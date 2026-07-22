@@ -7,16 +7,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CandidateRequest;
 use App\Models\Candidate;
 use App\Models\CandidateCvView;
-use App\Models\CandidateLanguage;
 use App\Models\CandidateEducation;
 use App\Models\CandidateExperience;
 use App\Models\CandidateExperienceSkill;
-use App\Models\CandidateResume;
+use App\Models\CandidateLanguage;
 use App\Models\CandidateReference;
+use App\Models\CandidateResume;
 use App\Models\ContactInfo;
 use App\Models\Education;
-use App\Models\ExtraCurricular;
 use App\Models\Experience;
+use App\Models\ExtraCurricular;
 use App\Models\JobCategory;
 use App\Models\JobRole;
 use App\Models\Profession;
@@ -28,6 +28,7 @@ use App\Models\User;
 use App\Notifications\CandidateCreateApprovalPendingNotification;
 use App\Notifications\CandidateCreateNotification;
 use App\Notifications\UpdateCompanyPassNotification;
+use App\Services\Admin\CandidateFilter;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -41,7 +42,6 @@ use Modules\Location\Entities\Country;
 
 class CandidateController extends Controller
 {
-
     private function candidatePayload(Request $request): array
     {
         $date = $request->birth_date ? Carbon::parse($request->birth_date)->format('Y-m-d') : null;
@@ -145,8 +145,6 @@ class CandidateController extends Controller
             }
         }
     }
-
-
 
     private function syncCandidateEducations(Candidate $candidate, Request $request): void
     {
@@ -348,48 +346,25 @@ class CandidateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, CandidateFilter $filters)
     {
-        try {
-            abort_if(! userCan('candidate.view'), 403);
+        abort_if(! userCan('candidate.view'), 403);
+        $filters->validate($request);
 
-            $query = Candidate::withCount('appliedJobs')->with('user', 'jobRole');
+        $query = $filters->apply(Candidate::query(), $request)
+            ->withCount('appliedJobs')
+            ->with(['user', 'jobRole', 'profession', 'experience', 'skills']);
+        $query->{$request->input('sort_by', 'latest') === 'oldest' ? 'oldest' : 'latest'}();
+        $candidates = $query->paginate(10)->withQueryString();
 
-            // verified status
-            if ($request->has('ev_status') && $request->ev_status != null) {
-                $ev_status = null;
-                if ($request->ev_status == 'true') {
-                    $query->whereHas('user', function ($q) {
-                        $q->whereNotNull('email_verified_at');
-                    });
-                } else {
-                    $query->whereHas('user', function ($q) {
-                        $q->whereNull('email_verified_at');
-                    });
-                }
-            }
+        $filterOptions = [
+            'professions' => Profession::orderBy('id')->get(), 'jobRoles' => JobRole::orderBy('id')->get(),
+            'skills' => Skill::orderBy('id')->get(),
+            'referenceRelations' => CandidateReference::query()->whereNotNull('relation')->where('relation', '!=', '')->distinct()->orderBy('relation')->pluck('relation'),
+            'locations' => Candidate::query()->whereNotNull('preferred_job_locations')->pluck('preferred_job_locations')->flatMap(fn ($json) => json_decode($json, true) ?: [])->filter()->unique()->sort()->values(),
+        ];
 
-            if ($request->keyword && $request->keyword != null) {
-                $query->whereHas('user', function ($q) use ($request) {
-                    $q->where('name', 'LIKE', "%$request->keyword%")->orWhere('email', 'LIKE', "%$request->keyword%");
-                });
-            }
-
-            // sortby
-            if ($request->sort_by == 'latest' || $request->sort_by == null) {
-                $query->latest();
-            } else {
-                $query->oldest();
-            }
-
-            $candidates = $query->paginate(10)->withQueryString();
-
-            return view('backend.candidate.index', compact('candidates'));
-        } catch (\Exception $e) {
-            flashError('An error occurred: '.$e->getMessage());
-
-            return back();
-        }
+        return view('backend.candidate.index', compact('candidates', 'filterOptions'));
     }
 
     /**
@@ -1197,32 +1172,24 @@ class CandidateController extends Controller
         }
     }
 
-    public function candidateExport(Request $request, $type)
+    public function candidateExport(Request $request, $type, CandidateFilter $filters)
     {
-        try {
-            $candidateIds = array_filter(array_map('intval', explode(',', (string) $request->query('ids', ''))));
-
-            if ($type === 'pdf') {
-                $query = Candidate::with(['user', 'profession', 'jobRole', 'skills', 'languages', 'education', 'experience', 'professionalReferences'])->latest();
-
-                if (! empty($candidateIds)) {
-                    $query->whereIn('id', $candidateIds);
-                }
-
-                $candidates = $query->get();
-
-                $pdf = Pdf::loadView('backend.candidate.export-cv-pdf', compact('candidates'))
-                    ->setPaper('a4');
-
-                return $pdf->download(time().'_candidates_cv.pdf');
-            }
-
-            $name = time().'_candidates.'.$type;
-            return Excel::download(new CandidateExport($candidateIds), $name);
-        } catch (\Exception $e) {
-            flashError('An error occurred: '.$e->getMessage());
-
-            return back();
+        abort_if(! userCan('candidate.view'), 403);
+        abort_unless(in_array($type, ['csv', 'xlsx', 'pdf'], true), 404);
+        $filters->validate($request);
+        $ids = collect(explode(',', (string) $request->query('ids', '')))->filter('is_numeric')->map('intval')->unique()->values();
+        $query = $filters->apply(Candidate::query(), $request)->with(['user', 'profession', 'jobRole', 'skills', 'languages', 'education', 'experience', 'professionalReferences'])->latest();
+        if ($ids->isNotEmpty()) {
+            $query->whereIn('candidates.id', $ids);
         }
+
+        if ($type === 'pdf') {
+            // DOMPDF renders in memory; keep this legacy export bounded rather than failing with a 500.
+            abort_if($query->count() > 500, 422, 'PDF export is limited to 500 candidates. Use CSV or Excel for larger filtered exports.');
+
+            return Pdf::loadView('backend.candidate.export-cv-pdf', ['candidates' => $query->get()])->setPaper('a4')->download(now()->format('Ymd_His').'_candidates_cv.pdf');
+        }
+
+        return Excel::download(new CandidateExport($query), now()->format('Ymd_His').'_candidates.'.$type);
     }
 }

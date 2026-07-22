@@ -18,12 +18,13 @@
                                         <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item export-candidate-btn"
-                                        href="{{ route('candidate.export', 'csv') }}" data-type="csv">CSV</a>
-                                    <a class="dropdown-item export-candidate-btn"
-                                        href="{{ route('candidate.export', 'pdf') }}" data-type="pdf">PDF</a>
-                                    <a class="dropdown-item export-candidate-btn"
-                                        href="{{ route('candidate.export', 'xlsx') }}" data-type="xlsx">Excel</a>
+                                    <a class="dropdown-item export-filtered-btn" href="{{ route('candidate.export', 'csv') }}?{{ request()->getQueryString() }}">CSV (all filtered)</a>
+                                    <a class="dropdown-item export-filtered-btn" href="{{ route('candidate.export', 'xlsx') }}?{{ request()->getQueryString() }}">Excel (all filtered)</a>
+                                    <a class="dropdown-item export-filtered-btn" href="{{ route('candidate.export', 'pdf') }}?{{ request()->getQueryString() }}">PDF (all filtered, max 500)</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item export-candidate-btn" href="{{ route('candidate.export', 'csv') }}?{{ request()->getQueryString() }}" data-type="csv">CSV (selected on this page)</a>
+                                    <a class="dropdown-item export-candidate-btn" href="{{ route('candidate.export', 'xlsx') }}?{{ request()->getQueryString() }}" data-type="xlsx">Excel (selected on this page)</a>
+                                    <a class="dropdown-item export-candidate-btn" href="{{ route('candidate.export', 'pdf') }}?{{ request()->getQueryString() }}" data-type="pdf">PDF (selected on this page)</a>
                                     <!-- Add more options for different export formats if needed -->
                                 </div>
                             </div>
@@ -38,8 +39,8 @@
                                     <i class="fas fa-trash mr-1"></i> {{ __('delete_selected') }}
                                 </button>
                             @endif
-                            @if (request('keyword') || request('ev_status') || request('sort_by'))
-                                <a href="{{ route('company.index') }}" class="btn bg-danger"><i
+                            @if (request()->query())
+                                <a href="{{ route('candidate.index') }}" class="btn bg-danger"><i
                                         class="fas fa-times"></i>&nbsp; {{ __('clear') }}
                                 </a>
                             @endif
@@ -50,6 +51,7 @@
                 {{-- Filter  --}}
                 <form id="formSubmit" action="{{ route('candidate.index') }}" method="GET" onchange="this.submit();">
                     <div class="card-body border-bottom row">
+                        <div class="col-12 mb-2"><strong>Advanced filters</strong> <span class="badge badge-primary">{{ collect(request()->query())->except(['page', 'sort_by'])->filter(fn ($value) => filled($value))->count() }} active</span></div>
                         <div class="col-lg-4 col-md-6 col-12">
                             <label>{{ __('search') }}</label>
                             <input name="keyword" type="text" placeholder="{{ __('search') }}" class="form-control"
@@ -69,6 +71,19 @@
                                 </option>
                             </select>
                         </div>
+                        <div class="col-lg-4 col-md-6 col-12"><label>Email</label><input name="email" type="search" class="form-control" value="{{ request('email') }}"></div>
+                        <div class="col-lg-4 col-md-6 col-12"><label>Profession</label><select name="profession_ids[]" multiple class="form-control select2bs4">@foreach($filterOptions['professions'] as $option)<option value="{{ $option->id }}" @selected(in_array($option->id, request('profession_ids', [])))>{{ $option->name }}</option>@endforeach</select></div>
+                        <div class="col-lg-4 col-md-6 col-12"><label>Job Role</label><select name="job_role_ids[]" multiple class="form-control select2bs4">@foreach($filterOptions['jobRoles'] as $option)<option value="{{ $option->id }}" @selected(in_array($option->id, request('job_role_ids', [])))>{{ $option->name }}</option>@endforeach</select></div>
+                        <div class="col-lg-4 col-md-6 col-12"><label>Skills (any)</label><select name="skill_ids[]" multiple class="form-control select2bs4">@foreach($filterOptions['skills'] as $option)<option value="{{ $option->id }}" @selected(in_array($option->id, request('skill_ids', [])))>{{ $option->name }}</option>@endforeach</select></div>
+                        <div class="col-lg-4 col-md-6 col-12"><label>Reference relation</label><select name="reference_relations[]" multiple class="form-control select2bs4">@foreach($filterOptions['referenceRelations'] as $option)<option value="{{ $option }}" @selected(in_array($option, request('reference_relations', [])))>{{ $option }}</option>@endforeach</select></div>
+                        <div class="col-lg-4 col-md-6 col-12"><label>Preferred work location</label><select name="preferred_locations[]" multiple class="form-control select2bs4">@foreach($filterOptions['locations'] as $option)<option value="{{ $option }}" @selected(in_array($option, request('preferred_locations', [])))>{{ $option }}</option>@endforeach</select></div>
+                        <div class="col-lg-2 col-md-4 col-6"><label>Min age</label><input name="min_age" type="number" min="0" max="120" class="form-control" value="{{ request('min_age') }}"></div>
+                        <div class="col-lg-2 col-md-4 col-6"><label>Max age</label><input name="max_age" type="number" min="0" max="120" class="form-control" value="{{ request('max_age') }}"></div>
+                        <div class="col-lg-2 col-md-4 col-6"><label>Experience min</label><input name="min_experience" type="number" min="0" step="0.5" class="form-control" value="{{ request('min_experience') }}"></div>
+                        <div class="col-lg-2 col-md-4 col-6"><label>Experience max</label><input name="max_experience" type="number" min="0" step="0.5" class="form-control" value="{{ request('max_experience') }}"></div>
+                        <div class="col-lg-2 col-md-4 col-6"><label>Created from</label><input name="created_from" type="date" class="form-control" value="{{ request('created_from') }}"></div>
+                        <div class="col-lg-2 col-md-4 col-6"><label>Created to</label><input name="created_to" type="date" class="form-control" value="{{ request('created_to') }}"></div>
+                        <div class="col-12 mt-2"><button class="btn btn-primary" type="submit">Apply filters</button> <a class="btn btn-outline-secondary" href="{{ route('candidate.index') }}">Clear all filters</a><span class="ml-2">{{ $candidates->total() }} matching candidates</span></div>
                         <div class="col-lg-4 col-md-6 col-12">
                             <label>{{ __('sort_by') }}</label>
                             <select name="sort_by" class="form-control select2bs4 w-100-p">
@@ -90,7 +105,7 @@
                         <div class="col-sm-12 py-2" style="padding-left: 32px;">
                             <label class="d-inline-flex align-items-center gap-2">
                                 <input type="checkbox" id="select-all" class="mr-2">
-                                <span>{{ __('select_all') }}</span>
+                                <span>Select all rows on this page</span>
                             </label>
                         </div>
                     </div>
@@ -99,7 +114,7 @@
                             <tr>
                                 <th width="5%">{{ __('select') }}</th>
                                 <th>{{ __('candidate') }}</th>
-                                <th>{{ __('role') }}/{{ __('profession') }}</th>
+                                <th>{{ __('role') }}/{{ __('profession') }}</th><th>Experience</th>
                                 <th>{{ __('profile_completion') }}</th>
                                 <th>{{ __('applied_jobs') }}</th>
                                 @if (userCan('candidate.update'))
@@ -134,6 +149,7 @@
                                             <p class="job-role">{{ $candidate->jobRole->name ?? '' }}</p>
                                             <p class="profession">{{ $candidate->profession->name ?? '' }}</p>
                                         </td>
+                                        <td>{{ $candidate->experience->name ?? '' }}</td>
                                         <td tabindex="0">
                                             @php($completion = $candidate->profile_completion_percentage)
                                             <div class="d-flex align-items-center">
@@ -215,7 +231,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="8">
+                                    <td colspan="10">
                                         {{ __('no_data_found') }}
                                     </td>
                                 </tr>
@@ -367,7 +383,7 @@
 
                 var exportType = $(this).data('type');
                 var exportUrl = '{{ route('candidate.export', ':type') }}'.replace(':type', exportType);
-                window.location.href = exportUrl + '?ids=' + candidateIds.join(',');
+                var params = new URLSearchParams(window.location.search); params.set('ids', candidateIds.join(',')); window.location.href = exportUrl + '?' + params.toString();
             });
 
             // Select all checkbox functionality
