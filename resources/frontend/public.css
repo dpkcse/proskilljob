@@ -1,0 +1,59 @@
+/* @import "../../public/frontend/assets/css/content.min.css"; */
+/* @import "../../public/frontend/assets/css/OverlayScrollbars.min.css"; */
+@import "../../public/backend/plugins/select2/css/select2.min.css";
+@import "../../public/frontend/assets/css/bootstrap.min.css";
+@import "../../public/frontend/assets/css/bootstrap-select-country.min.css";
+@import "../../public/frontend/plugins/cookieconsent/cookieconsent.css";
+@import "../../public/backend/plugins/toastr/toastr.min.css";
+@import "../../public/backend/plugins/sweetalert2/sweetalert2.min.css";
+/* @import "../../public/frontend/assets/css/customfont.css"; */
+@import "../../public/frontend/assets/css/flag-icon.min.css";
+@import "../../public/frontend/assets/css/flags.css";
+@import "../../public/frontend/assets/css/rtl-app.css";
+@import "../../public/frontend/assets/css/slick.css";
+@import "../../public/frontend/assets/css/aos.css";
+@import "../../public/frontend/assets/css/phosphor-icon.min.css";
+@import "../../resources/frontend/css/main.css";
+@import "../../resources/frontend/css/templatecookie.css";
+@import "../../resources/frontend/css/tailwind.css";
+/* don't remove it from live versions */
+#scrollUp {
+    line-height: 45px !important;
+    background: #333 !important;
+    color: white !important;
+    border-radius: 50% !important;
+    text-align: center !important;
+    cursor: pointer !important;
+    z-index: 9999 !important;
+    transition: all 0.3s ease !important;
+}
+
+#scrollUp:hover {
+    background: #555 !important;
+    transform: scale(1.1) !important;
+}
+
+/* Custom fallback button styles */
+#customScrollUp {
+    position: fixed !important;
+    bottom: 30px !important;
+    right: 30px !important;
+    width: 45px !important;
+    height: 45px !important;
+    background: #333 !important;
+    color: white !important;
+    border-radius: 50% !important;
+    text-align: center !important;
+    line-height: 45px !important;
+    cursor: pointer !important;
+    z-index: 9999 !important;
+    font-size: 20px !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important;
+}
+
+#customScrollUp:hover {
+    background: #555 !important;
+    transform: scale(1.1) !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4) !important;
+}

@@ -1,0 +1,4283 @@
+{
+  "total_count": 216,
+  "scraped_from": "https://en.wikipedia.org/wiki/List_of_universities_in_Bangladesh",
+  "last_updated": "2025-01-27",
+  "universities_by_section": {
+    "General": [
+      {
+        "name": "University of Dhaka",
+        "acronym": "DU",
+        "established": "1921",
+        "location": "Shabagh, Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "phd_granting": "Yes",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Dhaka"
+      },
+      {
+        "name": "University of Rajshahi",
+        "acronym": "RU",
+        "established": "1953",
+        "location": "Motihar, Rajshahi",
+        "division": "Rajshahi Division",
+        "specialization": "General",
+        "phd_granting": "Yes",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Rajshahi"
+      },
+      {
+        "name": "University of Chittagong",
+        "acronym": "CU",
+        "established": "1966",
+        "location": "Hathazari, Chattogram",
+        "division": "Chattogram Division",
+        "specialization": "General",
+        "phd_granting": "Yes",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Chittagong"
+      },
+      {
+        "name": "Jahangirnagar University",
+        "acronym": "JU",
+        "established": "1970",
+        "location": "Savar, Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "phd_granting": "Yes",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Jahangirnagar_University"
+      },
+      {
+        "name": "Islamic University, Bangladesh",
+        "acronym": "IU",
+        "established": "1979",
+        "location": "Kushtia Sadar, Kushtia",
+        "division": "Khulna Division",
+        "specialization": "General",
+        "phd_granting": "Yes",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Islamic_University,_Bangladesh"
+      },
+      {
+        "name": "Khulna University",
+        "acronym": "KU",
+        "established": "1991",
+        "location": "Harintana, Khulna",
+        "division": "Khulna Division",
+        "specialization": "General",
+        "phd_granting": "Yes",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Khulna_University"
+      },
+      {
+        "name": "Jagannath University",
+        "acronym": "JnU",
+        "established": "2005",
+        "location": "Sadar Ghat, Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "phd_granting": "Yes",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Jagannath_University"
+      },
+      {
+        "name": "Comilla University",
+        "acronym": "CoU",
+        "established": "2006",
+        "location": "Sadar Dakkhin, Comilla",
+        "division": "Chittagong Division",
+        "specialization": "General",
+        "phd_granting": "No",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Comilla_University"
+      },
+      {
+        "name": "Jatiya Kabi Kazi Nazrul Islam University",
+        "acronym": "JKKNIU",
+        "established": "2006",
+        "location": "Trishal, Mymensingh",
+        "division": "Mymensingh Division",
+        "specialization": "General",
+        "phd_granting": "Yes",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Jatiya_Kabi_Kazi_Nazrul_Islam_University"
+      },
+      {
+        "name": "Bangladesh University of Professionals",
+        "acronym": "BUP",
+        "established": "2008",
+        "location": "Mirpur, Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "phd_granting": "Yes",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_University_of_Professionals"
+      },
+      {
+        "name": "Begum Rokeya University",
+        "acronym": "BRUR",
+        "established": "2008",
+        "location": "Kotwali",
+        "division": "Rangpur Division",
+        "specialization": "General",
+        "phd_granting": "Yes",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Begum_Rokeya_University"
+      },
+      {
+        "name": "University of Barisal",
+        "acronym": "BU",
+        "established": "2011",
+        "location": "Bandar, Barisal",
+        "division": "Barisal Division",
+        "specialization": "General",
+        "phd_granting": "No",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Barisal"
+      },
+      {
+        "name": "Rabindra University, Bangladesh",
+        "acronym": "RUB",
+        "established": "2017",
+        "location": "Shahjadpur, Sirajganj",
+        "division": "Rajshahi Division",
+        "specialization": "General",
+        "phd_granting": "No",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Rabindra_University,_Bangladesh"
+      },
+      {
+        "name": "Netrokona University",
+        "acronym": "NkU",
+        "established": "2018",
+        "location": "Netrokona Sadar, Netrokona",
+        "division": "Mymensingh Division",
+        "specialization": "General",
+        "phd_granting": "No",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Netrokona_University"
+      },
+      {
+        "name": "Kishoreganj University",
+        "acronym": "KgU",
+        "established": "2020",
+        "location": "Kishoreganj Sadar, Kishoreganj",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "phd_granting": "No",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Kishoreganj_University"
+      },
+      {
+        "name": "Meherpur University",
+        "acronym": "MU",
+        "established": "2022",
+        "location": "Mujibnagar, Meherpur",
+        "division": "Khulna Division",
+        "specialization": "General",
+        "phd_granting": "No",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Meherpur_University"
+      },
+      {
+        "name": "Thakurgaon University",
+        "acronym": "TU",
+        "established": "2022",
+        "location": "Thakurgaon Sadar, Thakurgaon",
+        "division": "Rangpur Division",
+        "specialization": "General",
+        "phd_granting": "No",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Thakurgaon_University"
+      },
+      {
+        "name": "Naogaon University",
+        "acronym": "NgU",
+        "established": "2022",
+        "location": "Noagaon Sadar, Naogaon",
+        "division": "Rajshahi Division",
+        "specialization": "General",
+        "phd_granting": "No",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Naogaon_University"
+      },
+      {
+        "name": "International University of Business Agriculture and Technology",
+        "acronym": "IUBAT",
+        "established": "1992",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/International_University_of_Business_Agriculture_and_Technology"
+      },
+      {
+        "name": "North South University",
+        "acronym": "NSU",
+        "established": "1992",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/North_South_University"
+      },
+      {
+        "name": "Independent University, Bangladesh",
+        "acronym": "IUB",
+        "established": "1993",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Independent_University,_Bangladesh"
+      },
+      {
+        "name": "American International University-Bangladesh",
+        "acronym": "AIUB",
+        "established": "1994",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/American_International_University-Bangladesh"
+      },
+      {
+        "name": "Dhaka International University",
+        "acronym": "DIU",
+        "established": "1995",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Dhaka_International_University"
+      },
+      {
+        "name": "International Islamic University, Chittagong",
+        "acronym": "IIUC",
+        "established": "1995",
+        "location": "Chittagong",
+        "division": "Chittagong Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/International_Islamic_University,_Chittagong"
+      },
+      {
+        "name": "Asian University of Bangladesh",
+        "acronym": "AUB",
+        "established": "1996",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Asian_University_of_Bangladesh"
+      },
+      {
+        "name": "East West University",
+        "acronym": "EWU",
+        "established": "1996",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/East_West_University"
+      },
+      {
+        "name": "Gono Bishwabidyalay",
+        "acronym": "GB",
+        "established": "1996",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Gono_Bishwabidyalay"
+      },
+      {
+        "name": "People's University of Bangladesh",
+        "acronym": "PUB",
+        "established": "1996",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/People%27s_University_of_Bangladesh"
+      },
+      {
+        "name": "Queens University",
+        "acronym": "QU",
+        "established": "1996",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Queens_University_(Bangladesh)"
+      },
+      {
+        "name": "University of Asia Pacific (Bangladesh)",
+        "acronym": "UAP",
+        "established": "1996",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Asia_Pacific_(Bangladesh)"
+      },
+      {
+        "name": "Chittagong Independent University (CIU)",
+        "acronym": "CIU",
+        "established": "1999",
+        "location": "Chittagong",
+        "division": "Chittagong Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Chittagong_Independent_University_(CIU)"
+      },
+      {
+        "name": "Bangladesh University",
+        "acronym": "BU",
+        "established": "2001",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_University"
+      },
+      {
+        "name": "BGC Trust University Bangladesh",
+        "acronym": "BGCTUB",
+        "established": "2001",
+        "location": "Chittagong",
+        "division": "Chittagong Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/BGC_Trust_University_Bangladesh"
+      },
+      {
+        "name": "Brac University",
+        "acronym": "BracU",
+        "established": "2001",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Brac_University"
+      },
+      {
+        "name": "Manarat International University",
+        "acronym": "MIU",
+        "established": "2001",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Manarat_International_University"
+      },
+      {
+        "name": "Premier University, Chittagong",
+        "acronym": "PU",
+        "established": "2001",
+        "location": "Chittagong",
+        "division": "Chittagong Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Premier_University,_Chittagong"
+      },
+      {
+        "name": "Southern University, Bangladesh",
+        "acronym": "SUB",
+        "established": "2001",
+        "location": "Chittagong",
+        "division": "Chittagong Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Southern_University,_Bangladesh"
+      },
+      {
+        "name": "Sylhet International University",
+        "acronym": "SIU",
+        "established": "2001",
+        "location": "Sylhet",
+        "division": "Sylhet Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Sylhet_International_University"
+      },
+      {
+        "name": "University of Development Alternative",
+        "acronym": "UODA",
+        "established": "2002",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Development_Alternative"
+      },
+      {
+        "name": "City University, Bangladesh",
+        "acronym": "CUB",
+        "established": "2002",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/City_University,_Bangladesh"
+      },
+      {
+        "name": "Daffodil International University",
+        "acronym": "DIU",
+        "established": "2002",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Daffodil_International_University"
+      },
+      {
+        "name": "Green University of Bangladesh",
+        "acronym": "GUB",
+        "established": "2002",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Green_University_of_Bangladesh"
+      },
+      {
+        "name": "IBAIS University",
+        "acronym": "IU",
+        "established": "2002",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/IBAIS_University"
+      },
+      {
+        "name": "Leading University",
+        "acronym": "LU",
+        "established": "2002",
+        "location": "Sylhet",
+        "division": "Sylhet Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Leading_University"
+      },
+      {
+        "name": "Northern University, Bangladesh",
+        "acronym": "NUB",
+        "established": "2002",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Northern_University,_Bangladesh"
+      },
+      {
+        "name": "Prime University",
+        "acronym": "PU",
+        "established": "2002",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Prime_University"
+      },
+      {
+        "name": "Southeast University",
+        "acronym": "SEU",
+        "established": "2002",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Southeast_University_(Bangladesh)"
+      },
+      {
+        "name": "Stamford University Bangladesh",
+        "acronym": "SU",
+        "established": "2002",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Stamford_University_Bangladesh"
+      },
+      {
+        "name": "State University of Bangladesh",
+        "acronym": "SUB",
+        "established": "2002",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/State_University_of_Bangladesh"
+      },
+      {
+        "name": "Eastern University, Bangladesh",
+        "acronym": "EU",
+        "established": "2003",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Eastern_University,_Bangladesh"
+      },
+      {
+        "name": "Metropolitan University",
+        "acronym": "MU",
+        "established": "2003",
+        "location": "Sylhet",
+        "division": "Sylhet Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Metropolitan_University,_Sylhet"
+      },
+      {
+        "name": "Millennium University",
+        "acronym": "MU",
+        "established": "2003",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Millennium_University"
+      },
+      {
+        "name": "Primeasia University",
+        "acronym": "PAU",
+        "established": "2003",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Primeasia_University"
+      },
+      {
+        "name": "Royal University of Dhaka",
+        "acronym": "RUD",
+        "established": "2003",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Royal_University_of_Dhaka"
+      },
+      {
+        "name": "United International University",
+        "acronym": "UIU",
+        "established": "2003",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/United_International_University"
+      },
+      {
+        "name": "University of Information Technology and Sciences",
+        "acronym": "UITS",
+        "established": "2003",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Information_Technology_and_Sciences"
+      },
+      {
+        "name": "University of South Asia, Bangladesh",
+        "acronym": "USAB",
+        "established": "2003",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_South_Asia,_Bangladesh"
+      },
+      {
+        "name": "Presidency University",
+        "acronym": "PU",
+        "established": "2003",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Presidency_University,_Bangladesh"
+      },
+      {
+        "name": "Uttara University",
+        "acronym": "UU",
+        "established": "2003",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Uttara_University"
+      },
+      {
+        "name": "Victoria University of Bangladesh",
+        "acronym": "VUB",
+        "established": "2003",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Victoria_University_of_Bangladesh"
+      },
+      {
+        "name": "World University of Bangladesh",
+        "acronym": "WUB",
+        "established": "2003",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/World_University_of_Bangladesh"
+      },
+      {
+        "name": "Asa University Bangladesh",
+        "acronym": "ASAUB",
+        "established": "2006",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Asa_University_Bangladesh"
+      },
+      {
+        "name": "Bangladesh Islami University",
+        "acronym": "BIU",
+        "established": "2006",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Islami_University"
+      },
+      {
+        "name": "East Delta University",
+        "acronym": "EDU",
+        "established": "2006",
+        "location": "Chittagong",
+        "division": "Chittagong Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/East_Delta_University"
+      },
+      {
+        "name": "Northern University of Business and Technology Khulna",
+        "acronym": "NUB",
+        "established": "2010",
+        "location": "Khulna",
+        "division": "Khulna Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Northern_University_of_Business_and_Technology_Khulna"
+      },
+      {
+        "name": "Britannia University",
+        "acronym": "BU",
+        "established": "2010",
+        "location": "Comilla",
+        "division": "Chittagong Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Britannia_University"
+      },
+      {
+        "name": "Feni University",
+        "acronym": "FU",
+        "established": "2010",
+        "location": "Feni",
+        "division": "Chittagong Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Feni_University"
+      },
+      {
+        "name": "Khwaja Yunus Ali University",
+        "acronym": "KYAU",
+        "established": "2010",
+        "location": "Sirajgonj",
+        "division": "Rajshahi Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Khwaja_Yunus_Ali_University"
+      },
+      {
+        "name": "European University of Bangladesh",
+        "acronym": "EUB",
+        "established": "2012",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/European_University_of_Bangladesh"
+      },
+      {
+        "name": "First Capital University Of Bangladesh",
+        "acronym": "FCUB",
+        "established": "2012",
+        "location": "Chuadanga",
+        "division": "Khulna Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/First_Capital_University_Of_Bangladesh"
+      },
+      {
+        "name": "BGMEA University of Fashion & Technology",
+        "acronym": "BUFT",
+        "established": "2012",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/BGMEA_University_of_Fashion_%26_Technology"
+      },
+      {
+        "name": "Hamdard University Bangladesh",
+        "acronym": "HUB",
+        "established": "2012",
+        "location": "Munshiganj",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Hamdard_University_Bangladesh"
+      },
+      {
+        "name": "Ishakha International University",
+        "acronym": "IIUB",
+        "established": "2012",
+        "location": "Kishoreganj",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Ishakha_International_University,_Bangladesh"
+      },
+      {
+        "name": "North East University Bangladesh",
+        "acronym": "NEUB",
+        "established": "2012",
+        "location": "Sylhet",
+        "division": "Sylhet Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/North_East_University"
+      },
+      {
+        "name": "North Western University, Bangladesh",
+        "acronym": "NWU",
+        "established": "2012",
+        "location": "Khulna",
+        "division": "Khulna Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/North_Western_University,_Bangladesh"
+      },
+      {
+        "name": "Port City International University",
+        "acronym": "PCIU",
+        "established": "2012",
+        "location": "Chittagong",
+        "division": "Chittagong Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Port_City_International_University"
+      },
+      {
+        "name": "Varendra University",
+        "acronym": "VU",
+        "established": "2012",
+        "location": "Rajshahi",
+        "division": "Rajshahi Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Varendra_University"
+      },
+      {
+        "name": "Sonargaon University",
+        "acronym": "SU",
+        "established": "2012",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Sonargaon_University"
+      },
+      {
+        "name": "Cox's Bazar International University",
+        "acronym": "CBIU",
+        "established": "2013",
+        "location": "Cox's Bazar",
+        "division": "Chittagong Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Cox%27s_Bazar_International_University"
+      },
+      {
+        "name": "Fareast International University",
+        "acronym": "FIU",
+        "established": "2013",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Fareast_International_University"
+      },
+      {
+        "name": "German University Bangladesh",
+        "acronym": "GUB",
+        "established": "2013",
+        "location": "Gazipur",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/German_University_Bangladesh"
+      },
+      {
+        "name": "North Bengal International University",
+        "acronym": "NBIU",
+        "established": "2013",
+        "location": "Rajshahi",
+        "division": "Rajshahi Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/North_Bengal_International_University"
+      },
+      {
+        "name": "Notre Dame University Bangladesh",
+        "acronym": "NDUB",
+        "established": "2013",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Notre_Dame_University_Bangladesh"
+      },
+      {
+        "name": "Ranada Prasad Shaha University",
+        "acronym": "RPSU",
+        "established": "2013",
+        "location": "Narayanganj",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Ranada_Prasad_Shaha_University"
+      },
+      {
+        "name": "Brahmaputra International University",
+        "acronym": "BIU",
+        "established": "2013",
+        "location": "Jamalpur",
+        "division": "Mymensingh Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Brahmaputra_International_University"
+      },
+      {
+        "name": "Times University Bangladesh",
+        "acronym": "TMUB",
+        "established": "2013",
+        "location": "Faridpur",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Times_University_Bangladesh"
+      },
+      {
+        "name": "Canadian University of Bangladesh",
+        "acronym": "CUB",
+        "established": "2015",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Canadian_University_of_Bangladesh"
+      },
+      {
+        "name": "Global University Bangladesh",
+        "acronym": "GUB",
+        "established": "2015",
+        "location": "Barisal",
+        "division": "Barisal Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Global_University_Bangladesh"
+      },
+      {
+        "name": "NPI University of Bangladesh",
+        "acronym": "NPIUB",
+        "established": "2015",
+        "location": "Manikganj",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/NPI_University_of_Bangladesh"
+      },
+      {
+        "name": "Rabindra Maitree University",
+        "acronym": "RMU",
+        "established": "2015",
+        "location": "Kushtia",
+        "division": "Khulna Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Rabindra_Maitree_University"
+      },
+      {
+        "name": "University of Scholars",
+        "acronym": "IUS",
+        "established": "2015",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/The_International_University_of_Scholars"
+      },
+      {
+        "name": "University of Creative Technology Chittagong",
+        "acronym": "UCTC",
+        "established": "2015",
+        "location": "Chittagong",
+        "division": "Chittagong Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Creative_Technology_Chittagong"
+      },
+      {
+        "name": "[122]",
+        "acronym": "AKMU",
+        "established": "2016",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org#cite_note-124"
+      },
+      {
+        "name": "University of Global Village",
+        "acronym": "UIGV",
+        "established": "2016",
+        "location": "Barisal",
+        "division": "Barisal Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Global_Village"
+      },
+      {
+        "name": "Khulna Khan Bahadur Ahsanullah University",
+        "acronym": "KKBAU",
+        "established": "2018",
+        "location": "Khulna",
+        "division": "Khulna Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": null
+      },
+      {
+        "name": "[124]",
+        "acronym": "TUB",
+        "established": "2018",
+        "location": "Barisal",
+        "division": "Barisal Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org#cite_note-126"
+      },
+      {
+        "name": "[125]",
+        "acronym": "UOB",
+        "established": "2018",
+        "location": "Brahamanbaria",
+        "division": "Chittagong Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org#cite_note-127"
+      },
+      {
+        "name": "University of Skill Enrichment and Technology",
+        "acronym": "USET",
+        "established": "2018",
+        "location": "Narayanganj",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/w/index.php?title=University_of_Skill_Enrichment_and_Technology&action=edit&redlink=1"
+      },
+      {
+        "name": "International Standard University",
+        "acronym": "ISU",
+        "established": "2018",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/International_Standard_University"
+      },
+      {
+        "name": "ZNRF University of Management Sciences",
+        "acronym": "ZUMS",
+        "established": "2018",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/w/index.php?title=ZNRF_University_of_Management_Sciences&action=edit&redlink=1"
+      },
+      {
+        "name": "Bandarban University",
+        "acronym": "BdU",
+        "established": "2019",
+        "location": "Bandarban",
+        "division": "Chittagong Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Bandarban_University"
+      },
+      {
+        "name": "RTM Al-Kabir Technical University",
+        "acronym": "RTM-AKTU",
+        "established": "2020",
+        "location": "Sylhet",
+        "division": "Sylhet Division",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/w/index.php?title=RTM_Al-Kabir_Technical_University&action=edit&redlink=1"
+      },
+      {
+        "name": "International Islami University of Science and Technology Bangladesh",
+        "acronym": "IIUSTB",
+        "established": "2023",
+        "location": "Dhaka",
+        "division": "Dhaka",
+        "specialization": "Science and Technology",
+        "website": "https://www.iiustb.ac.bd/",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/International_Islami_University_of_Science_and_Technology_Bangladesh"
+      },
+      {
+        "name": "Microland University of Science and Technology",
+        "acronym": "MUST",
+        "established": "2014",
+        "location": "Dhaka",
+        "division": "Dhaka",
+        "specialization": "Science and Technology",
+        "website": "https://www.microlanduniversity.org/",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Microland_University_of_Science_and_Technology"
+      },
+      {
+        "name": "Lalon University of Science & Arts",
+        "acronym": "LUSA",
+        "established": "2023",
+        "location": "Kushtia",
+        "division": "Khulna",
+        "specialization": "Science and Arts",
+        "website": "https://www.lusa.ac.bd/",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/w/index.php?title=Lalon_University_of_Science_%26_Arts&action=edit&redlink=1"
+      },
+      {
+        "name": "Grameen University",
+        "acronym": "GU",
+        "established": "2025",
+        "location": "Dhaka",
+        "division": "Dhaka",
+        "specialization": "General",
+        "section": "General",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Grameen_University"
+      }
+    ],
+    "Science and technology": [
+      {
+        "name": "Shahjalal University of Science and Technology",
+        "acronym": "SUST",
+        "established": "1986",
+        "location": "Kumargaon, Sylhet",
+        "division": "Sylhet Division",
+        "specialization": "STEM",
+        "phd_granting": "Yes",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Shahjalal_University_of_Science_and_Technology"
+      },
+      {
+        "name": "Hajee Mohammad Danesh Science & Technology University",
+        "acronym": "HSTU",
+        "established": "1999",
+        "location": "Kotwali, Dinajpur",
+        "division": "Rangpur Division",
+        "specialization": "STEM",
+        "phd_granting": "Yes",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Hajee_Mohammad_Danesh_Science_%26_Technology_University"
+      },
+      {
+        "name": "Mawlana Bhashani Science and Technology University",
+        "acronym": "MBSTU",
+        "established": "1999",
+        "location": "Tangail Sadar, Tangail",
+        "division": "Dhaka Division",
+        "specialization": "STEM",
+        "phd_granting": "Yes",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Mawlana_Bhashani_Science_and_Technology_University"
+      },
+      {
+        "name": "Patuakhali Science and Technology University",
+        "acronym": "PSTU",
+        "established": "2000",
+        "location": "Dumki, Patuakhali",
+        "division": "Barisal Division",
+        "specialization": "STEM",
+        "phd_granting": "Yes",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Patuakhali_Science_and_Technology_University"
+      },
+      {
+        "name": "Noakhali Science and Technology University",
+        "acronym": "NSTU",
+        "established": "2006",
+        "location": "Sudharam, Noakhali",
+        "division": "Chittagong Division",
+        "specialization": "STEM",
+        "phd_granting": "Yes",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Noakhali_Science_and_Technology_University"
+      },
+      {
+        "name": "Jashore University of Science and Technology",
+        "acronym": "JUST",
+        "established": "2007",
+        "location": "Kotwali, Jessore",
+        "division": "Khulna Division",
+        "specialization": "STEM",
+        "phd_granting": "Yes",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Jessore_University_of_Science_%26_Technology"
+      },
+      {
+        "name": "Pabna University of Science and Technology",
+        "acronym": "PUST",
+        "established": "2008",
+        "location": "Kotwali, Pabna",
+        "division": "Rajshahi Division",
+        "specialization": "STEM",
+        "phd_granting": "Yes",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Pabna_University_of_Science_and_Technology"
+      },
+      {
+        "name": "Gopalganj Science and Technology University",
+        "acronym": "GSTU",
+        "established": "2011",
+        "location": "Gopalganj Sadar, Gopalganj",
+        "division": "Dhaka Division",
+        "specialization": "STEM",
+        "phd_granting": "No",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Gopalganj_Science_and_Technology_University"
+      },
+      {
+        "name": "Rangamati Science and Technology University",
+        "acronym": "RmSTU",
+        "established": "2014",
+        "location": "Kotwali, Rangamati",
+        "division": "Chittagong Division",
+        "specialization": "STEM",
+        "phd_granting": "No",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Rangamati_Science_and_Technology_University"
+      },
+      {
+        "name": "Jamalpur Science and Technology University",
+        "acronym": "JSTU",
+        "established": "2017",
+        "location": "Melandaha, Jamalpur",
+        "division": "Mymensingh Division",
+        "specialization": "STEM",
+        "phd_granting": "No",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Jamalpur_Science_and_Technology_University"
+      },
+      {
+        "name": "Chandpur Science and Technology University",
+        "acronym": "CSTU",
+        "established": "2020",
+        "location": "Chandpur Sadar, Chandpur",
+        "division": "Chittagong Division",
+        "specialization": "STEM",
+        "phd_granting": "No",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Chandpur_Science_and_Technology_University"
+      },
+      {
+        "name": "Sunamganj Science and Technology University",
+        "acronym": "SSTU",
+        "established": "2020",
+        "location": "Shantiganj, Sunamganj",
+        "division": "Sylhet Division",
+        "specialization": "STEM",
+        "phd_granting": "No",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Sunamganj_Science_and_Technology_University"
+      },
+      {
+        "name": "Bogura Science and Technology University",
+        "acronym": "BSTU",
+        "established": "2001",
+        "location": "Bogura Sadar, Bogura",
+        "division": "Rajshahi Division",
+        "specialization": "STEM",
+        "phd_granting": "No",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Bogura_Science_and_Technology_University"
+      },
+      {
+        "name": "Lakshmipur Science and Technology University",
+        "acronym": "LSTU",
+        "established": "2020",
+        "location": "Lakshmipur Sadar, Lakshmipur",
+        "division": "Chittagong Division",
+        "specialization": "STEM",
+        "phd_granting": "No",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Lakshmipur_Science_and_Technology_University"
+      },
+      {
+        "name": "Pirojpur Science and Technology University",
+        "acronym": "PpSTU",
+        "established": "2022",
+        "location": "Pirojpur Sadar, Pirojpur",
+        "division": "Barishal Division",
+        "specialization": "STEM",
+        "phd_granting": "No",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Pirojpur_Science_and_Technology_University"
+      },
+      {
+        "name": "Satkhira University of Science and Technology",
+        "acronym": "SaUST",
+        "established": "2023",
+        "location": "Satkhira Sadar, Satkhira",
+        "division": "Khulna Division",
+        "specialization": "STEM",
+        "phd_granting": "No",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Satkhira_University_of_Science_and_Technology"
+      },
+      {
+        "name": "Narayanganj Science and Technology University",
+        "acronym": "NGSTU",
+        "established": "2023",
+        "location": "Narayanganj Sadar, Narayanganj",
+        "division": "Dhaka Division",
+        "specialization": "STEM",
+        "phd_granting": "No",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Narayanganj_Science_and_Technology_University"
+      },
+      {
+        "name": "University of Science & Technology Chittagong",
+        "acronym": "USTC",
+        "established": "1992",
+        "location": "Chittagong",
+        "division": "Chittagong Division",
+        "specialization": "STEM",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Science_%26_Technology_Chittagong"
+      },
+      {
+        "name": "Ahsanullah University of Science and Technology",
+        "acronym": "AUST",
+        "established": "1995",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "STEM",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Ahsanullah_University_of_Science_and_Technology"
+      },
+      {
+        "name": "Pundra University of Science and Technology",
+        "acronym": "PDUST",
+        "established": "2001",
+        "location": "Bogra",
+        "division": "Rajshahi Division",
+        "specialization": "STEM",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Pundra_University_of_Science_and_Technology"
+      },
+      {
+        "name": "Bangladesh University of Business and Technology",
+        "acronym": "BUBT",
+        "established": "2003",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "STEM",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_University_of_Business_and_Technology"
+      },
+      {
+        "name": "Atish Dipankar University of Science and Technology",
+        "acronym": "ADUST",
+        "established": "2004",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "STEM",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Atish_Dipankar_University_of_Science_and_Technology"
+      },
+      {
+        "name": "[136]",
+        "acronym": "ZHSUST",
+        "established": "2012",
+        "location": "Shariatpur",
+        "division": "Dhaka Division",
+        "specialization": "STEM",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org#cite_note-138"
+      },
+      {
+        "name": "Rajshahi Science & Technology University",
+        "acronym": "RSTU",
+        "established": "2013",
+        "location": "Natore",
+        "division": "Rajshahi Division",
+        "specialization": "STEM",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Rajshahi_Science_%26_Technology_University"
+      },
+      {
+        "name": "Bangladesh Army International University of Science & Technology",
+        "acronym": "BAIUST",
+        "established": "2015",
+        "location": "Comilla",
+        "division": "Chittagong Division",
+        "specialization": "STEM",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Army_International_University_of_Science_%26_Technology"
+      },
+      {
+        "name": "Bangladesh Army University of Science & Technology, Khulna",
+        "acronym": "BAUST, Khulna",
+        "established": "2021",
+        "location": "Khulna",
+        "division": "Khulna Division",
+        "specialization": "STEM",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Army_University_of_Science_%26_Technology,_Khulna"
+      },
+      {
+        "name": "Bangladesh Army University of Science and Technology, Saidpur",
+        "acronym": "BAUST, Saidpur",
+        "established": "2015",
+        "location": "Saidpur",
+        "division": "Rangpur Division",
+        "specialization": "STEM",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Army_University_of_Science_and_Technology,_Saidpur"
+      },
+      {
+        "name": "CCN University of Science & Technology",
+        "acronym": "CCNUST",
+        "established": "2015",
+        "location": "Comilla",
+        "division": "Chittagong Division",
+        "specialization": "STEM",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/CCN_University_of_Science_%26_Technology"
+      },
+      {
+        "name": "Central University of Science and Technology",
+        "acronym": "CUST",
+        "established": "2016",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "STEM",
+        "section": "Science and technology",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Central_University_of_Science_and_Technology"
+      }
+    ],
+    "Engineering": [
+      {
+        "name": "Bangladesh University of Engineering & Technology",
+        "acronym": "BUET",
+        "established": "1962",
+        "location": "Palashi, Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "Engineering",
+        "phd_granting": "Yes",
+        "section": "Engineering",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_University_of_Engineering_%26_Technology"
+      },
+      {
+        "name": "Rajshahi University of Engineering & Technology",
+        "acronym": "RUET",
+        "established": "2003",
+        "location": "Motihar, Rajshahi",
+        "division": "Rajshahi Division",
+        "specialization": "Engineering",
+        "phd_granting": "Yes",
+        "section": "Engineering",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Rajshahi_University_of_Engineering_%26_Technology"
+      },
+      {
+        "name": "Khulna University of Engineering & Technology",
+        "acronym": "KUET",
+        "established": "2003",
+        "location": "Daulatpur, Khulna",
+        "division": "Khulna Division",
+        "specialization": "Engineering",
+        "phd_granting": "Yes",
+        "section": "Engineering",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Khulna_University_of_Engineering_%26_Technology"
+      },
+      {
+        "name": "Chittagong University of Engineering & Technology",
+        "acronym": "CUET",
+        "established": "2003",
+        "location": "Raozan, Chittagong",
+        "division": "Chittagong Division",
+        "specialization": "Engineering",
+        "phd_granting": "Yes",
+        "section": "Engineering",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Chittagong_University_of_Engineering_%26_Technology"
+      },
+      {
+        "name": "Dhaka University of Engineering & Technology",
+        "acronym": "DUET",
+        "established": "2003",
+        "location": "Joydebpur, Gazipur",
+        "division": "Dhaka Division",
+        "specialization": "Engineering",
+        "phd_granting": "Yes",
+        "section": "Engineering",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Dhaka_University_of_Engineering_%26_Technology"
+      },
+      {
+        "name": "Military Institute of Science and Technology",
+        "acronym": "MIST",
+        "established": "1998",
+        "location": "Mirpur Cantonment, Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "Engineering",
+        "phd_granting": "Yes",
+        "section": "Engineering",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Military_Institute_of_Science_and_Technology"
+      }
+    ],
+    "Agricultural": [
+      {
+        "name": "Bangladesh Agricultural University",
+        "acronym": "BAU",
+        "established": "1961",
+        "location": "Kotwali, Mymensingh",
+        "division": "Mymensingh Division",
+        "specialization": "Agricultural Science",
+        "phd_granting": "Yes",
+        "section": "Agricultural",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Agricultural_University"
+      },
+      {
+        "name": "Gazipur Agricultural University",
+        "acronym": "GAU",
+        "established": "1998",
+        "location": "Salna, Gazipur",
+        "division": "Dhaka Division",
+        "specialization": "Agricultural Science",
+        "phd_granting": "Yes",
+        "section": "Agricultural",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Gazipur_Agricultural_University"
+      },
+      {
+        "name": "Sher-e-Bangla Agricultural University",
+        "acronym": "SBAU",
+        "established": "2001",
+        "location": "Sher e Bangla Nagar, Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "Agricultural Science",
+        "phd_granting": "Yes",
+        "section": "Agricultural",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Sher-e-Bangla_Agricultural_University"
+      },
+      {
+        "name": "Sylhet Agricultural University",
+        "acronym": "SAU",
+        "established": "2006",
+        "location": "Uttar Baluchar, Sylhet",
+        "division": "Sylhet Division",
+        "specialization": "Agricultural Science",
+        "phd_granting": "Yes",
+        "section": "Agricultural",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Sylhet_Agricultural_University"
+      },
+      {
+        "name": "Khulna Agricultural University",
+        "acronym": "KAU",
+        "established": "2019",
+        "location": "Daulatpur, Khulna",
+        "division": "Khulna Division",
+        "specialization": "Agricultural science",
+        "phd_granting": "No",
+        "section": "Agricultural",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Khulna_Agricultural_University"
+      },
+      {
+        "name": "Habiganj Agricultural University",
+        "acronym": "HAU",
+        "established": "2020",
+        "location": "Habiganj Sadar, Habiganj",
+        "division": "Sylhet Division",
+        "specialization": "Agricultural science",
+        "phd_granting": "No",
+        "section": "Agricultural",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Habiganj_Agricultural_University"
+      },
+      {
+        "name": "Kurigram Agricultural University",
+        "acronym": "KuriAU",
+        "established": "2022",
+        "location": "Kurigram, Kurigram",
+        "division": "Rangpur Division",
+        "specialization": "Agricultural science",
+        "phd_granting": "No",
+        "section": "Agricultural",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Kurigram_Agricultural_University"
+      },
+      {
+        "name": "Shariatpur Agriculture University",
+        "acronym": "ShAU",
+        "established": "2021",
+        "location": "Shariatpur, Sadar\tShariatpur",
+        "division": "Dhaka Division",
+        "specialization": "Agricultural science",
+        "phd_granting": "No",
+        "section": "Agricultural",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Shariatpur_Agriculture_University"
+      }
+    ],
+    "Medical": [
+      {
+        "name": "Bangladesh Medical University",
+        "acronym": "BMU",
+        "established": "1998",
+        "location": "Shabagh, Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "Medical",
+        "phd_granting": "Yes",
+        "section": "Medical",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Medical_University"
+      },
+      {
+        "name": "Chittagong Medical University",
+        "acronym": "CMU",
+        "established": "2016",
+        "location": "Salimpur, Chittagong",
+        "division": "Chittagong Division",
+        "specialization": "Medical",
+        "phd_granting": "No",
+        "section": "Medical",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Chittagong_Medical_University"
+      },
+      {
+        "name": "Rajshahi Medical University",
+        "acronym": "RMU",
+        "established": "2017",
+        "location": "Rajpara, Rajshahi",
+        "division": "Rajshahi Division",
+        "specialization": "Medical",
+        "phd_granting": "No",
+        "section": "Medical",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Rajshahi_Medical_University"
+      },
+      {
+        "name": "Sylhet Medical University",
+        "acronym": "SMU",
+        "established": "2018",
+        "location": "Ambarkhana, Sylhet",
+        "division": "Sylhet Division",
+        "specialization": "Medical",
+        "phd_granting": "No",
+        "section": "Medical",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Sylhet_Medical_University"
+      },
+      {
+        "name": "Khulna Medical University",
+        "acronym": "KMU",
+        "established": "2020",
+        "location": "Labanchara, Khulna",
+        "division": "Khulna Division",
+        "specialization": "Medical",
+        "phd_granting": "No",
+        "section": "Medical",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Khulna_Medical_University"
+      }
+    ],
+    "Other specialized": [
+      {
+        "name": "Chittagong Veterinary and Animal Sciences University",
+        "acronym": "CVASU",
+        "established": "2006",
+        "location": "Jhautala, Chittagong",
+        "division": "Chittagong Division",
+        "specialization": "Veterinary Science",
+        "phd_granting": "Yes",
+        "section": "Other specialized",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Chittagong_Veterinary_and_Animal_Sciences_University"
+      },
+      {
+        "name": "Bangladesh University of Textiles",
+        "acronym": "BUTEX",
+        "established": "2010",
+        "location": "Tejgaon Industrial area, Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "Textile Engineering",
+        "phd_granting": "Yes",
+        "section": "Other specialized",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_University_of_Textiles"
+      },
+      {
+        "name": "Bangladesh Maritime University",
+        "acronym": "BMU",
+        "established": "2013",
+        "location": "Sitakunda, Chittagong",
+        "division": "Chittagong Division",
+        "specialization": "Maritime transport",
+        "phd_granting": "No",
+        "section": "Other specialized",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Maritime_University"
+      },
+      {
+        "name": "Bangladesh Digital University",
+        "acronym": "BDU",
+        "established": "2018",
+        "location": "Kaliakoir, Gazipur",
+        "division": "Dhaka Division",
+        "specialization": "ICT in education",
+        "phd_granting": "No",
+        "section": "Other specialized",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Digital_University"
+      },
+      {
+        "name": "Aviation and Aerospace University Bangladesh",
+        "acronym": "AAUB",
+        "established": "2019",
+        "location": "Lalmonirhat Sadar, Lalmonirhat",
+        "division": "Rangpur Division",
+        "specialization": "Aeronautical Science",
+        "phd_granting": "Yes",
+        "section": "Other specialized",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Aviation_and_Aerospace_University_Bangladesh"
+      }
+    ],
+    "Off-campus": [
+      {
+        "name": "National University Bangladesh",
+        "acronym": "NU",
+        "established": "1992",
+        "location": "Joydebpur, Gazipur",
+        "specialization": "General",
+        "phd_granting": "Yes",
+        "section": "Off-campus",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/National_University,_Bangladesh"
+      },
+      {
+        "name": "Bangladesh Open University",
+        "acronym": "BOU",
+        "established": "1992",
+        "location": "Joydebpur, Gazipur",
+        "specialization": "General",
+        "phd_granting": "Yes",
+        "section": "Off-campus",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Open_University"
+      },
+      {
+        "name": "Islamic Arabic University",
+        "acronym": "IAU",
+        "established": "2013",
+        "location": "Mohammadpur, Dhaka",
+        "specialization": "Islamic",
+        "phd_granting": "No",
+        "section": "Off-campus",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Islamic_Arabic_University"
+      }
+    ],
+    "Affiliate institutes": [
+      {
+        "name": "Sylhet Engineering College",
+        "acronym": "SEC",
+        "established": "2007",
+        "location": "Tilagarh, Sylhet",
+        "division": "Sylhet Division",
+        "specialization": "Engineering",
+        "phd_granting": "No",
+        "section": "Affiliate institutes",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Sylhet_Engineering_College"
+      },
+      {
+        "name": "Mymensingh Engineering College",
+        "acronym": "MEC",
+        "established": "2007",
+        "location": "Kotwali, Mymensingh",
+        "division": "Mymensingh Division",
+        "specialization": "Engineering",
+        "phd_granting": "No",
+        "section": "Affiliate institutes",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Mymensingh_Engineering_College"
+      },
+      {
+        "name": "Faridpur Engineering College",
+        "acronym": "FEC",
+        "established": "2010",
+        "location": "Kotwali, Faridpur",
+        "division": "Dhaka Division",
+        "specialization": "Engineering",
+        "phd_granting": "No",
+        "section": "Affiliate institutes",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Faridpur_Engineering_College"
+      },
+      {
+        "name": "Barisal Engineering College",
+        "acronym": "BEC",
+        "established": "2018",
+        "location": "Kotwali, Barisal",
+        "division": "Barisal Division",
+        "specialization": "Engineering",
+        "phd_granting": "No",
+        "section": "Affiliate institutes",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Barisal_Engineering_College"
+      },
+      {
+        "name": "Textile Engineering College, Chittagong",
+        "acronym": "CTEC",
+        "established": "2006",
+        "location": "Mirsharai, Chittagong",
+        "division": "Chittagong Division",
+        "specialization": "Textile Engineering",
+        "phd_granting": "No",
+        "section": "Affiliate institutes",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Textile_Engineering_College,_Chittagong"
+      },
+      {
+        "name": "Pabna Textile Engineering College",
+        "acronym": "PTEC",
+        "established": "2006",
+        "location": "Shalgaria. Pabna",
+        "division": "Rajshahi Division",
+        "specialization": "Textile Engineering",
+        "phd_granting": "No",
+        "section": "Affiliate institutes",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Pabna_Textile_Engineering_College"
+      },
+      {
+        "name": "Textile Engineering College, Noakhali",
+        "acronym": "TECN",
+        "established": "2007",
+        "location": "Begumganj, Noakhali",
+        "division": "Chittagong Division",
+        "specialization": "Textile Engineering",
+        "phd_granting": "No",
+        "section": "Affiliate institutes",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Textile_Engineering_College,_Noakhali"
+      },
+      {
+        "name": "Tangail Textile Engineering College",
+        "acronym": "TTEC",
+        "established": "2007",
+        "location": "Kalihati, Tangail",
+        "division": "Dhaka Division",
+        "specialization": "Textile Engineering",
+        "phd_granting": "No",
+        "section": "Affiliate institutes",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Tangail_Textile_Engineering_College"
+      },
+      {
+        "name": "Barishal Textile Engineering College",
+        "acronym": "BTEC",
+        "established": "2010",
+        "location": "C&B Road, Barisal",
+        "division": "Barisal Division",
+        "specialization": "Textile Engineering",
+        "phd_granting": "No",
+        "section": "Affiliate institutes",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Barishal_Textile_Engineering_College"
+      },
+      {
+        "name": "Jhenaidah Textile Engineering College, Jhenaidah",
+        "acronym": "JTEC",
+        "established": "2016",
+        "location": "Aruakandi, Jhenaidah",
+        "division": "Khulna Division",
+        "specialization": "Textile Engineering",
+        "phd_granting": "No",
+        "section": "Affiliate institutes",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Jhenaidah_Textile_Engineering_College,_Jhenaidah"
+      },
+      {
+        "name": "Rangpur Textile Engineering College",
+        "acronym": "RTEC",
+        "established": "2018",
+        "location": "Pirganj, Rangpur",
+        "division": "Rangpur Division",
+        "specialization": "Textile Engineering",
+        "phd_granting": "No",
+        "section": "Affiliate institutes",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Rangpur_Textile_Engineering_College"
+      },
+      {
+        "name": "Gopalganj Textile Engineering College",
+        "acronym": "GTEC",
+        "established": "2021",
+        "location": "Ghonapara, Gopalganj",
+        "division": "Dhaka Division",
+        "specialization": "Textile Engineering",
+        "phd_granting": "No",
+        "section": "Affiliate institutes",
+        "wikipedia_url": "https://en.wikipedia.org/w/index.php?title=Gopalganj_Textile_Engineering_College&action=edit&redlink=1"
+      },
+      {
+        "name": "Jamalpur Textile Engineering College, Jamalpur",
+        "acronym": "JmTEC",
+        "established": "2022",
+        "location": "Melandaha, Jamalpur",
+        "division": "Mymensigh Division",
+        "specialization": "Textile Engineering",
+        "phd_granting": "No",
+        "website": "[link]",
+        "section": "Affiliate institutes",
+        "wikipedia_url": "https://en.wikipedia.org/w/index.php?title=Jamalpur_Textile_Engineering_College&action=edit&redlink=1"
+      }
+    ],
+    "Specialized": [
+      {
+        "name": "Central Women's University",
+        "acronym": "CWU",
+        "established": "1993",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "Women's studies",
+        "section": "Specialized",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Central_Women%27s_University"
+      },
+      {
+        "name": "Shanto-Mariam University of Creative Technology",
+        "acronym": "SMUCT",
+        "established": "2003",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "Creative technology",
+        "section": "Specialized",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Shanto-Mariam_University_of_Creative_Technology"
+      },
+      {
+        "name": "University of Liberal Arts Bangladesh",
+        "acronym": "ULAB",
+        "established": "2004",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "Media studies and journalism",
+        "section": "Specialized",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Liberal_Arts_Bangladesh"
+      },
+      {
+        "name": "Bangladesh University of Health Sciences",
+        "acronym": "BUHS",
+        "established": "2012",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "Health Sciences",
+        "section": "Specialized",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_University_of_Health_Sciences"
+      },
+      {
+        "name": "Exim Bank Agricultural University Bangladesh",
+        "acronym": "EBAUB",
+        "established": "2013",
+        "location": "Chapainawabganj",
+        "division": "Rajshahi Division",
+        "specialization": "Agricultural Science",
+        "section": "Specialized",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Exim_Bank_Agricultural_University_Bangladesh"
+      },
+      {
+        "name": "Bangladesh Army University of Engineering & Technology",
+        "acronym": "BAUET",
+        "established": "2015",
+        "location": "Natore",
+        "division": "Rajshahi Division",
+        "specialization": "Engineering and Technology",
+        "section": "Specialized",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Army_University_of_Engineering_%26_Technology"
+      },
+      {
+        "name": "Tagore University of Creative Arts",
+        "acronym": "TUCA",
+        "established": "2016",
+        "location": "Dhaka",
+        "division": "Dhaka Division",
+        "specialization": "Creative",
+        "section": "Specialized",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Tagore_University_of_Creative_Arts"
+      }
+    ],
+    "International universities": [
+      {
+        "name": "Islamic University of Technology",
+        "acronym": "IUT",
+        "established": "1978",
+        "location": "Gazipur",
+        "specialization": "Engineering and Technology (Muslim students only)",
+        "phd_granting": "Yes",
+        "section": "International universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Islamic_University_of_Technology"
+      },
+      {
+        "name": "Asian University for Women",
+        "acronym": "AUW",
+        "established": "2008",
+        "location": "Chittagong",
+        "specialization": "(Female students only)",
+        "phd_granting": "No",
+        "section": "International universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Asian_University_for_Women"
+      }
+    ],
+    "Proposed universities": [
+      {
+        "name": "Mymensingh University of Engineering and Technology",
+        "acronym": "MUET",
+        "location": "Mymensingh",
+        "division": "Mymensingh Division",
+        "specialization": "Engineering University",
+        "section": "Proposed universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Mymensingh_Engineering_College"
+      },
+      {
+        "name": "Mymensingh Medical University",
+        "acronym": "MMU",
+        "location": "Mymensingh",
+        "division": "Mymensingh Division",
+        "specialization": "Medical University",
+        "section": "Proposed universities",
+        "wikipedia_url": null
+      },
+      {
+        "name": "Thakurgaon University of Science and Technology",
+        "acronym": "TSTU",
+        "location": "Thakurgaon",
+        "division": "Rangpur Division",
+        "specialization": "STEM",
+        "section": "Proposed universities",
+        "wikipedia_url": null
+      },
+      {
+        "name": "Marine Science University of Barisal",
+        "acronym": "MSUB",
+        "location": "Barishal",
+        "division": "Barishal Division",
+        "specialization": "Maritime studies",
+        "section": "Proposed universities",
+        "wikipedia_url": null
+      },
+      {
+        "name": "Michael Madhusudan Cultural University",
+        "acronym": "MMCU",
+        "location": "Jashore",
+        "division": "Khulna Division",
+        "specialization": "Cultural studies",
+        "section": "Proposed universities",
+        "wikipedia_url": null
+      },
+      {
+        "name": "Bangladesh University of Juridical Sciences",
+        "acronym": "BUJS",
+        "specialization": "Legal education",
+        "section": "Proposed universities",
+        "wikipedia_url": null
+      },
+      {
+        "name": "Bangladesh University of Educational Planning and Administration",
+        "acronym": "BUEdPA",
+        "specialization": "Educational management",
+        "section": "Proposed universities",
+        "wikipedia_url": null
+      }
+    ],
+    "Additional Universities": [
+      {
+        "name": "University Grants Commission",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/University_Grants_Commission_of_Bangladesh",
+        "source": "content_links"
+      },
+      {
+        "name": "University Grants Commission of Bangladesh",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/University_Grants_Commission_of_Bangladesh",
+        "source": "content_links"
+      },
+      {
+        "name": "University of Barishal",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Barishal",
+        "source": "content_links"
+      },
+      {
+        "name": "Chittagong University",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Chittagong",
+        "source": "content_links"
+      },
+      {
+        "name": "National University of Bangladesh",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/National_University_of_Bangladesh",
+        "source": "content_links"
+      },
+      {
+        "name": "Open University of Bangladesh",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Open_University",
+        "source": "content_links"
+      },
+      {
+        "name": "Bangladesh University of Engineering and Technology",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_University_of_Engineering_and_Technology",
+        "source": "content_links"
+      },
+      {
+        "name": "Dhaka University",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Dhaka_University",
+        "source": "content_links"
+      },
+      {
+        "name": "Jessore University of Science & Technology",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Jessore_University_of_Science_%26_Technology",
+        "source": "content_links"
+      },
+      {
+        "name": "Pabna University of Science & Technology",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Pabna_University_of_Science_%26_Technology",
+        "source": "content_links"
+      },
+      {
+        "name": "Rajshahi University of Engineering and Technology",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Rajshahi_University_of_Engineering_and_Technology",
+        "source": "content_links"
+      },
+      {
+        "name": "Begum Rokeya University, Rangpur",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Begum_Rokeya_University,_Rangpur",
+        "source": "content_links"
+      },
+      {
+        "name": "University of Thakurgaon",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Thakurgaon_University",
+        "source": "content_links"
+      },
+      {
+        "name": "University of Science and Technology Chittagong",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Science_and_Technology_Chittagong",
+        "source": "content_links"
+      },
+      {
+        "name": "BRAC University",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/BRAC_University",
+        "source": "content_links"
+      },
+      {
+        "name": "Darul Ihsan University",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Darul_Ihsan_University",
+        "source": "content_links"
+      },
+      {
+        "name": "Eastern University",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Eastern_University_(Bangladesh)",
+        "source": "content_links"
+      },
+      {
+        "name": "Gono University",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Gono_University",
+        "source": "content_links"
+      },
+      {
+        "name": "Stamford University",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Stamford_University_Bangladesh",
+        "source": "content_links"
+      },
+      {
+        "name": "University of Asia Pacific",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Asia_Pacific",
+        "source": "content_links"
+      },
+      {
+        "name": "University of South Asia",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_South_Asia_(Bangladesh)",
+        "source": "content_links"
+      },
+      {
+        "name": "North Western University",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/North_Western_University,_Bangladesh",
+        "source": "content_links"
+      },
+      {
+        "name": "Northern University",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Northern_University_of_Business_and_Technology_Khulna",
+        "source": "content_links"
+      },
+      {
+        "name": "Teesta University",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Teesta_University",
+        "source": "content_links"
+      },
+      {
+        "name": "Metropolitan University, Sylhet",
+        "section": "Additional Universities",
+        "wikipedia_url": "https://en.wikipedia.org/wiki/Metropolitan_University,_Sylhet",
+        "source": "content_links"
+      }
+    ]
+  },
+  "all_universities": [
+    {
+      "name": "University of Dhaka",
+      "acronym": "DU",
+      "established": "1921",
+      "location": "Shabagh, Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "phd_granting": "Yes",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Dhaka"
+    },
+    {
+      "name": "University of Rajshahi",
+      "acronym": "RU",
+      "established": "1953",
+      "location": "Motihar, Rajshahi",
+      "division": "Rajshahi Division",
+      "specialization": "General",
+      "phd_granting": "Yes",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Rajshahi"
+    },
+    {
+      "name": "University of Chittagong",
+      "acronym": "CU",
+      "established": "1966",
+      "location": "Hathazari, Chattogram",
+      "division": "Chattogram Division",
+      "specialization": "General",
+      "phd_granting": "Yes",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Chittagong"
+    },
+    {
+      "name": "Jahangirnagar University",
+      "acronym": "JU",
+      "established": "1970",
+      "location": "Savar, Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "phd_granting": "Yes",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Jahangirnagar_University"
+    },
+    {
+      "name": "Islamic University, Bangladesh",
+      "acronym": "IU",
+      "established": "1979",
+      "location": "Kushtia Sadar, Kushtia",
+      "division": "Khulna Division",
+      "specialization": "General",
+      "phd_granting": "Yes",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Islamic_University,_Bangladesh"
+    },
+    {
+      "name": "Khulna University",
+      "acronym": "KU",
+      "established": "1991",
+      "location": "Harintana, Khulna",
+      "division": "Khulna Division",
+      "specialization": "General",
+      "phd_granting": "Yes",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Khulna_University"
+    },
+    {
+      "name": "Jagannath University",
+      "acronym": "JnU",
+      "established": "2005",
+      "location": "Sadar Ghat, Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "phd_granting": "Yes",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Jagannath_University"
+    },
+    {
+      "name": "Comilla University",
+      "acronym": "CoU",
+      "established": "2006",
+      "location": "Sadar Dakkhin, Comilla",
+      "division": "Chittagong Division",
+      "specialization": "General",
+      "phd_granting": "No",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Comilla_University"
+    },
+    {
+      "name": "Jatiya Kabi Kazi Nazrul Islam University",
+      "acronym": "JKKNIU",
+      "established": "2006",
+      "location": "Trishal, Mymensingh",
+      "division": "Mymensingh Division",
+      "specialization": "General",
+      "phd_granting": "Yes",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Jatiya_Kabi_Kazi_Nazrul_Islam_University"
+    },
+    {
+      "name": "Bangladesh University of Professionals",
+      "acronym": "BUP",
+      "established": "2008",
+      "location": "Mirpur, Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "phd_granting": "Yes",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_University_of_Professionals"
+    },
+    {
+      "name": "Begum Rokeya University",
+      "acronym": "BRUR",
+      "established": "2008",
+      "location": "Kotwali",
+      "division": "Rangpur Division",
+      "specialization": "General",
+      "phd_granting": "Yes",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Begum_Rokeya_University"
+    },
+    {
+      "name": "University of Barisal",
+      "acronym": "BU",
+      "established": "2011",
+      "location": "Bandar, Barisal",
+      "division": "Barisal Division",
+      "specialization": "General",
+      "phd_granting": "No",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Barisal"
+    },
+    {
+      "name": "Rabindra University, Bangladesh",
+      "acronym": "RUB",
+      "established": "2017",
+      "location": "Shahjadpur, Sirajganj",
+      "division": "Rajshahi Division",
+      "specialization": "General",
+      "phd_granting": "No",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Rabindra_University,_Bangladesh"
+    },
+    {
+      "name": "Netrokona University",
+      "acronym": "NkU",
+      "established": "2018",
+      "location": "Netrokona Sadar, Netrokona",
+      "division": "Mymensingh Division",
+      "specialization": "General",
+      "phd_granting": "No",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Netrokona_University"
+    },
+    {
+      "name": "Kishoreganj University",
+      "acronym": "KgU",
+      "established": "2020",
+      "location": "Kishoreganj Sadar, Kishoreganj",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "phd_granting": "No",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Kishoreganj_University"
+    },
+    {
+      "name": "Meherpur University",
+      "acronym": "MU",
+      "established": "2022",
+      "location": "Mujibnagar, Meherpur",
+      "division": "Khulna Division",
+      "specialization": "General",
+      "phd_granting": "No",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Meherpur_University"
+    },
+    {
+      "name": "Thakurgaon University",
+      "acronym": "TU",
+      "established": "2022",
+      "location": "Thakurgaon Sadar, Thakurgaon",
+      "division": "Rangpur Division",
+      "specialization": "General",
+      "phd_granting": "No",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Thakurgaon_University"
+    },
+    {
+      "name": "Naogaon University",
+      "acronym": "NgU",
+      "established": "2022",
+      "location": "Noagaon Sadar, Naogaon",
+      "division": "Rajshahi Division",
+      "specialization": "General",
+      "phd_granting": "No",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Naogaon_University"
+    },
+    {
+      "name": "Shahjalal University of Science and Technology",
+      "acronym": "SUST",
+      "established": "1986",
+      "location": "Kumargaon, Sylhet",
+      "division": "Sylhet Division",
+      "specialization": "STEM",
+      "phd_granting": "Yes",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Shahjalal_University_of_Science_and_Technology"
+    },
+    {
+      "name": "Hajee Mohammad Danesh Science & Technology University",
+      "acronym": "HSTU",
+      "established": "1999",
+      "location": "Kotwali, Dinajpur",
+      "division": "Rangpur Division",
+      "specialization": "STEM",
+      "phd_granting": "Yes",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Hajee_Mohammad_Danesh_Science_%26_Technology_University"
+    },
+    {
+      "name": "Mawlana Bhashani Science and Technology University",
+      "acronym": "MBSTU",
+      "established": "1999",
+      "location": "Tangail Sadar, Tangail",
+      "division": "Dhaka Division",
+      "specialization": "STEM",
+      "phd_granting": "Yes",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Mawlana_Bhashani_Science_and_Technology_University"
+    },
+    {
+      "name": "Patuakhali Science and Technology University",
+      "acronym": "PSTU",
+      "established": "2000",
+      "location": "Dumki, Patuakhali",
+      "division": "Barisal Division",
+      "specialization": "STEM",
+      "phd_granting": "Yes",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Patuakhali_Science_and_Technology_University"
+    },
+    {
+      "name": "Noakhali Science and Technology University",
+      "acronym": "NSTU",
+      "established": "2006",
+      "location": "Sudharam, Noakhali",
+      "division": "Chittagong Division",
+      "specialization": "STEM",
+      "phd_granting": "Yes",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Noakhali_Science_and_Technology_University"
+    },
+    {
+      "name": "Jashore University of Science and Technology",
+      "acronym": "JUST",
+      "established": "2007",
+      "location": "Kotwali, Jessore",
+      "division": "Khulna Division",
+      "specialization": "STEM",
+      "phd_granting": "Yes",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Jessore_University_of_Science_%26_Technology"
+    },
+    {
+      "name": "Pabna University of Science and Technology",
+      "acronym": "PUST",
+      "established": "2008",
+      "location": "Kotwali, Pabna",
+      "division": "Rajshahi Division",
+      "specialization": "STEM",
+      "phd_granting": "Yes",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Pabna_University_of_Science_and_Technology"
+    },
+    {
+      "name": "Gopalganj Science and Technology University",
+      "acronym": "GSTU",
+      "established": "2011",
+      "location": "Gopalganj Sadar, Gopalganj",
+      "division": "Dhaka Division",
+      "specialization": "STEM",
+      "phd_granting": "No",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Gopalganj_Science_and_Technology_University"
+    },
+    {
+      "name": "Rangamati Science and Technology University",
+      "acronym": "RmSTU",
+      "established": "2014",
+      "location": "Kotwali, Rangamati",
+      "division": "Chittagong Division",
+      "specialization": "STEM",
+      "phd_granting": "No",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Rangamati_Science_and_Technology_University"
+    },
+    {
+      "name": "Jamalpur Science and Technology University",
+      "acronym": "JSTU",
+      "established": "2017",
+      "location": "Melandaha, Jamalpur",
+      "division": "Mymensingh Division",
+      "specialization": "STEM",
+      "phd_granting": "No",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Jamalpur_Science_and_Technology_University"
+    },
+    {
+      "name": "Chandpur Science and Technology University",
+      "acronym": "CSTU",
+      "established": "2020",
+      "location": "Chandpur Sadar, Chandpur",
+      "division": "Chittagong Division",
+      "specialization": "STEM",
+      "phd_granting": "No",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Chandpur_Science_and_Technology_University"
+    },
+    {
+      "name": "Sunamganj Science and Technology University",
+      "acronym": "SSTU",
+      "established": "2020",
+      "location": "Shantiganj, Sunamganj",
+      "division": "Sylhet Division",
+      "specialization": "STEM",
+      "phd_granting": "No",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Sunamganj_Science_and_Technology_University"
+    },
+    {
+      "name": "Bogura Science and Technology University",
+      "acronym": "BSTU",
+      "established": "2001",
+      "location": "Bogura Sadar, Bogura",
+      "division": "Rajshahi Division",
+      "specialization": "STEM",
+      "phd_granting": "No",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Bogura_Science_and_Technology_University"
+    },
+    {
+      "name": "Lakshmipur Science and Technology University",
+      "acronym": "LSTU",
+      "established": "2020",
+      "location": "Lakshmipur Sadar, Lakshmipur",
+      "division": "Chittagong Division",
+      "specialization": "STEM",
+      "phd_granting": "No",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Lakshmipur_Science_and_Technology_University"
+    },
+    {
+      "name": "Pirojpur Science and Technology University",
+      "acronym": "PpSTU",
+      "established": "2022",
+      "location": "Pirojpur Sadar, Pirojpur",
+      "division": "Barishal Division",
+      "specialization": "STEM",
+      "phd_granting": "No",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Pirojpur_Science_and_Technology_University"
+    },
+    {
+      "name": "Satkhira University of Science and Technology",
+      "acronym": "SaUST",
+      "established": "2023",
+      "location": "Satkhira Sadar, Satkhira",
+      "division": "Khulna Division",
+      "specialization": "STEM",
+      "phd_granting": "No",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Satkhira_University_of_Science_and_Technology"
+    },
+    {
+      "name": "Narayanganj Science and Technology University",
+      "acronym": "NGSTU",
+      "established": "2023",
+      "location": "Narayanganj Sadar, Narayanganj",
+      "division": "Dhaka Division",
+      "specialization": "STEM",
+      "phd_granting": "No",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Narayanganj_Science_and_Technology_University"
+    },
+    {
+      "name": "Bangladesh University of Engineering & Technology",
+      "acronym": "BUET",
+      "established": "1962",
+      "location": "Palashi, Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "Engineering",
+      "phd_granting": "Yes",
+      "section": "Engineering",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_University_of_Engineering_%26_Technology"
+    },
+    {
+      "name": "Rajshahi University of Engineering & Technology",
+      "acronym": "RUET",
+      "established": "2003",
+      "location": "Motihar, Rajshahi",
+      "division": "Rajshahi Division",
+      "specialization": "Engineering",
+      "phd_granting": "Yes",
+      "section": "Engineering",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Rajshahi_University_of_Engineering_%26_Technology"
+    },
+    {
+      "name": "Khulna University of Engineering & Technology",
+      "acronym": "KUET",
+      "established": "2003",
+      "location": "Daulatpur, Khulna",
+      "division": "Khulna Division",
+      "specialization": "Engineering",
+      "phd_granting": "Yes",
+      "section": "Engineering",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Khulna_University_of_Engineering_%26_Technology"
+    },
+    {
+      "name": "Chittagong University of Engineering & Technology",
+      "acronym": "CUET",
+      "established": "2003",
+      "location": "Raozan, Chittagong",
+      "division": "Chittagong Division",
+      "specialization": "Engineering",
+      "phd_granting": "Yes",
+      "section": "Engineering",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Chittagong_University_of_Engineering_%26_Technology"
+    },
+    {
+      "name": "Dhaka University of Engineering & Technology",
+      "acronym": "DUET",
+      "established": "2003",
+      "location": "Joydebpur, Gazipur",
+      "division": "Dhaka Division",
+      "specialization": "Engineering",
+      "phd_granting": "Yes",
+      "section": "Engineering",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Dhaka_University_of_Engineering_%26_Technology"
+    },
+    {
+      "name": "Military Institute of Science and Technology",
+      "acronym": "MIST",
+      "established": "1998",
+      "location": "Mirpur Cantonment, Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "Engineering",
+      "phd_granting": "Yes",
+      "section": "Engineering",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Military_Institute_of_Science_and_Technology"
+    },
+    {
+      "name": "Bangladesh Agricultural University",
+      "acronym": "BAU",
+      "established": "1961",
+      "location": "Kotwali, Mymensingh",
+      "division": "Mymensingh Division",
+      "specialization": "Agricultural Science",
+      "phd_granting": "Yes",
+      "section": "Agricultural",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Agricultural_University"
+    },
+    {
+      "name": "Gazipur Agricultural University",
+      "acronym": "GAU",
+      "established": "1998",
+      "location": "Salna, Gazipur",
+      "division": "Dhaka Division",
+      "specialization": "Agricultural Science",
+      "phd_granting": "Yes",
+      "section": "Agricultural",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Gazipur_Agricultural_University"
+    },
+    {
+      "name": "Sher-e-Bangla Agricultural University",
+      "acronym": "SBAU",
+      "established": "2001",
+      "location": "Sher e Bangla Nagar, Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "Agricultural Science",
+      "phd_granting": "Yes",
+      "section": "Agricultural",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Sher-e-Bangla_Agricultural_University"
+    },
+    {
+      "name": "Sylhet Agricultural University",
+      "acronym": "SAU",
+      "established": "2006",
+      "location": "Uttar Baluchar, Sylhet",
+      "division": "Sylhet Division",
+      "specialization": "Agricultural Science",
+      "phd_granting": "Yes",
+      "section": "Agricultural",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Sylhet_Agricultural_University"
+    },
+    {
+      "name": "Khulna Agricultural University",
+      "acronym": "KAU",
+      "established": "2019",
+      "location": "Daulatpur, Khulna",
+      "division": "Khulna Division",
+      "specialization": "Agricultural science",
+      "phd_granting": "No",
+      "section": "Agricultural",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Khulna_Agricultural_University"
+    },
+    {
+      "name": "Habiganj Agricultural University",
+      "acronym": "HAU",
+      "established": "2020",
+      "location": "Habiganj Sadar, Habiganj",
+      "division": "Sylhet Division",
+      "specialization": "Agricultural science",
+      "phd_granting": "No",
+      "section": "Agricultural",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Habiganj_Agricultural_University"
+    },
+    {
+      "name": "Kurigram Agricultural University",
+      "acronym": "KuriAU",
+      "established": "2022",
+      "location": "Kurigram, Kurigram",
+      "division": "Rangpur Division",
+      "specialization": "Agricultural science",
+      "phd_granting": "No",
+      "section": "Agricultural",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Kurigram_Agricultural_University"
+    },
+    {
+      "name": "Shariatpur Agriculture University",
+      "acronym": "ShAU",
+      "established": "2021",
+      "location": "Shariatpur, Sadar\tShariatpur",
+      "division": "Dhaka Division",
+      "specialization": "Agricultural science",
+      "phd_granting": "No",
+      "section": "Agricultural",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Shariatpur_Agriculture_University"
+    },
+    {
+      "name": "Bangladesh Medical University",
+      "acronym": "BMU",
+      "established": "1998",
+      "location": "Shabagh, Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "Medical",
+      "phd_granting": "Yes",
+      "section": "Medical",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Medical_University"
+    },
+    {
+      "name": "Chittagong Medical University",
+      "acronym": "CMU",
+      "established": "2016",
+      "location": "Salimpur, Chittagong",
+      "division": "Chittagong Division",
+      "specialization": "Medical",
+      "phd_granting": "No",
+      "section": "Medical",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Chittagong_Medical_University"
+    },
+    {
+      "name": "Rajshahi Medical University",
+      "acronym": "RMU",
+      "established": "2017",
+      "location": "Rajpara, Rajshahi",
+      "division": "Rajshahi Division",
+      "specialization": "Medical",
+      "phd_granting": "No",
+      "section": "Medical",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Rajshahi_Medical_University"
+    },
+    {
+      "name": "Sylhet Medical University",
+      "acronym": "SMU",
+      "established": "2018",
+      "location": "Ambarkhana, Sylhet",
+      "division": "Sylhet Division",
+      "specialization": "Medical",
+      "phd_granting": "No",
+      "section": "Medical",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Sylhet_Medical_University"
+    },
+    {
+      "name": "Khulna Medical University",
+      "acronym": "KMU",
+      "established": "2020",
+      "location": "Labanchara, Khulna",
+      "division": "Khulna Division",
+      "specialization": "Medical",
+      "phd_granting": "No",
+      "section": "Medical",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Khulna_Medical_University"
+    },
+    {
+      "name": "Chittagong Veterinary and Animal Sciences University",
+      "acronym": "CVASU",
+      "established": "2006",
+      "location": "Jhautala, Chittagong",
+      "division": "Chittagong Division",
+      "specialization": "Veterinary Science",
+      "phd_granting": "Yes",
+      "section": "Other specialized",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Chittagong_Veterinary_and_Animal_Sciences_University"
+    },
+    {
+      "name": "Bangladesh University of Textiles",
+      "acronym": "BUTEX",
+      "established": "2010",
+      "location": "Tejgaon Industrial area, Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "Textile Engineering",
+      "phd_granting": "Yes",
+      "section": "Other specialized",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_University_of_Textiles"
+    },
+    {
+      "name": "Bangladesh Maritime University",
+      "acronym": "BMU",
+      "established": "2013",
+      "location": "Sitakunda, Chittagong",
+      "division": "Chittagong Division",
+      "specialization": "Maritime transport",
+      "phd_granting": "No",
+      "section": "Other specialized",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Maritime_University"
+    },
+    {
+      "name": "Bangladesh Digital University",
+      "acronym": "BDU",
+      "established": "2018",
+      "location": "Kaliakoir, Gazipur",
+      "division": "Dhaka Division",
+      "specialization": "ICT in education",
+      "phd_granting": "No",
+      "section": "Other specialized",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Digital_University"
+    },
+    {
+      "name": "Aviation and Aerospace University Bangladesh",
+      "acronym": "AAUB",
+      "established": "2019",
+      "location": "Lalmonirhat Sadar, Lalmonirhat",
+      "division": "Rangpur Division",
+      "specialization": "Aeronautical Science",
+      "phd_granting": "Yes",
+      "section": "Other specialized",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Aviation_and_Aerospace_University_Bangladesh"
+    },
+    {
+      "name": "National University Bangladesh",
+      "acronym": "NU",
+      "established": "1992",
+      "location": "Joydebpur, Gazipur",
+      "specialization": "General",
+      "phd_granting": "Yes",
+      "section": "Off-campus",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/National_University,_Bangladesh"
+    },
+    {
+      "name": "Bangladesh Open University",
+      "acronym": "BOU",
+      "established": "1992",
+      "location": "Joydebpur, Gazipur",
+      "specialization": "General",
+      "phd_granting": "Yes",
+      "section": "Off-campus",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Open_University"
+    },
+    {
+      "name": "Islamic Arabic University",
+      "acronym": "IAU",
+      "established": "2013",
+      "location": "Mohammadpur, Dhaka",
+      "specialization": "Islamic",
+      "phd_granting": "No",
+      "section": "Off-campus",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Islamic_Arabic_University"
+    },
+    {
+      "name": "Sylhet Engineering College",
+      "acronym": "SEC",
+      "established": "2007",
+      "location": "Tilagarh, Sylhet",
+      "division": "Sylhet Division",
+      "specialization": "Engineering",
+      "phd_granting": "No",
+      "section": "Affiliate institutes",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Sylhet_Engineering_College"
+    },
+    {
+      "name": "Mymensingh Engineering College",
+      "acronym": "MEC",
+      "established": "2007",
+      "location": "Kotwali, Mymensingh",
+      "division": "Mymensingh Division",
+      "specialization": "Engineering",
+      "phd_granting": "No",
+      "section": "Affiliate institutes",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Mymensingh_Engineering_College"
+    },
+    {
+      "name": "Faridpur Engineering College",
+      "acronym": "FEC",
+      "established": "2010",
+      "location": "Kotwali, Faridpur",
+      "division": "Dhaka Division",
+      "specialization": "Engineering",
+      "phd_granting": "No",
+      "section": "Affiliate institutes",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Faridpur_Engineering_College"
+    },
+    {
+      "name": "Barisal Engineering College",
+      "acronym": "BEC",
+      "established": "2018",
+      "location": "Kotwali, Barisal",
+      "division": "Barisal Division",
+      "specialization": "Engineering",
+      "phd_granting": "No",
+      "section": "Affiliate institutes",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Barisal_Engineering_College"
+    },
+    {
+      "name": "Textile Engineering College, Chittagong",
+      "acronym": "CTEC",
+      "established": "2006",
+      "location": "Mirsharai, Chittagong",
+      "division": "Chittagong Division",
+      "specialization": "Textile Engineering",
+      "phd_granting": "No",
+      "section": "Affiliate institutes",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Textile_Engineering_College,_Chittagong"
+    },
+    {
+      "name": "Pabna Textile Engineering College",
+      "acronym": "PTEC",
+      "established": "2006",
+      "location": "Shalgaria. Pabna",
+      "division": "Rajshahi Division",
+      "specialization": "Textile Engineering",
+      "phd_granting": "No",
+      "section": "Affiliate institutes",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Pabna_Textile_Engineering_College"
+    },
+    {
+      "name": "Textile Engineering College, Noakhali",
+      "acronym": "TECN",
+      "established": "2007",
+      "location": "Begumganj, Noakhali",
+      "division": "Chittagong Division",
+      "specialization": "Textile Engineering",
+      "phd_granting": "No",
+      "section": "Affiliate institutes",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Textile_Engineering_College,_Noakhali"
+    },
+    {
+      "name": "Tangail Textile Engineering College",
+      "acronym": "TTEC",
+      "established": "2007",
+      "location": "Kalihati, Tangail",
+      "division": "Dhaka Division",
+      "specialization": "Textile Engineering",
+      "phd_granting": "No",
+      "section": "Affiliate institutes",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Tangail_Textile_Engineering_College"
+    },
+    {
+      "name": "Barishal Textile Engineering College",
+      "acronym": "BTEC",
+      "established": "2010",
+      "location": "C&B Road, Barisal",
+      "division": "Barisal Division",
+      "specialization": "Textile Engineering",
+      "phd_granting": "No",
+      "section": "Affiliate institutes",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Barishal_Textile_Engineering_College"
+    },
+    {
+      "name": "Jhenaidah Textile Engineering College, Jhenaidah",
+      "acronym": "JTEC",
+      "established": "2016",
+      "location": "Aruakandi, Jhenaidah",
+      "division": "Khulna Division",
+      "specialization": "Textile Engineering",
+      "phd_granting": "No",
+      "section": "Affiliate institutes",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Jhenaidah_Textile_Engineering_College,_Jhenaidah"
+    },
+    {
+      "name": "Rangpur Textile Engineering College",
+      "acronym": "RTEC",
+      "established": "2018",
+      "location": "Pirganj, Rangpur",
+      "division": "Rangpur Division",
+      "specialization": "Textile Engineering",
+      "phd_granting": "No",
+      "section": "Affiliate institutes",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Rangpur_Textile_Engineering_College"
+    },
+    {
+      "name": "Gopalganj Textile Engineering College",
+      "acronym": "GTEC",
+      "established": "2021",
+      "location": "Ghonapara, Gopalganj",
+      "division": "Dhaka Division",
+      "specialization": "Textile Engineering",
+      "phd_granting": "No",
+      "section": "Affiliate institutes",
+      "wikipedia_url": "https://en.wikipedia.org/w/index.php?title=Gopalganj_Textile_Engineering_College&action=edit&redlink=1"
+    },
+    {
+      "name": "Jamalpur Textile Engineering College, Jamalpur",
+      "acronym": "JmTEC",
+      "established": "2022",
+      "location": "Melandaha, Jamalpur",
+      "division": "Mymensigh Division",
+      "specialization": "Textile Engineering",
+      "phd_granting": "No",
+      "website": "[link]",
+      "section": "Affiliate institutes",
+      "wikipedia_url": "https://en.wikipedia.org/w/index.php?title=Jamalpur_Textile_Engineering_College&action=edit&redlink=1"
+    },
+    {
+      "name": "International University of Business Agriculture and Technology",
+      "acronym": "IUBAT",
+      "established": "1992",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/International_University_of_Business_Agriculture_and_Technology"
+    },
+    {
+      "name": "North South University",
+      "acronym": "NSU",
+      "established": "1992",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/North_South_University"
+    },
+    {
+      "name": "Independent University, Bangladesh",
+      "acronym": "IUB",
+      "established": "1993",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Independent_University,_Bangladesh"
+    },
+    {
+      "name": "American International University-Bangladesh",
+      "acronym": "AIUB",
+      "established": "1994",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/American_International_University-Bangladesh"
+    },
+    {
+      "name": "Dhaka International University",
+      "acronym": "DIU",
+      "established": "1995",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Dhaka_International_University"
+    },
+    {
+      "name": "International Islamic University, Chittagong",
+      "acronym": "IIUC",
+      "established": "1995",
+      "location": "Chittagong",
+      "division": "Chittagong Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/International_Islamic_University,_Chittagong"
+    },
+    {
+      "name": "Asian University of Bangladesh",
+      "acronym": "AUB",
+      "established": "1996",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Asian_University_of_Bangladesh"
+    },
+    {
+      "name": "East West University",
+      "acronym": "EWU",
+      "established": "1996",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/East_West_University"
+    },
+    {
+      "name": "Gono Bishwabidyalay",
+      "acronym": "GB",
+      "established": "1996",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Gono_Bishwabidyalay"
+    },
+    {
+      "name": "People's University of Bangladesh",
+      "acronym": "PUB",
+      "established": "1996",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/People%27s_University_of_Bangladesh"
+    },
+    {
+      "name": "Queens University",
+      "acronym": "QU",
+      "established": "1996",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Queens_University_(Bangladesh)"
+    },
+    {
+      "name": "University of Asia Pacific (Bangladesh)",
+      "acronym": "UAP",
+      "established": "1996",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Asia_Pacific_(Bangladesh)"
+    },
+    {
+      "name": "Chittagong Independent University (CIU)",
+      "acronym": "CIU",
+      "established": "1999",
+      "location": "Chittagong",
+      "division": "Chittagong Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Chittagong_Independent_University_(CIU)"
+    },
+    {
+      "name": "Bangladesh University",
+      "acronym": "BU",
+      "established": "2001",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_University"
+    },
+    {
+      "name": "BGC Trust University Bangladesh",
+      "acronym": "BGCTUB",
+      "established": "2001",
+      "location": "Chittagong",
+      "division": "Chittagong Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/BGC_Trust_University_Bangladesh"
+    },
+    {
+      "name": "Brac University",
+      "acronym": "BracU",
+      "established": "2001",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Brac_University"
+    },
+    {
+      "name": "Manarat International University",
+      "acronym": "MIU",
+      "established": "2001",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Manarat_International_University"
+    },
+    {
+      "name": "Premier University, Chittagong",
+      "acronym": "PU",
+      "established": "2001",
+      "location": "Chittagong",
+      "division": "Chittagong Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Premier_University,_Chittagong"
+    },
+    {
+      "name": "Southern University, Bangladesh",
+      "acronym": "SUB",
+      "established": "2001",
+      "location": "Chittagong",
+      "division": "Chittagong Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Southern_University,_Bangladesh"
+    },
+    {
+      "name": "Sylhet International University",
+      "acronym": "SIU",
+      "established": "2001",
+      "location": "Sylhet",
+      "division": "Sylhet Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Sylhet_International_University"
+    },
+    {
+      "name": "University of Development Alternative",
+      "acronym": "UODA",
+      "established": "2002",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Development_Alternative"
+    },
+    {
+      "name": "City University, Bangladesh",
+      "acronym": "CUB",
+      "established": "2002",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/City_University,_Bangladesh"
+    },
+    {
+      "name": "Daffodil International University",
+      "acronym": "DIU",
+      "established": "2002",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Daffodil_International_University"
+    },
+    {
+      "name": "Green University of Bangladesh",
+      "acronym": "GUB",
+      "established": "2002",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Green_University_of_Bangladesh"
+    },
+    {
+      "name": "IBAIS University",
+      "acronym": "IU",
+      "established": "2002",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/IBAIS_University"
+    },
+    {
+      "name": "Leading University",
+      "acronym": "LU",
+      "established": "2002",
+      "location": "Sylhet",
+      "division": "Sylhet Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Leading_University"
+    },
+    {
+      "name": "Northern University, Bangladesh",
+      "acronym": "NUB",
+      "established": "2002",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Northern_University,_Bangladesh"
+    },
+    {
+      "name": "Prime University",
+      "acronym": "PU",
+      "established": "2002",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Prime_University"
+    },
+    {
+      "name": "Southeast University",
+      "acronym": "SEU",
+      "established": "2002",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Southeast_University_(Bangladesh)"
+    },
+    {
+      "name": "Stamford University Bangladesh",
+      "acronym": "SU",
+      "established": "2002",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Stamford_University_Bangladesh"
+    },
+    {
+      "name": "State University of Bangladesh",
+      "acronym": "SUB",
+      "established": "2002",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/State_University_of_Bangladesh"
+    },
+    {
+      "name": "Eastern University, Bangladesh",
+      "acronym": "EU",
+      "established": "2003",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Eastern_University,_Bangladesh"
+    },
+    {
+      "name": "Metropolitan University",
+      "acronym": "MU",
+      "established": "2003",
+      "location": "Sylhet",
+      "division": "Sylhet Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Metropolitan_University,_Sylhet"
+    },
+    {
+      "name": "Millennium University",
+      "acronym": "MU",
+      "established": "2003",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Millennium_University"
+    },
+    {
+      "name": "Primeasia University",
+      "acronym": "PAU",
+      "established": "2003",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Primeasia_University"
+    },
+    {
+      "name": "Royal University of Dhaka",
+      "acronym": "RUD",
+      "established": "2003",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Royal_University_of_Dhaka"
+    },
+    {
+      "name": "United International University",
+      "acronym": "UIU",
+      "established": "2003",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/United_International_University"
+    },
+    {
+      "name": "University of Information Technology and Sciences",
+      "acronym": "UITS",
+      "established": "2003",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Information_Technology_and_Sciences"
+    },
+    {
+      "name": "University of South Asia, Bangladesh",
+      "acronym": "USAB",
+      "established": "2003",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_South_Asia,_Bangladesh"
+    },
+    {
+      "name": "Presidency University",
+      "acronym": "PU",
+      "established": "2003",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Presidency_University,_Bangladesh"
+    },
+    {
+      "name": "Uttara University",
+      "acronym": "UU",
+      "established": "2003",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Uttara_University"
+    },
+    {
+      "name": "Victoria University of Bangladesh",
+      "acronym": "VUB",
+      "established": "2003",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Victoria_University_of_Bangladesh"
+    },
+    {
+      "name": "World University of Bangladesh",
+      "acronym": "WUB",
+      "established": "2003",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/World_University_of_Bangladesh"
+    },
+    {
+      "name": "Asa University Bangladesh",
+      "acronym": "ASAUB",
+      "established": "2006",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Asa_University_Bangladesh"
+    },
+    {
+      "name": "Bangladesh Islami University",
+      "acronym": "BIU",
+      "established": "2006",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Islami_University"
+    },
+    {
+      "name": "East Delta University",
+      "acronym": "EDU",
+      "established": "2006",
+      "location": "Chittagong",
+      "division": "Chittagong Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/East_Delta_University"
+    },
+    {
+      "name": "Northern University of Business and Technology Khulna",
+      "acronym": "NUB",
+      "established": "2010",
+      "location": "Khulna",
+      "division": "Khulna Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Northern_University_of_Business_and_Technology_Khulna"
+    },
+    {
+      "name": "Britannia University",
+      "acronym": "BU",
+      "established": "2010",
+      "location": "Comilla",
+      "division": "Chittagong Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Britannia_University"
+    },
+    {
+      "name": "Feni University",
+      "acronym": "FU",
+      "established": "2010",
+      "location": "Feni",
+      "division": "Chittagong Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Feni_University"
+    },
+    {
+      "name": "Khwaja Yunus Ali University",
+      "acronym": "KYAU",
+      "established": "2010",
+      "location": "Sirajgonj",
+      "division": "Rajshahi Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Khwaja_Yunus_Ali_University"
+    },
+    {
+      "name": "European University of Bangladesh",
+      "acronym": "EUB",
+      "established": "2012",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/European_University_of_Bangladesh"
+    },
+    {
+      "name": "First Capital University Of Bangladesh",
+      "acronym": "FCUB",
+      "established": "2012",
+      "location": "Chuadanga",
+      "division": "Khulna Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/First_Capital_University_Of_Bangladesh"
+    },
+    {
+      "name": "BGMEA University of Fashion & Technology",
+      "acronym": "BUFT",
+      "established": "2012",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/BGMEA_University_of_Fashion_%26_Technology"
+    },
+    {
+      "name": "Hamdard University Bangladesh",
+      "acronym": "HUB",
+      "established": "2012",
+      "location": "Munshiganj",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Hamdard_University_Bangladesh"
+    },
+    {
+      "name": "Ishakha International University",
+      "acronym": "IIUB",
+      "established": "2012",
+      "location": "Kishoreganj",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Ishakha_International_University,_Bangladesh"
+    },
+    {
+      "name": "North East University Bangladesh",
+      "acronym": "NEUB",
+      "established": "2012",
+      "location": "Sylhet",
+      "division": "Sylhet Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/North_East_University"
+    },
+    {
+      "name": "North Western University, Bangladesh",
+      "acronym": "NWU",
+      "established": "2012",
+      "location": "Khulna",
+      "division": "Khulna Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/North_Western_University,_Bangladesh"
+    },
+    {
+      "name": "Port City International University",
+      "acronym": "PCIU",
+      "established": "2012",
+      "location": "Chittagong",
+      "division": "Chittagong Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Port_City_International_University"
+    },
+    {
+      "name": "Varendra University",
+      "acronym": "VU",
+      "established": "2012",
+      "location": "Rajshahi",
+      "division": "Rajshahi Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Varendra_University"
+    },
+    {
+      "name": "Sonargaon University",
+      "acronym": "SU",
+      "established": "2012",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Sonargaon_University"
+    },
+    {
+      "name": "Cox's Bazar International University",
+      "acronym": "CBIU",
+      "established": "2013",
+      "location": "Cox's Bazar",
+      "division": "Chittagong Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Cox%27s_Bazar_International_University"
+    },
+    {
+      "name": "Fareast International University",
+      "acronym": "FIU",
+      "established": "2013",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Fareast_International_University"
+    },
+    {
+      "name": "German University Bangladesh",
+      "acronym": "GUB",
+      "established": "2013",
+      "location": "Gazipur",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/German_University_Bangladesh"
+    },
+    {
+      "name": "North Bengal International University",
+      "acronym": "NBIU",
+      "established": "2013",
+      "location": "Rajshahi",
+      "division": "Rajshahi Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/North_Bengal_International_University"
+    },
+    {
+      "name": "Notre Dame University Bangladesh",
+      "acronym": "NDUB",
+      "established": "2013",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Notre_Dame_University_Bangladesh"
+    },
+    {
+      "name": "Ranada Prasad Shaha University",
+      "acronym": "RPSU",
+      "established": "2013",
+      "location": "Narayanganj",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Ranada_Prasad_Shaha_University"
+    },
+    {
+      "name": "Brahmaputra International University",
+      "acronym": "BIU",
+      "established": "2013",
+      "location": "Jamalpur",
+      "division": "Mymensingh Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Brahmaputra_International_University"
+    },
+    {
+      "name": "Times University Bangladesh",
+      "acronym": "TMUB",
+      "established": "2013",
+      "location": "Faridpur",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Times_University_Bangladesh"
+    },
+    {
+      "name": "Canadian University of Bangladesh",
+      "acronym": "CUB",
+      "established": "2015",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Canadian_University_of_Bangladesh"
+    },
+    {
+      "name": "Global University Bangladesh",
+      "acronym": "GUB",
+      "established": "2015",
+      "location": "Barisal",
+      "division": "Barisal Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Global_University_Bangladesh"
+    },
+    {
+      "name": "NPI University of Bangladesh",
+      "acronym": "NPIUB",
+      "established": "2015",
+      "location": "Manikganj",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/NPI_University_of_Bangladesh"
+    },
+    {
+      "name": "Rabindra Maitree University",
+      "acronym": "RMU",
+      "established": "2015",
+      "location": "Kushtia",
+      "division": "Khulna Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Rabindra_Maitree_University"
+    },
+    {
+      "name": "University of Scholars",
+      "acronym": "IUS",
+      "established": "2015",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/The_International_University_of_Scholars"
+    },
+    {
+      "name": "University of Creative Technology Chittagong",
+      "acronym": "UCTC",
+      "established": "2015",
+      "location": "Chittagong",
+      "division": "Chittagong Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Creative_Technology_Chittagong"
+    },
+    {
+      "name": "[122]",
+      "acronym": "AKMU",
+      "established": "2016",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org#cite_note-124"
+    },
+    {
+      "name": "University of Global Village",
+      "acronym": "UIGV",
+      "established": "2016",
+      "location": "Barisal",
+      "division": "Barisal Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Global_Village"
+    },
+    {
+      "name": "Khulna Khan Bahadur Ahsanullah University",
+      "acronym": "KKBAU",
+      "established": "2018",
+      "location": "Khulna",
+      "division": "Khulna Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": null
+    },
+    {
+      "name": "[124]",
+      "acronym": "TUB",
+      "established": "2018",
+      "location": "Barisal",
+      "division": "Barisal Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org#cite_note-126"
+    },
+    {
+      "name": "[125]",
+      "acronym": "UOB",
+      "established": "2018",
+      "location": "Brahamanbaria",
+      "division": "Chittagong Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org#cite_note-127"
+    },
+    {
+      "name": "University of Skill Enrichment and Technology",
+      "acronym": "USET",
+      "established": "2018",
+      "location": "Narayanganj",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/w/index.php?title=University_of_Skill_Enrichment_and_Technology&action=edit&redlink=1"
+    },
+    {
+      "name": "International Standard University",
+      "acronym": "ISU",
+      "established": "2018",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/International_Standard_University"
+    },
+    {
+      "name": "ZNRF University of Management Sciences",
+      "acronym": "ZUMS",
+      "established": "2018",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/w/index.php?title=ZNRF_University_of_Management_Sciences&action=edit&redlink=1"
+    },
+    {
+      "name": "Bandarban University",
+      "acronym": "BdU",
+      "established": "2019",
+      "location": "Bandarban",
+      "division": "Chittagong Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Bandarban_University"
+    },
+    {
+      "name": "RTM Al-Kabir Technical University",
+      "acronym": "RTM-AKTU",
+      "established": "2020",
+      "location": "Sylhet",
+      "division": "Sylhet Division",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/w/index.php?title=RTM_Al-Kabir_Technical_University&action=edit&redlink=1"
+    },
+    {
+      "name": "International Islami University of Science and Technology Bangladesh",
+      "acronym": "IIUSTB",
+      "established": "2023",
+      "location": "Dhaka",
+      "division": "Dhaka",
+      "specialization": "Science and Technology",
+      "website": "https://www.iiustb.ac.bd/",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/International_Islami_University_of_Science_and_Technology_Bangladesh"
+    },
+    {
+      "name": "Microland University of Science and Technology",
+      "acronym": "MUST",
+      "established": "2014",
+      "location": "Dhaka",
+      "division": "Dhaka",
+      "specialization": "Science and Technology",
+      "website": "https://www.microlanduniversity.org/",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Microland_University_of_Science_and_Technology"
+    },
+    {
+      "name": "Lalon University of Science & Arts",
+      "acronym": "LUSA",
+      "established": "2023",
+      "location": "Kushtia",
+      "division": "Khulna",
+      "specialization": "Science and Arts",
+      "website": "https://www.lusa.ac.bd/",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/w/index.php?title=Lalon_University_of_Science_%26_Arts&action=edit&redlink=1"
+    },
+    {
+      "name": "Grameen University",
+      "acronym": "GU",
+      "established": "2025",
+      "location": "Dhaka",
+      "division": "Dhaka",
+      "specialization": "General",
+      "section": "General",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Grameen_University"
+    },
+    {
+      "name": "University of Science & Technology Chittagong",
+      "acronym": "USTC",
+      "established": "1992",
+      "location": "Chittagong",
+      "division": "Chittagong Division",
+      "specialization": "STEM",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Science_%26_Technology_Chittagong"
+    },
+    {
+      "name": "Ahsanullah University of Science and Technology",
+      "acronym": "AUST",
+      "established": "1995",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "STEM",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Ahsanullah_University_of_Science_and_Technology"
+    },
+    {
+      "name": "Pundra University of Science and Technology",
+      "acronym": "PDUST",
+      "established": "2001",
+      "location": "Bogra",
+      "division": "Rajshahi Division",
+      "specialization": "STEM",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Pundra_University_of_Science_and_Technology"
+    },
+    {
+      "name": "Bangladesh University of Business and Technology",
+      "acronym": "BUBT",
+      "established": "2003",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "STEM",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_University_of_Business_and_Technology"
+    },
+    {
+      "name": "Atish Dipankar University of Science and Technology",
+      "acronym": "ADUST",
+      "established": "2004",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "STEM",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Atish_Dipankar_University_of_Science_and_Technology"
+    },
+    {
+      "name": "[136]",
+      "acronym": "ZHSUST",
+      "established": "2012",
+      "location": "Shariatpur",
+      "division": "Dhaka Division",
+      "specialization": "STEM",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org#cite_note-138"
+    },
+    {
+      "name": "Rajshahi Science & Technology University",
+      "acronym": "RSTU",
+      "established": "2013",
+      "location": "Natore",
+      "division": "Rajshahi Division",
+      "specialization": "STEM",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Rajshahi_Science_%26_Technology_University"
+    },
+    {
+      "name": "Bangladesh Army International University of Science & Technology",
+      "acronym": "BAIUST",
+      "established": "2015",
+      "location": "Comilla",
+      "division": "Chittagong Division",
+      "specialization": "STEM",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Army_International_University_of_Science_%26_Technology"
+    },
+    {
+      "name": "Bangladesh Army University of Science & Technology, Khulna",
+      "acronym": "BAUST, Khulna",
+      "established": "2021",
+      "location": "Khulna",
+      "division": "Khulna Division",
+      "specialization": "STEM",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Army_University_of_Science_%26_Technology,_Khulna"
+    },
+    {
+      "name": "Bangladesh Army University of Science and Technology, Saidpur",
+      "acronym": "BAUST, Saidpur",
+      "established": "2015",
+      "location": "Saidpur",
+      "division": "Rangpur Division",
+      "specialization": "STEM",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Army_University_of_Science_and_Technology,_Saidpur"
+    },
+    {
+      "name": "CCN University of Science & Technology",
+      "acronym": "CCNUST",
+      "established": "2015",
+      "location": "Comilla",
+      "division": "Chittagong Division",
+      "specialization": "STEM",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/CCN_University_of_Science_%26_Technology"
+    },
+    {
+      "name": "Central University of Science and Technology",
+      "acronym": "CUST",
+      "established": "2016",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "STEM",
+      "section": "Science and technology",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Central_University_of_Science_and_Technology"
+    },
+    {
+      "name": "Central Women's University",
+      "acronym": "CWU",
+      "established": "1993",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "Women's studies",
+      "section": "Specialized",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Central_Women%27s_University"
+    },
+    {
+      "name": "Shanto-Mariam University of Creative Technology",
+      "acronym": "SMUCT",
+      "established": "2003",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "Creative technology",
+      "section": "Specialized",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Shanto-Mariam_University_of_Creative_Technology"
+    },
+    {
+      "name": "University of Liberal Arts Bangladesh",
+      "acronym": "ULAB",
+      "established": "2004",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "Media studies and journalism",
+      "section": "Specialized",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Liberal_Arts_Bangladesh"
+    },
+    {
+      "name": "Bangladesh University of Health Sciences",
+      "acronym": "BUHS",
+      "established": "2012",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "Health Sciences",
+      "section": "Specialized",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_University_of_Health_Sciences"
+    },
+    {
+      "name": "Exim Bank Agricultural University Bangladesh",
+      "acronym": "EBAUB",
+      "established": "2013",
+      "location": "Chapainawabganj",
+      "division": "Rajshahi Division",
+      "specialization": "Agricultural Science",
+      "section": "Specialized",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Exim_Bank_Agricultural_University_Bangladesh"
+    },
+    {
+      "name": "Bangladesh Army University of Engineering & Technology",
+      "acronym": "BAUET",
+      "established": "2015",
+      "location": "Natore",
+      "division": "Rajshahi Division",
+      "specialization": "Engineering and Technology",
+      "section": "Specialized",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Army_University_of_Engineering_%26_Technology"
+    },
+    {
+      "name": "Tagore University of Creative Arts",
+      "acronym": "TUCA",
+      "established": "2016",
+      "location": "Dhaka",
+      "division": "Dhaka Division",
+      "specialization": "Creative",
+      "section": "Specialized",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Tagore_University_of_Creative_Arts"
+    },
+    {
+      "name": "Islamic University of Technology",
+      "acronym": "IUT",
+      "established": "1978",
+      "location": "Gazipur",
+      "specialization": "Engineering and Technology (Muslim students only)",
+      "phd_granting": "Yes",
+      "section": "International universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Islamic_University_of_Technology"
+    },
+    {
+      "name": "Asian University for Women",
+      "acronym": "AUW",
+      "established": "2008",
+      "location": "Chittagong",
+      "specialization": "(Female students only)",
+      "phd_granting": "No",
+      "section": "International universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Asian_University_for_Women"
+    },
+    {
+      "name": "Mymensingh University of Engineering and Technology",
+      "acronym": "MUET",
+      "location": "Mymensingh",
+      "division": "Mymensingh Division",
+      "specialization": "Engineering University",
+      "section": "Proposed universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Mymensingh_Engineering_College"
+    },
+    {
+      "name": "Mymensingh Medical University",
+      "acronym": "MMU",
+      "location": "Mymensingh",
+      "division": "Mymensingh Division",
+      "specialization": "Medical University",
+      "section": "Proposed universities",
+      "wikipedia_url": null
+    },
+    {
+      "name": "Thakurgaon University of Science and Technology",
+      "acronym": "TSTU",
+      "location": "Thakurgaon",
+      "division": "Rangpur Division",
+      "specialization": "STEM",
+      "section": "Proposed universities",
+      "wikipedia_url": null
+    },
+    {
+      "name": "Marine Science University of Barisal",
+      "acronym": "MSUB",
+      "location": "Barishal",
+      "division": "Barishal Division",
+      "specialization": "Maritime studies",
+      "section": "Proposed universities",
+      "wikipedia_url": null
+    },
+    {
+      "name": "Michael Madhusudan Cultural University",
+      "acronym": "MMCU",
+      "location": "Jashore",
+      "division": "Khulna Division",
+      "specialization": "Cultural studies",
+      "section": "Proposed universities",
+      "wikipedia_url": null
+    },
+    {
+      "name": "Bangladesh University of Juridical Sciences",
+      "acronym": "BUJS",
+      "specialization": "Legal education",
+      "section": "Proposed universities",
+      "wikipedia_url": null
+    },
+    {
+      "name": "Bangladesh University of Educational Planning and Administration",
+      "acronym": "BUEdPA",
+      "specialization": "Educational management",
+      "section": "Proposed universities",
+      "wikipedia_url": null
+    },
+    {
+      "name": "University Grants Commission",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/University_Grants_Commission_of_Bangladesh",
+      "source": "content_links"
+    },
+    {
+      "name": "University Grants Commission of Bangladesh",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/University_Grants_Commission_of_Bangladesh",
+      "source": "content_links"
+    },
+    {
+      "name": "University of Barishal",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Barishal",
+      "source": "content_links"
+    },
+    {
+      "name": "Chittagong University",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Chittagong",
+      "source": "content_links"
+    },
+    {
+      "name": "National University of Bangladesh",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/National_University_of_Bangladesh",
+      "source": "content_links"
+    },
+    {
+      "name": "Open University of Bangladesh",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_Open_University",
+      "source": "content_links"
+    },
+    {
+      "name": "Bangladesh University of Engineering and Technology",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Bangladesh_University_of_Engineering_and_Technology",
+      "source": "content_links"
+    },
+    {
+      "name": "Dhaka University",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Dhaka_University",
+      "source": "content_links"
+    },
+    {
+      "name": "Jessore University of Science & Technology",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Jessore_University_of_Science_%26_Technology",
+      "source": "content_links"
+    },
+    {
+      "name": "Pabna University of Science & Technology",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Pabna_University_of_Science_%26_Technology",
+      "source": "content_links"
+    },
+    {
+      "name": "Rajshahi University of Engineering and Technology",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Rajshahi_University_of_Engineering_and_Technology",
+      "source": "content_links"
+    },
+    {
+      "name": "Begum Rokeya University, Rangpur",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Begum_Rokeya_University,_Rangpur",
+      "source": "content_links"
+    },
+    {
+      "name": "University of Thakurgaon",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Thakurgaon_University",
+      "source": "content_links"
+    },
+    {
+      "name": "University of Science and Technology Chittagong",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Science_and_Technology_Chittagong",
+      "source": "content_links"
+    },
+    {
+      "name": "BRAC University",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/BRAC_University",
+      "source": "content_links"
+    },
+    {
+      "name": "Darul Ihsan University",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Darul_Ihsan_University",
+      "source": "content_links"
+    },
+    {
+      "name": "Eastern University",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Eastern_University_(Bangladesh)",
+      "source": "content_links"
+    },
+    {
+      "name": "Gono University",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Gono_University",
+      "source": "content_links"
+    },
+    {
+      "name": "Stamford University",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Stamford_University_Bangladesh",
+      "source": "content_links"
+    },
+    {
+      "name": "University of Asia Pacific",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_Asia_Pacific",
+      "source": "content_links"
+    },
+    {
+      "name": "University of South Asia",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/University_of_South_Asia_(Bangladesh)",
+      "source": "content_links"
+    },
+    {
+      "name": "North Western University",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/North_Western_University,_Bangladesh",
+      "source": "content_links"
+    },
+    {
+      "name": "Northern University",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Northern_University_of_Business_and_Technology_Khulna",
+      "source": "content_links"
+    },
+    {
+      "name": "Teesta University",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Teesta_University",
+      "source": "content_links"
+    },
+    {
+      "name": "Metropolitan University, Sylhet",
+      "section": "Additional Universities",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/Metropolitan_University,_Sylhet",
+      "source": "content_links"
+    }
+  ]
+}

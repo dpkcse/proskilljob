@@ -1,0 +1,17 @@
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# Credentials
+*service-account*.json
+*credentials*.json
+firebase-adminsdk*.json
+secrets/
+storage/secure/
+
+# Dependencies and builds
+node_modules/
+dist/
+build/
+vendor/

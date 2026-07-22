@@ -1,0 +1,86 @@
+# Laravel Framework Security Enhanced
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Force HTTPS for all requests
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Remove trailing = from last parameter (tag= becomes tag)
+    RewriteCond %{QUERY_STRING} ^(.*[^=])=$
+    RewriteRule ^(.*)$ $1?%1 [R=301,L]
+
+    # Security Headers
+    <IfModule mod_headers.c>
+        Header always set X-Content-Type-Options nosniff
+        Header always set X-Frame-Options DENY
+        Header always set X-XSS-Protection "1; mode=block"
+        Header always set Referrer-Policy "strict-origin-when-cross-origin"
+        Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+        Header always unset X-Powered-By
+        Header always unset Server
+        # Force HTTPS for all resources to prevent mixed content
+        Header always set Content-Security-Policy "upgrade-insecure-requests"
+    </IfModule>
+
+    # Block malicious file uploads
+    <FilesMatch "\.(php|php3|php4|php5|phtml|pl|py|jsp|asp|sh|cgi)$">
+        <RequireAll>
+            Require all denied
+        </RequireAll>
+    </FilesMatch>
+
+    # Allow PHP only in root
+    <Files ~ "^(index\.php)$">
+        Require all granted
+    </Files>
+
+    # Block suspicious requests
+    RewriteCond %{QUERY_STRING} (<|%3C)([^s]*s)+cript.*(>|%3E) [NC,OR]
+    RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+    RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2}) [OR]
+    RewriteCond %{QUERY_STRING} ^.*("|'|<|>|\|{2}).* [NC,OR]
+    RewriteCond %{QUERY_STRING} ^.*(%0|%A|%B|%C|%D|%E|%F|127\.0).* [NC,OR]
+    RewriteCond %{QUERY_STRING} ^.*(globals|encode|localhost|loopback).* [NC,OR]
+    RewriteCond %{QUERY_STRING} ^.*(request|select|insert|union|declare|drop).* [NC]
+    RewriteRule ^(.*)$ - [F,L]
+
+    # Block base64 and eval attempts
+    RewriteCond %{QUERY_STRING} base64_encode.*\(.*\) [OR]
+    RewriteCond %{QUERY_STRING} base64_decode.*\(.*\) [OR]  
+    RewriteCond %{QUERY_STRING} eval.*\(.*\) [NC]
+    RewriteRule ^(.*)$ - [F,L]
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+
+    # Block directory browsing
+    Options -Indexes
+
+    # Block access to sensitive files
+    <FilesMatch "\.(env|log|sql|md|htaccess|htpasswd|ini|conf|yaml|yml)$">
+        Require all denied
+    </FilesMatch>
+
+    # Block access to git files
+    <DirectoryMatch "\.git">
+        Require all denied
+    </DirectoryMatch>
+
+</IfModule>

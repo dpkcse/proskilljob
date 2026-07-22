@@ -1,0 +1,9 @@
+<<<<<<< HEAD
+RewriteEngine on
+RewriteCond %{REQUEST_URI} !^public
+RewriteRule ^(.*)$ public/$1 [L]
+=======
+RewriteEngine on
+RewriteCond %{REQUEST_URI} !^public
+RewriteRule ^(.*)$ public/$1 [L]
+>>>>>>> b97050d9a35d8e1601a5a8340e1eb9497226ea1b
