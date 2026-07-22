@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Modules\Location\Entities\Country;
 
 class CandidateController extends Controller
@@ -354,7 +355,6 @@ class CandidateController extends Controller
         $query = $filters->apply(Candidate::query(), $request)
             ->withCount('appliedJobs')
             ->with(['user', 'jobRole', 'profession', 'experience', 'skills']);
-        $query->{$request->input('sort_by', 'latest') === 'oldest' ? 'oldest' : 'latest'}();
         $candidates = $query->paginate(10)->withQueryString();
 
         $filterOptions = [
@@ -1177,19 +1177,59 @@ class CandidateController extends Controller
         abort_if(! userCan('candidate.view'), 403);
         abort_unless(in_array($type, ['csv', 'xlsx', 'pdf'], true), 404);
         $filters->validate($request);
-        $ids = collect(explode(',', (string) $request->query('ids', '')))->filter('is_numeric')->map('intval')->unique()->values();
-        $query = $filters->apply(Candidate::query(), $request)->with(['user', 'profession', 'jobRole', 'skills', 'languages', 'education', 'experience', 'professionalReferences'])->latest();
+        $ids = $this->exportCandidateIds($request);
+        $query = $filters->apply(Candidate::query(), $request)->with(['user', 'profession', 'jobRole', 'skills', 'languages', 'education', 'experience', 'professionalReferences']);
         if ($ids->isNotEmpty()) {
             $query->whereIn('candidates.id', $ids);
         }
 
-        if ($type === 'pdf') {
-            // DOMPDF renders in memory; keep this legacy export bounded rather than failing with a 500.
-            abort_if($query->count() > 500, 422, 'PDF export is limited to 500 candidates. Use CSV or Excel for larger filtered exports.');
+        try {
+            if ($type === 'csv') {
+                return $this->streamCandidateCsv($query);
+            }
 
-            return Pdf::loadView('backend.candidate.export-cv-pdf', ['candidates' => $query->get()])->setPaper('a4')->download(now()->format('Ymd_His').'_candidates_cv.pdf');
+            if ($type === 'pdf') {
+                // DOMPDF renders in memory; keep this export bounded rather than risking exhaustion.
+                abort_if($query->count() > 500, 422, 'PDF export is limited to 500 candidates. Use CSV or Excel for larger filtered exports.');
+
+                return Pdf::loadView('backend.candidate.export-cv-pdf', ['candidates' => $query->get()])->setPaper('a4')->download(now()->format('Ymd_His').'_candidates_cv.pdf');
+            }
+
+            return Excel::download(new CandidateExport($query), now()->format('Ymd_His').'_candidates.xlsx');
+        } catch (HttpExceptionInterface $exception) {
+            throw $exception;
+        } catch (\Throwable $exception) {
+            Log::error('Candidate export generation failed.', ['format' => $type, 'selected_count' => $ids->count(), 'exception' => $exception]);
+            return back()->withErrors(['export' => 'The candidate export could not be generated. Please try again or contact support.']);
         }
+    }
 
-        return Excel::download(new CandidateExport($query), now()->format('Ymd_His').'_candidates.'.$type);
+    private function exportCandidateIds(Request $request)
+    {
+        return collect(explode(',', (string) $request->query('ids', '')))
+            ->map(fn ($id) => trim($id))
+            ->filter(fn ($id) => filter_var($id, FILTER_VALIDATE_INT) !== false && (int) $id > 0)
+            ->map(fn ($id) => (int) $id)->unique()->values();
+    }
+
+    private function streamCandidateCsv($query)
+    {
+        $filename = now()->format('Ymd_His').'_candidates.csv';
+
+        return response()->streamDownload(function () use ($query) {
+            $output = fopen('php://output', 'wb');
+            // Excel recognizes this UTF-8 BOM while RFC 4180-compatible readers retain Unicode text.
+            fwrite($output, "\xEF\xBB\xBF");
+            fputcsv($output, ['Name', 'Email', 'Job Role', 'Profession', 'Experience', 'Skills', 'Created At']);
+            foreach ($query->lazy(500) as $candidate) {
+                fputcsv($output, [
+                    data_get($candidate, 'user.name', ''), data_get($candidate, 'user.email', ''),
+                    data_get($candidate, 'jobRole.name', ''), data_get($candidate, 'profession.name', ''),
+                    data_get($candidate, 'experience.name', ''), $candidate->skills->pluck('name')->implode(', '),
+                    $candidate->created_at?->format('Y-m-d H:i:s'),
+                ]);
+            }
+            fclose($output);
+        }, $filename, ['Content-Type' => 'text/csv; charset=UTF-8']);
     }
 }
