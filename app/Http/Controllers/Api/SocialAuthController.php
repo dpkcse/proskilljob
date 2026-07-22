@@ -107,7 +107,7 @@ class SocialAuthController extends Controller
             ], 500);
         }
 
-        $token = $user->createToken('job-pilot')->plainTextToken;
+        $token = $user->createToken('naxas')->plainTextToken;
 
         return response()->json([
             'data' => [

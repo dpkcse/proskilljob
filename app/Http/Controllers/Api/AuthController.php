@@ -36,7 +36,7 @@ class AuthController extends Controller
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
-            $token = $user->createToken('job-pilot')->plainTextToken;
+            $token = $user->createToken('naxas')->plainTextToken;
 
             return $this->respondWithSuccess([
                 'data' => [
@@ -254,7 +254,7 @@ class AuthController extends Controller
         }
 
         // Create a Personal Access Token using Sanctum
-        $token = $user->createToken('job-pilot')->plainTextToken;
+        $token = $user->createToken('naxas')->plainTextToken;
 
         return $this->respondWithSuccess([
             'data' => [

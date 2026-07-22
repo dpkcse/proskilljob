@@ -118,7 +118,7 @@ class FreePlanPurchaseController extends Controller
             'plan_id' => $plan?->id ?? null,
             'company_id' => currentCompany()->id,
             'amount' => $amount,
-            // 'currency_symbol' => config('jobpilot.currency_symbol'),
+            // 'currency_symbol' => config('currency.currency_symbol'),
             'currency_symbol' => config('templatecookie.currency_symbol'),
             'usd_amount' => $amount * $rate,
             'payment_type' => $payment_type,

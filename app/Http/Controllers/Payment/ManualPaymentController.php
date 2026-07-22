@@ -40,7 +40,7 @@ class ManualPaymentController extends Controller
             'plan_id' => $plan->id ?? null,
             'company_id' => currentCompany()->id,
             'amount' => $price,
-            // 'currency_symbol' => config('jobpilot.currency_symbol'),
+            // 'currency_symbol' => config('currency.currency_symbol'),
             'currency_symbol' => config('templatecookie.currency_symbol'),
             'usd_amount' => $usd_amount,
             'manual_payment_id' => $payment->id,

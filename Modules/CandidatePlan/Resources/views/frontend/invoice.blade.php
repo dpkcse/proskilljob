@@ -298,7 +298,8 @@
                         <b>Invoice From:</b>
                     </p>
                     <p style="margin-bottom: 15px;">
-                        {{ config('app.name') }} <br>
+                        {{ config('brand.product_name') }} <br>
+                        {{ config('brand.product_attribution') }} <br>
                         {{ $setting->email }} <br>
                         <a href="{{ config('app.url') }}">{{ config('app.url') }}</a>
                     </p>
