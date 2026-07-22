@@ -3,6 +3,7 @@
     {{ __('candidate_list') }}
 @endsection
 @section('content')
+    @php($exportQuery = http_build_query(request()->except(['ids', 'page'])))
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -18,13 +19,13 @@
                                         <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item export-filtered-btn" href="{{ route('candidate.export', 'csv') }}?{{ request()->getQueryString() }}">CSV (all filtered)</a>
-                                    <a class="dropdown-item export-filtered-btn" href="{{ route('candidate.export', 'xlsx') }}?{{ request()->getQueryString() }}">Excel (all filtered)</a>
-                                    <a class="dropdown-item export-filtered-btn" href="{{ route('candidate.export', 'pdf') }}?{{ request()->getQueryString() }}">PDF (all filtered, max 500)</a>
+                                    <a class="dropdown-item export-filtered-btn" href="{{ route('candidate.export', 'csv') }}?{{ $exportQuery }}">CSV (all filtered)</a>
+                                    <a class="dropdown-item export-filtered-btn" href="{{ route('candidate.export', 'xlsx') }}?{{ $exportQuery }}">Excel (all filtered)</a>
+                                    <a class="dropdown-item export-filtered-btn" href="{{ route('candidate.export', 'pdf') }}?{{ $exportQuery }}">PDF (all filtered, max 500)</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item export-candidate-btn" href="{{ route('candidate.export', 'csv') }}?{{ request()->getQueryString() }}" data-type="csv">CSV (selected on this page)</a>
-                                    <a class="dropdown-item export-candidate-btn" href="{{ route('candidate.export', 'xlsx') }}?{{ request()->getQueryString() }}" data-type="xlsx">Excel (selected on this page)</a>
-                                    <a class="dropdown-item export-candidate-btn" href="{{ route('candidate.export', 'pdf') }}?{{ request()->getQueryString() }}" data-type="pdf">PDF (selected on this page)</a>
+                                    <a class="dropdown-item export-candidate-btn" href="{{ route('candidate.export', 'csv') }}?{{ $exportQuery }}" data-type="csv">CSV (selected on this page)</a>
+                                    <a class="dropdown-item export-candidate-btn" href="{{ route('candidate.export', 'xlsx') }}?{{ $exportQuery }}" data-type="xlsx">Excel (selected on this page)</a>
+                                    <a class="dropdown-item export-candidate-btn" href="{{ route('candidate.export', 'pdf') }}?{{ $exportQuery }}" data-type="pdf">PDF (selected on this page)</a>
                                     <!-- Add more options for different export formats if needed -->
                                 </div>
                             </div>

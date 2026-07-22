@@ -3,6 +3,7 @@
 namespace App\Services\Admin;
 
 use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
@@ -10,23 +11,26 @@ class CandidateFilter
 {
     public function validate(Request $request): array
     {
+        $this->normalize($request);
+
         return $request->validate([
             'keyword' => ['nullable', 'string', 'max:120'],
             'email' => ['nullable', 'string', 'max:255'],
-            'profession_ids' => ['nullable', 'array'], 'profession_ids.*' => ['integer', 'exists:professions,id'],
-            'job_role_ids' => ['nullable', 'array'], 'job_role_ids.*' => ['integer', 'exists:job_roles,id'],
-            'skill_ids' => ['nullable', 'array'], 'skill_ids.*' => ['integer', 'exists:skills,id'],
+            'profession_ids' => ['nullable', 'array'], 'profession_ids.*' => ['integer', 'min:1', 'distinct', 'exists:professions,id'],
+            'job_role_ids' => ['nullable', 'array'], 'job_role_ids.*' => ['integer', 'min:1', 'distinct', 'exists:job_roles,id'],
+            'skill_ids' => ['nullable', 'array'], 'skill_ids.*' => ['integer', 'min:1', 'distinct', 'exists:skills,id'],
             'reference_relations' => ['nullable', 'array'], 'reference_relations.*' => ['string', 'max:100'],
             'preferred_locations' => ['nullable', 'array'], 'preferred_locations.*' => ['string', 'max:255'],
             'min_age' => ['nullable', 'integer', 'min:0', 'max:120'], 'max_age' => ['nullable', 'integer', 'min:0', 'max:120', 'gte:min_age'],
             'created_from' => ['nullable', 'date'], 'created_to' => ['nullable', 'date', 'after_or_equal:created_from'],
             'min_experience' => ['nullable', 'numeric', 'min:0', 'max:80'], 'max_experience' => ['nullable', 'numeric', 'min:0', 'max:80', 'gte:min_experience'],
-            'ev_status' => ['nullable', 'in:true,false'], 'sort_by' => ['nullable', 'in:latest,oldest'],
+            'ev_status' => ['nullable', 'in:true,false'], 'sort_by' => ['nullable', 'in:latest,newest,oldest,name_asc,name_desc'],
         ]);
     }
 
     public function apply(Builder $query, Request $request): Builder
     {
+        $this->normalize($request);
         $keyword = trim((string) $request->input('keyword'));
         $email = trim((string) $request->input('email'));
         $query->whereHas('user', fn (Builder $q) => $q->where('role', 'candidate'));
@@ -90,7 +94,47 @@ class CandidateFilter
             });
         }
 
-        return $query;
+        return $this->applySorting($query, (string) $request->input('sort_by', 'latest'));
+    }
+
+    /** Normalize list and export inputs once so both paths use identical rules. */
+    public function normalize(Request $request): void
+    {
+        $scalars = ['keyword', 'email', 'min_age', 'max_age', 'created_from', 'created_to', 'min_experience', 'max_experience', 'ev_status', 'sort_by'];
+        $arrays = ['profession_ids', 'job_role_ids', 'skill_ids', 'reference_relations', 'preferred_locations'];
+        $normalized = [];
+
+        foreach ($scalars as $key) {
+            $value = $request->input($key);
+            if (is_string($value)) {
+                $value = trim($value);
+            }
+            $normalized[$key] = $value === '' ? null : $value;
+        }
+
+        foreach ($arrays as $key) {
+            $values = $request->input($key, []);
+            $values = is_array($values) ? $values : [$values];
+            $values = collect($values)
+                ->map(fn ($value) => is_string($value) ? trim($value) : $value)
+                ->filter(fn ($value) => $value !== null && $value !== '')
+                ->unique()
+                ->values()
+                ->all();
+            $normalized[$key] = $values ?: null;
+        }
+
+        $request->merge($normalized);
+    }
+
+    private function applySorting(Builder $query, string $sort): Builder
+    {
+        return match ($sort) {
+            'oldest' => $query->oldest('candidates.created_at'),
+            'name_asc' => $query->orderBy(User::select('name')->whereColumn('users.id', 'candidates.user_id')),
+            'name_desc' => $query->orderByDesc(User::select('name')->whereColumn('users.id', 'candidates.user_id')),
+            default => $query->latest('candidates.created_at'),
+        };
     }
 
     private function whereIn(Builder $query, string $column, mixed $values): void
@@ -102,7 +146,7 @@ class CandidateFilter
 
     private function ids(mixed $values): array
     {
-        return collect(is_array($values) ? $values : [])->filter(fn ($id) => filter_var($id, FILTER_VALIDATE_INT) !== false)->map(fn ($id) => (int) $id)->unique()->values()->all();
+        return collect(is_array($values) ? $values : [])->filter(fn ($id) => filter_var($id, FILTER_VALIDATE_INT) !== false && (int) $id > 0)->map(fn ($id) => (int) $id)->unique()->values()->all();
     }
 
     private function strings(mixed $values): array
