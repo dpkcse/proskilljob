@@ -17,7 +17,7 @@ class SettingSeeder extends Seeder
     public function run()
     {
         $setting = new Setting;
-        $setting->email = 'jobpilot@templatecookie.com';
+        $setting->email = 'hello@naxas.ai';
         // $setting->dark_logo = "frontend/assets/images/logo/logo.png";
         // $setting->light_logo = "frontend/assets/images/logo/logowhite.png";
         $setting->favicon_image = 'frontend/assets/images/logo/fav.png';

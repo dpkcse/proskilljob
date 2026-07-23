@@ -23,7 +23,7 @@
                         {{ currencyPosition($data['earnings']) }}
                         @if($data['earnings'] == null || $data['earnings'] == 0) 0 @endif
                         <span data-toggle="tooltip"
-                            {{-- title="All the earnings are converted to '{{ config('jobpilot.currency') }}' currency"> --}}
+                            {{-- title="All the earnings are converted to '{{ config('currency.currency') }}' currency"> --}}
                             title="All the earnings are converted to '{{ config('templatecookie.currency') }}' currency">
                             <x-svg.info-icon />
                         </span>
