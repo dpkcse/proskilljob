@@ -52,7 +52,7 @@ it('admin can post a new blog', function () {
     // Define the data for the new blog.
     $data = [
         'author_id' => '2',
-        'title' => 'Job pilot testing',
+        'title' => 'NAXAS testing',
         'locale' => 'en',
         'category_id' => '1',
         'short_description' => 'ok',
@@ -66,8 +66,8 @@ it('admin can post a new blog', function () {
     // Assert that the response status code is 302 (a redirect).
     $response->assertStatus(302);
 
-    // Expect that a Post record with ID 2 has been created and has the title 'Job pilot testing'.
-    expect(Post::find(2)->title)->toBe('Job pilot testing');
+    // Expect that a Post record with ID 2 has been created and has the title 'NAXAS testing'.
+    expect(Post::find(2)->title)->toBe('NAXAS testing');
 });
 
 it('admin fails to post a new blog for validation', function () {
@@ -103,7 +103,7 @@ it('admin can update any blog', function () {
     //  Define the data for the new blog.
     $data = [
         'author_id' => '2',
-        'title' => 'Job pilot testing',
+        'title' => 'NAXAS testing',
         'locale' => 'en',
         'category_id' => '1',
         'short_description' => 'ok',
@@ -117,8 +117,8 @@ it('admin can update any blog', function () {
     // Assert that the response status code is 302 (a redirect).
     $response->assertStatus(302);
 
-    // Expect that a Post record with ID 2 has been created and has the title 'Job pilot testing'.
-    expect(Post::find(1)->title)->toBe('Job pilot testing');
+    // Expect that a Post record with ID 2 has been created and has the title 'NAXAS testing'.
+    expect(Post::find(1)->title)->toBe('NAXAS testing');
 });
 
 it('admin fails to update any blog', function () {
@@ -136,7 +136,7 @@ it('admin fails to update any blog', function () {
     // Assert that the response status code is 302 (a redirect).
     $response->assertStatus(302);
 
-    // Expect that a Post record with ID 2 has been created and has the title 'Job pilot testing'.
+    // Expect that a Post record with ID 2 has been created and has the title 'NAXAS testing'.
     expect(Post::find(1)->title)->toBe($title);
 });
 

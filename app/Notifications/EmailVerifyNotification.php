@@ -49,7 +49,7 @@ class EmailVerifyNotification extends Notification
             ->line('Please click the button below to verify your email address.')
             ->action('Verify Email Address', $verificationUrl)
             ->line('If you did not create an account, no further action is required.')
-            ->salutation('Best regards, Jobpilot Team');
+            ->salutation('Best regards, '.config('brand.product_name').' Team');
     }
 
     /**

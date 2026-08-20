@@ -21,7 +21,7 @@ class SeoDatabaseSeeder extends Seeder
         $pages = [
             [
                 'page_slug' => 'home',
-                'title' => 'Welcome To Jobpilot',
+                'title' => 'Welcome To NAXAS',
             ],
             [
                 'page_slug' => 'jobs',
@@ -93,8 +93,8 @@ class SeoDatabaseSeeder extends Seeder
             $page->contents()->create([
                 'language_code' => 'en',
                 'title' => $item['title'],
-                'description' => 'Jobpilot is job portal laravel script designed to create, manage and publish jobs posts. Companies can create their profile and publish jobs posts. Candidate can apply job posts.',
-                'image' => 'frontend/assets/images/jobpilot.png',
+                'description' => 'NAXAS is job portal laravel script designed to create, manage and publish jobs posts. Companies can create their profile and publish jobs posts. Candidate can apply job posts.',
+                'image' => 'frontend/assets/images/logo/logo.svg',
             ]);
         }
     }

@@ -1,1 +1,1 @@
-&copy; {{ config('app.name') }} {{ date('Y') }} | {{ __('all_rights_reserved') }}
+&copy; {{ date('Y') }} {{ config('brand.company_name') }}. {{ __('all_rights_reserved') }} | {{ config('brand.product_attribution') }}

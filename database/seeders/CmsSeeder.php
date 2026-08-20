@@ -54,18 +54,18 @@ class CmsSeeder extends Seeder
         $cms->footer_twitter_link = 'https://www.twitter.com/zakirsoft';
         $cms->footer_youtube_link = 'https://www.youtube.com/zakirsoft';
         $cms->privary_page = '
-        <p>Welcome to Jobpilot, a product of Templatecookie. This Privacy Policy outlines how we collect, use, disclose, and protect your personal information. By accessing or using Jobpilot, you agree to the terms outlined in this policy.</p>
+        <p>Welcome to NAXAS, a product of Templatecookie. This Privacy Policy outlines how we collect, use, disclose, and protect your personal information. By accessing or using NAXAS, you agree to the terms outlined in this policy.</p>
     
         <h2>Information We Collect</h2>
         
         <h6>Personal Information:</h6>
-        <ul><li>When you use Jobpilot, we may collect personal information such as your name, email address, and contact details.</li></ul>
+        <ul><li>When you use NAXAS, we may collect personal information such as your name, email address, and contact details.</li></ul>
         
         <h6>User-Generated Content:</h6>
         <ul><li>We may collect information you provide when using our services, such as job preferences, resume details, and any other content you submit.</li></ul>
         
         <h6>Device Information:</h6>
-        <ul><li>We may collect information about the device you use to access Jobpilot, including device type, operating system, and unique device identifiers.</li></ul>
+        <ul><li>We may collect information about the device you use to access NAXAS, including device type, operating system, and unique device identifiers.</li></ul>
         
         <h6>Log Data:</h6>
         <ul><li>Like many websites and applications, we automatically collect log data, which may include your IP address, browser type, pages visited, and time spent on the platform.</li></ul>
@@ -75,7 +75,7 @@ class CmsSeeder extends Seeder
 
         <h6>Providing and Improving Services:</h6>
         <ul>
-            <li>To offer, operate, maintain, and improve Jobpilot\'s features and functionality.</li>
+            <li>To offer, operate, maintain, and improve NAXAS\'s features and functionality.</li>
         </ul>
 
         <h6>Personalization:</h6>
@@ -105,7 +105,7 @@ class CmsSeeder extends Seeder
 
 
         <h2>Gallery Access Permission</h2>
-        <p>Jobpilot may request access to your device\'s gallery to provide specific functionality, such as uploading a profile picture or attaching images to job applications.</p>
+        <p>NAXAS may request access to your device\'s gallery to provide specific functionality, such as uploading a profile picture or attaching images to job applications.</p>
     
         <h6>Types of Data Collected:</h6>
         <ul><li>Photos and images stored in your device\'s gallery.</li></ul>
@@ -114,7 +114,7 @@ class CmsSeeder extends Seeder
         <ul><li>To enhance your profile, attach relevant images to job applications, etc.</li></ul>
         
         <h6>Consent:</h6>
-        <ul><li>By using Jobpilot, you grant us permission to access your device\'s gallery for the specified purposes. You can manage or revoke this permission through your device settings.</li></ul>
+        <ul><li>By using NAXAS, you grant us permission to access your device\'s gallery for the specified purposes. You can manage or revoke this permission through your device settings.</li></ul>
         
         <h6>Retention:</h6>
         <ul><li>We will only retain images from your gallery for as long as necessary to fulfill the purpose for which they were collected or as required by applicable laws.</li></ul>
@@ -128,12 +128,12 @@ class CmsSeeder extends Seeder
         <h2>Account Deletion</h2>
         <p>Users have the option to delete their accounts through the following URLs:</p>
         <ul>
-            <li><strong>Candidate Account Deletion:</strong> <a href="https://jobpilot.templatecookie.com/candidate/settings">https://jobpilot.templatecookie.com/candidate/settings</a></li>
-            <li><strong>Company Account Deletion:</strong> <a href="https://jobpilot.templatecookie.com/company/settings">https://jobpilot.templatecookie.com/company/settings</a></li>
+            <li><strong>Candidate Account Deletion:</strong> <a href="https://naxas.templatecookie.com/candidate/settings">https://naxas.templatecookie.com/candidate/settings</a></li>
+            <li><strong>Company Account Deletion:</strong> <a href="https://naxas.templatecookie.com/company/settings">https://naxas.templatecookie.com/company/settings</a></li>
         </ul>
     
         <h2>Contact Us</h2>
-        <p>If you have questions or concerns about this Privacy Policy, please contact us at <a href="mailto:hello+jobpilot@templatecookie.com">hello+jobpilot@templatecookie.com</a>.</p>';
+        <p>If you have questions or concerns about this Privacy Policy, please contact us at <a href="mailto:hello+naxas@templatecookie.com">hello+naxas@templatecookie.com</a>.</p>';
         $cms->terms_page = '<h2>01. Terms &amp; Condition</h2><p>Praesent placerat dictum elementum. Nam pulvinar urna vel lectus maximus, eget faucibus turpis hendrerit. Sed iaculis molestie arcu, et accumsan nisi. Quisque molestie velit vitae ligula luctus bibendum. Duis sit amet eros mollis, viverra ipsum sed, convallis sapien. Donec justo erat, pulvinar vitae dui ut, finibus euismod enim. Donec velit tortor, mollis eu tortor euismod, gravida lacinia arcu.</p><ul><li>In ac turpis mi. Donec quis semper neque. Nulla cursus gravida interdum.</li><li>Curabitur luctus sapien augue, mattis faucibus nisl vehicula nec. Mauris at scelerisque lorem. Nullam tempus felis ipsum, sagittis malesuada nulla vulputate et.</li><li>Aenean vel metus leo. Vivamus nec neque a libero sodales aliquam a et dolor.</li><li>Vestibulum rhoncus sagittis dolor vel finibus.</li><li>Integer feugiat lacus ut efficitur mattis. Sed quis molestie velit.</li></ul><h2>02. Limitations</h2><p>Praesent placerat dictum elementum. Nam pulvinar urna vel lectus maximus, eget faucibus turpis hendrerit. Sed iaculis molestie arcu, et accumsan nisi. Quisque molestie velit vitae ligula luctus bibendum. Duis sit amet eros mollis, viverra ipsum sed, convallis sapien. Donec justo erat, pulvinar vitae dui ut, finibus euismod enim. Donec velit tortor, mollis eu tortor euismod, gravida lacinia arcu.</p><ul><li>In ac turpis mi. Donec quis semper neque. Nulla cursus gravida interdum.</li><li>Curabitur luctus sapien augue.</li><li>mattis faucibus nisl vehicula nec, Mauris at scelerisque lorem.</li><li>Nullam tempus felis ipsum, sagittis malesuada nulla vulputate et. Aenean vel metus leo.</li><li>Vivamus nec neque a libero sodales aliquam a et dolor.</li></ul><h2>03. Security</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ex neque, elementum eu blandit in, ornare eu purus. Fusce eu rhoncus mi, quis ultrices lacus. Phasellus id pellentesque nulla. Cras erat nisi, mattis et efficitur et, iaculis a lacus. Fusce gravida augue quis leo facilisis.</p><h2>04. Privacy Policy</h2><p>Praesent non sem facilisis, hendrerit nisi vitae, volutpat quam. Aliquam metus mauris, semper eu eros vitae, blandit tristique metus. Vestibulum maximus nec justo sed maximus. Vivamus sit amet turpis sem. Integer vitae tortor ac ex scelerisque facilisis ac vitae urna. In hac habitasse platea dictumst. Maecenas imperdiet tortor arcu, nec tincidunt neque malesuada volutpat.</p><ul><li>In ac turpis mi. Donec quis semper neque. Nulla cursus gravida interdum.</li><li>Mauris at scelerisque lorem. Nullam tempus felis ipsum, sagittis malesuada nulla vulputate et.</li><li>Aenean vel metus leo.</li><li>Vestibulum rhoncus sagittis dolor vel finibus.</li><li>Integer feugiat lacus ut efficitur mattis. Sed quis molestie velit.</li></ul><p>Fusce rutrum mauris sit amet justo rutrum, ut sodales lorem ullamcorper. Aliquam vitae iaculis urna. Nulla vitae mi vel nisl viverra ullamcorper vel elementum est. Mauris vitae elit nec enim tincidunt aliquet. Donec ultrices nulla a enim pulvinar, quis pulvinar lacus consectetur. Donec dignissim, risus nec mollis efficitur, turpis erat blandit urna, eget elementum lacus lectus eget lorem.</p><p><br>&nbsp;</p>';
         $cms->refund_page = '<h2>01. Refund Policy</h2><p>Praesent placerat dictum elementum. Nam pulvinar urna vel lectus maximus, eget faucibus turpis hendrerit. Sed iaculis molestie arcu, et accumsan nisi. Quisque molestie velit vitae ligula luctus bibendum. Duis sit amet eros mollis, viverra ipsum sed, convallis sapien. Donec justo erat, pulvinar vitae dui ut, finibus euismod enim. Donec velit tortor, mollis eu tortor euismod, gravida lacinia arcu.</p><ul><li>In ac turpis mi. Donec quis semper neque. Nulla cursus gravida interdum.</li><li>Curabitur luctus sapien augue, mattis faucibus nisl vehicula nec. Mauris at scelerisque lorem. Nullam tempus felis ipsum, sagittis malesuada nulla vulputate et.</li><li>Aenean vel metus leo. Vivamus nec neque a libero sodales aliquam a et dolor.</li><li>Vestibulum rhoncus sagittis dolor vel finibus.</li><li>Integer feugiat lacus ut efficitur mattis. Sed quis molestie velit.</li></ul><h2>02. Limitations</h2><p>Praesent placerat dictum elementum. Nam pulvinar urna vel lectus maximus, eget faucibus turpis hendrerit. Sed iaculis molestie arcu, et accumsan nisi. Quisque molestie velit vitae ligula luctus bibendum. Duis sit amet eros mollis, viverra ipsum sed, convallis sapien. Donec justo erat, pulvinar vitae dui ut, finibus euismod enim. Donec velit tortor, mollis eu tortor euismod, gravida lacinia arcu.</p><ul><li>In ac turpis mi. Donec quis semper neque. Nulla cursus gravida interdum.</li><li>Curabitur luctus sapien augue.</li><li>mattis faucibus nisl vehicula nec, Mauris at scelerisque lorem.</li><li>Nullam tempus felis ipsum, sagittis malesuada nulla vulputate et. Aenean vel metus leo.</li><li>Vivamus nec neque a libero sodales aliquam a et dolor.</li></ul><h2>03. Security</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ex neque, elementum eu blandit in, ornare eu purus. Fusce eu rhoncus mi, quis ultrices lacus. Phasellus id pellentesque nulla. Cras erat nisi, mattis et efficitur et, iaculis a lacus. Fusce gravida augue quis leo facilisis.</p><h2>04. Privacy Policy</h2><p>Praesent non sem facilisis, hendrerit nisi vitae, volutpat quam. Aliquam metus mauris, semper eu eros vitae, blandit tristique metus. Vestibulum maximus nec justo sed maximus. Vivamus sit amet turpis sem. Integer vitae tortor ac ex scelerisque facilisis ac vitae urna. In hac habitasse platea dictumst. Maecenas imperdiet tortor arcu, nec tincidunt neque malesuada volutpat.</p><ul><li>In ac turpis mi. Donec quis semper neque. Nulla cursus gravida interdum.</li><li>Mauris at scelerisque lorem. Nullam tempus felis ipsum, sagittis malesuada nulla vulputate et.</li><li>Aenean vel metus leo.</li><li>Vestibulum rhoncus sagittis dolor vel finibus.</li><li>Integer feugiat lacus ut efficitur mattis. Sed quis molestie velit.</li></ul><p>Fusce rutrum mauris sit amet justo rutrum, ut sodales lorem ullamcorper. Aliquam vitae iaculis urna. Nulla vitae mi vel nisl viverra ullamcorper vel elementum est. Mauris vitae elit nec enim tincidunt aliquet. Donec ultrices nulla a enim pulvinar, quis pulvinar lacus consectetur. Donec dignissim, risus nec mollis efficitur, turpis erat blandit urna, eget elementum lacus lectus eget lorem.</p><p><br>&nbsp;</p>';
         $cms->maintenance_image = 'frontend/assets/images/all-img/coming-banner.png';

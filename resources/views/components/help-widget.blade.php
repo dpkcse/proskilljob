@@ -11,8 +11,8 @@
             <div class="help-menu">
                 <ul class="capitilize">
                     <li> <a href="https://lomeyolabs.com/get-support">Create Support Ticket</a> </li>
-                    <li> <a href="https://lomeyolabs.helpcenter.guide/collections/jobpilot-job-portal-83c890-051be">Documentation</a></li>
-                    <li> <a href="https://roadmap.templatecookie.com/t/roadmap/jobpilot">Product Roadmap</a></li>
+                    <li> <a href="https://lomeyolabs.helpcenter.guide/collections/naxas-job-portal-83c890-051be">Documentation</a></li>
+                    <li> <a href="https://roadmap.templatecookie.com/t/roadmap/naxas">Product Roadmap</a></li>
                 </ul>
                 <hr>
                 <ul>

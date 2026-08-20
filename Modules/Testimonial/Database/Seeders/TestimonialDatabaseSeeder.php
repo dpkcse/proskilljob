@@ -21,7 +21,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Emily Johnson',
                 'position' => 'TechFusion Solutions',
-                'description' => 'Jobpilot has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
+                'description' => 'NAXAS has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
                 'image' => fake()->imageUrl,
                 'code' => 'en',
                 'stars' => 5,
@@ -29,7 +29,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'David Rodriguez',
                 'position' => 'InnovateX Services',
-                'description' => "I can't thank Jobpilot enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
+                'description' => "I can't thank NAXAS enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
                 'image' => fake()->imageUrl,
                 'code' => 'en',
                 'stars' => 5,
@@ -37,7 +37,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Sarah Williams',
                 'position' => 'ProTech Industries',
-                'description' => "Jobpilot truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
+                'description' => "NAXAS truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
                 'image' => fake()->imageUrl,
                 'code' => 'en',
                 'stars' => 5,
@@ -45,7 +45,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Michael Thompson',
                 'position' => 'GlobalTech Innovations',
-                'description' => "Finding the right job seemed daunting until I discovered Jobpilot. The platform's seamless navigation and efficient filters helped me find a job that aligns perfectly with my career goals. Thank you for making my job search fruitful and enjoyable.",
+                'description' => "Finding the right job seemed daunting until I discovered NAXAS. The platform's seamless navigation and efficient filters helped me find a job that aligns perfectly with my career goals. Thank you for making my job search fruitful and enjoyable.",
                 'image' => fake()->imageUrl,
                 'code' => 'bn',
                 'stars' => 5,
@@ -53,7 +53,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Jennifer Lee',
                 'position' => 'TechGenius Solutions',
-                'description' => "I've tried several job search platforms, but Jobpilot stands out for its accuracy and relevance. The job matching algorithm is impressive and helped me find a job that perfectly fits my skills and preferences. Thank you, Jobpilot!",
+                'description' => "I've tried several job search platforms, but NAXAS stands out for its accuracy and relevance. The job matching algorithm is impressive and helped me find a job that perfectly fits my skills and preferences. Thank you, NAXAS!",
                 'image' => fake()->imageUrl,
                 'code' => 'bn',
                 'stars' => 5,
@@ -61,7 +61,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Robert Carter',
                 'position' => 'NexTech Innovations',
-                'description' => "Jobpilot is a game-changer in the job hunting scene. The platform's user-friendly interface and comprehensive job listings make it incredibly easy to find and apply for jobs. I'm thrilled with the new job opportunity I secured through Jobpilot.",
+                'description' => "NAXAS is a game-changer in the job hunting scene. The platform's user-friendly interface and comprehensive job listings make it incredibly easy to find and apply for jobs. I'm thrilled with the new job opportunity I secured through NAXAS.",
                 'image' => fake()->imageUrl,
                 'code' => 'bn',
                 'stars' => 5,
@@ -69,7 +69,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Laura Martinez',
                 'position' => 'SwiftHire Solutions',
-                'description' => "As a recent graduate, I was struggling to find a job in my field. Jobpilot not only helped me discover relevant job openings but also provided resources to enhance my job search skills. Thanks to them, I'm now employed at a prestigious company.",
+                'description' => "As a recent graduate, I was struggling to find a job in my field. NAXAS not only helped me discover relevant job openings but also provided resources to enhance my job search skills. Thanks to them, I'm now employed at a prestigious company.",
                 'image' => fake()->imageUrl,
                 'code' => 'ar',
                 'stars' => 5,
@@ -77,7 +77,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'John Davis',
                 'position' => 'TechNex Corporation',
-                'description' => "Jobpilot made my job search efficient and productive. The platform's advanced filters and regular job alerts simplified the process, and their application tracking system helped me stay organized throughout. I highly recommend Jobpilot to anyone in need of a job.",
+                'description' => "NAXAS made my job search efficient and productive. The platform's advanced filters and regular job alerts simplified the process, and their application tracking system helped me stay organized throughout. I highly recommend NAXAS to anyone in need of a job.",
                 'image' => fake()->imageUrl,
                 'code' => 'ar',
                 'stars' => 5,
@@ -85,7 +85,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Mary Wilson',
                 'position' => 'TechFusion Solutions',
-                'description' => "I was struggling to find a job that matched my skills and preferences. Jobpilot's personalized job recommendations and application tracking system helped me find the perfect job in no time. I'm now employed at a company I had only dreamed of before.",
+                'description' => "I was struggling to find a job that matched my skills and preferences. NAXAS's personalized job recommendations and application tracking system helped me find the perfect job in no time. I'm now employed at a company I had only dreamed of before.",
                 'image' => fake()->imageUrl,
                 'code' => 'ar',
                 'stars' => 5,
@@ -93,7 +93,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Emily Johnson',
                 'position' => 'TechFusion Solutions',
-                'description' => 'Jobpilot has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
+                'description' => 'NAXAS has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
                 'image' => fake()->imageUrl,
                 'code' => 'fr',
                 'stars' => 5,
@@ -101,7 +101,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'David Rodriguez',
                 'position' => 'InnovateX Services',
-                'description' => "I can't thank Jobpilot enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
+                'description' => "I can't thank NAXAS enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
                 'image' => fake()->imageUrl,
                 'code' => 'fr',
                 'stars' => 5,
@@ -109,7 +109,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Sarah Williams',
                 'position' => 'ProTech Industries',
-                'description' => "Jobpilot truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
+                'description' => "NAXAS truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
                 'image' => fake()->imageUrl,
                 'code' => 'fr',
                 'stars' => 5,
@@ -117,7 +117,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Emily Johnson',
                 'position' => 'TechFusion Solutions',
-                'description' => 'Jobpilot has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
+                'description' => 'NAXAS has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
                 'image' => fake()->imageUrl,
                 'code' => 'es',
                 'stars' => 5,
@@ -125,7 +125,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'David Rodriguez',
                 'position' => 'InnovateX Services',
-                'description' => "I can't thank Jobpilot enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
+                'description' => "I can't thank NAXAS enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
                 'image' => fake()->imageUrl,
                 'code' => 'es',
                 'stars' => 5,
@@ -133,7 +133,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Sarah Williams',
                 'position' => 'ProTech Industries',
-                'description' => "Jobpilot truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
+                'description' => "NAXAS truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
                 'image' => fake()->imageUrl,
                 'code' => 'es',
                 'stars' => 5,
@@ -141,7 +141,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Emily Johnson',
                 'position' => 'TechFusion Solutions',
-                'description' => 'Jobpilot has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
+                'description' => 'NAXAS has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
                 'image' => fake()->imageUrl,
                 'code' => 'hi',
                 'stars' => 5,
@@ -149,7 +149,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'David Rodriguez',
                 'position' => 'InnovateX Services',
-                'description' => "I can't thank Jobpilot enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
+                'description' => "I can't thank NAXAS enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
                 'image' => fake()->imageUrl,
                 'code' => 'hi',
                 'stars' => 5,
@@ -157,7 +157,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Sarah Williams',
                 'position' => 'ProTech Industries',
-                'description' => "Jobpilot truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
+                'description' => "NAXAS truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
                 'image' => fake()->imageUrl,
                 'code' => 'hi',
                 'stars' => 5,
@@ -165,7 +165,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Emily Johnson',
                 'position' => 'TechFusion Solutions',
-                'description' => 'Jobpilot has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
+                'description' => 'NAXAS has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
                 'image' => fake()->imageUrl,
                 'code' => 'id',
                 'stars' => 5,
@@ -173,7 +173,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'David Rodriguez',
                 'position' => 'InnovateX Services',
-                'description' => "I can't thank Jobpilot enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
+                'description' => "I can't thank NAXAS enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
                 'image' => fake()->imageUrl,
                 'code' => 'id',
                 'stars' => 5,
@@ -181,7 +181,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Sarah Williams',
                 'position' => 'ProTech Industries',
-                'description' => "Jobpilot truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
+                'description' => "NAXAS truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
                 'image' => fake()->imageUrl,
                 'code' => 'id',
                 'stars' => 5,
@@ -189,7 +189,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Emily Johnson',
                 'position' => 'TechFusion Solutions',
-                'description' => 'Jobpilot has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
+                'description' => 'NAXAS has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
                 'image' => fake()->imageUrl,
                 'code' => 'de',
                 'stars' => 5,
@@ -197,7 +197,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'David Rodriguez',
                 'position' => 'InnovateX Services',
-                'description' => "I can't thank Jobpilot enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
+                'description' => "I can't thank NAXAS enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
                 'image' => fake()->imageUrl,
                 'code' => 'de',
                 'stars' => 5,
@@ -205,7 +205,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Sarah Williams',
                 'position' => 'ProTech Industries',
-                'description' => "Jobpilot truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
+                'description' => "NAXAS truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
                 'image' => fake()->imageUrl,
                 'code' => 'de',
                 'stars' => 5,
@@ -213,7 +213,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'James Anderson',
                 'position' => 'InnovateX Services',
-                'description' => "Jobpilot is the best job search platform I've ever used. Their user-friendly interface and extensive job listings made my job hunt a breeze. I'm now employed at a company I had only dreamed of before. Thank you, Jobpilot!",
+                'description' => "NAXAS is the best job search platform I've ever used. Their user-friendly interface and extensive job listings made my job hunt a breeze. I'm now employed at a company I had only dreamed of before. Thank you, NAXAS!",
                 'image' => fake()->imageUrl,
                 'code' => 'en',
                 'stars' => 5,
@@ -221,7 +221,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Patricia Moore',
                 'position' => 'ProTech Industries',
-                'description' => "I can't thank Jobpilot enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills.",
+                'description' => "I can't thank NAXAS enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills.",
                 'image' => fake()->imageUrl,
                 'code' => 'bn',
                 'stars' => 5,
@@ -229,7 +229,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'John Doe',
                 'position' => 'TechFusion Solutions',
-                'description' => 'Jobpilot has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
+                'description' => 'NAXAS has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
                 'image' => fake()->imageUrl,
                 'code' => 'ar',
                 'stars' => 5,
@@ -237,7 +237,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'John Doe',
                 'position' => 'TechFusion Solutions',
-                'description' => 'Jobpilot has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
+                'description' => 'NAXAS has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
                 'image' => fake()->imageUrl,
                 'code' => 'fr',
                 'stars' => 5,
@@ -245,7 +245,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'John Doe',
                 'position' => 'TechFusion Solutions',
-                'description' => 'Jobpilot has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
+                'description' => 'NAXAS has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
                 'image' => fake()->imageUrl,
                 'code' => 'id',
                 'stars' => 5,
@@ -253,7 +253,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'John Doe',
                 'position' => 'TechFusion Solutions',
-                'description' => 'Jobpilot has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
+                'description' => 'NAXAS has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
                 'image' => fake()->imageUrl,
                 'code' => 'de',
                 'stars' => 5,
@@ -261,7 +261,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'John Doe',
                 'position' => 'TechFusion Solutions',
-                'description' => 'Jobpilot has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
+                'description' => 'NAXAS has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
                 'image' => fake()->imageUrl,
                 'code' => 'hi',
                 'stars' => 5,
@@ -269,7 +269,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'John Doe',
                 'position' => 'TechFusion Solutions',
-                'description' => 'Jobpilot has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
+                'description' => 'NAXAS has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
                 'image' => fake()->imageUrl,
                 'code' => 'es',
                 'stars' => 5,
@@ -277,7 +277,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Emily Johnson',
                 'position' => 'TechFusion Solutions',
-                'description' => 'Jobpilot has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
+                'description' => 'NAXAS has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
                 'image' => fake()->imageUrl,
                 'code' => 'bn',
                 'stars' => 5,
@@ -285,7 +285,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'David Rodriguez',
                 'position' => 'InnovateX Services',
-                'description' => "I can't thank Jobpilot enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
+                'description' => "I can't thank NAXAS enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
                 'image' => fake()->imageUrl,
                 'code' => 'bn',
                 'stars' => 5,
@@ -293,7 +293,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Sarah Williams',
                 'position' => 'ProTech Industries',
-                'description' => "Jobpilot truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
+                'description' => "NAXAS truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
                 'image' => fake()->imageUrl,
                 'code' => 'bn',
                 'stars' => 5,
@@ -301,7 +301,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Michael Thompson',
                 'position' => 'GlobalTech Innovations',
-                'description' => "Finding the right job seemed daunting until I discovered Jobpilot. The platform's seamless navigation and efficient filters helped me find a job that aligns perfectly with my career goals. Thank you for making my job search fruitful and enjoyable.",
+                'description' => "Finding the right job seemed daunting until I discovered NAXAS. The platform's seamless navigation and efficient filters helped me find a job that aligns perfectly with my career goals. Thank you for making my job search fruitful and enjoyable.",
                 'image' => fake()->imageUrl,
                 'code' => 'ar',
                 'stars' => 5,
@@ -309,7 +309,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Jennifer Lee',
                 'position' => 'TechGenius Solutions',
-                'description' => "I've tried several job search platforms, but Jobpilot stands out for its accuracy and relevance. The job matching algorithm is impressive and helped me find a job that perfectly fits my skills and preferences. Thank you, Jobpilot!",
+                'description' => "I've tried several job search platforms, but NAXAS stands out for its accuracy and relevance. The job matching algorithm is impressive and helped me find a job that perfectly fits my skills and preferences. Thank you, NAXAS!",
                 'image' => fake()->imageUrl,
                 'code' => 'ar',
                 'stars' => 5,
@@ -317,7 +317,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Robert Carter',
                 'position' => 'NexTech Innovations',
-                'description' => "Jobpilot is a game-changer in the job hunting scene. The platform's user-friendly interface and comprehensive job listings make it incredibly easy to find and apply for jobs. I'm thrilled with the new job opportunity I secured through Jobpilot.",
+                'description' => "NAXAS is a game-changer in the job hunting scene. The platform's user-friendly interface and comprehensive job listings make it incredibly easy to find and apply for jobs. I'm thrilled with the new job opportunity I secured through NAXAS.",
                 'image' => fake()->imageUrl,
                 'code' => 'ar',
                 'stars' => 5,
@@ -325,7 +325,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Laura Martinez',
                 'position' => 'SwiftHire Solutions',
-                'description' => "As a recent graduate, I was struggling to find a job in my field. Jobpilot not only helped me discover relevant job openings but also provided resources to enhance my job search skills. Thanks to them, I'm now employed at a prestigious company.",
+                'description' => "As a recent graduate, I was struggling to find a job in my field. NAXAS not only helped me discover relevant job openings but also provided resources to enhance my job search skills. Thanks to them, I'm now employed at a prestigious company.",
                 'image' => fake()->imageUrl,
                 'code' => 'en',
                 'stars' => 5,
@@ -333,7 +333,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'John Davis',
                 'position' => 'TechNex Corporation',
-                'description' => "Jobpilot made my job search efficient and productive. The platform's advanced filters and regular job alerts simplified the process, and their application tracking system helped me stay organized throughout. I highly recommend Jobpilot to anyone in need of a job.",
+                'description' => "NAXAS made my job search efficient and productive. The platform's advanced filters and regular job alerts simplified the process, and their application tracking system helped me stay organized throughout. I highly recommend NAXAS to anyone in need of a job.",
                 'image' => fake()->imageUrl,
                 'code' => 'en',
                 'stars' => 5,
@@ -341,7 +341,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Mary Wilson',
                 'position' => 'TechFusion Solutions',
-                'description' => "I was struggling to find a job that matched my skills and preferences. Jobpilot's personalized job recommendations and application tracking system helped me find the perfect job in no time. I'm now employed at a company I had only dreamed of before.",
+                'description' => "I was struggling to find a job that matched my skills and preferences. NAXAS's personalized job recommendations and application tracking system helped me find the perfect job in no time. I'm now employed at a company I had only dreamed of before.",
                 'image' => fake()->imageUrl,
                 'code' => 'en',
                 'stars' => 5,
@@ -349,7 +349,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Emily Johnson',
                 'position' => 'TechFusion Solutions',
-                'description' => 'Jobpilot has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
+                'description' => 'NAXAS has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
                 'image' => fake()->imageUrl,
                 'code' => 'es',
                 'stars' => 5,
@@ -357,7 +357,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'David Rodriguez',
                 'position' => 'InnovateX Services',
-                'description' => "I can't thank Jobpilot enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
+                'description' => "I can't thank NAXAS enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
                 'image' => fake()->imageUrl,
                 'code' => 'es',
                 'stars' => 5,
@@ -365,7 +365,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Sarah Williams',
                 'position' => 'ProTech Industries',
-                'description' => "Jobpilot truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
+                'description' => "NAXAS truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
                 'image' => fake()->imageUrl,
                 'code' => 'es',
                 'stars' => 5,
@@ -373,7 +373,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Emily Johnson',
                 'position' => 'TechFusion Solutions',
-                'description' => 'Jobpilot has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
+                'description' => 'NAXAS has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
                 'image' => fake()->imageUrl,
                 'code' => 'id',
                 'stars' => 5,
@@ -381,7 +381,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'David Rodriguez',
                 'position' => 'InnovateX Services',
-                'description' => "I can't thank Jobpilot enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
+                'description' => "I can't thank NAXAS enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
                 'image' => fake()->imageUrl,
                 'code' => 'id',
                 'stars' => 5,
@@ -389,7 +389,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Sarah Williams',
                 'position' => 'ProTech Industries',
-                'description' => "Jobpilot truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
+                'description' => "NAXAS truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
                 'image' => fake()->imageUrl,
                 'code' => 'id',
                 'stars' => 5,
@@ -397,7 +397,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Emily Johnson',
                 'position' => 'TechFusion Solutions',
-                'description' => 'Jobpilot has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
+                'description' => 'NAXAS has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
                 'image' => fake()->imageUrl,
                 'code' => 'fr',
                 'stars' => 5,
@@ -405,7 +405,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'David Rodriguez',
                 'position' => 'InnovateX Services',
-                'description' => "I can't thank Jobpilot enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
+                'description' => "I can't thank NAXAS enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
                 'image' => fake()->imageUrl,
                 'code' => 'fr',
                 'stars' => 5,
@@ -413,7 +413,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Sarah Williams',
                 'position' => 'ProTech Industries',
-                'description' => "Jobpilot truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
+                'description' => "NAXAS truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
                 'image' => fake()->imageUrl,
                 'code' => 'fr',
                 'stars' => 5,
@@ -421,7 +421,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Emily Johnson',
                 'position' => 'TechFusion Solutions',
-                'description' => 'Jobpilot has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
+                'description' => 'NAXAS has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
                 'image' => fake()->imageUrl,
                 'code' => 'hi',
                 'stars' => 5,
@@ -429,7 +429,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'David Rodriguez',
                 'position' => 'InnovateX Services',
-                'description' => "I can't thank Jobpilot enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
+                'description' => "I can't thank NAXAS enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
                 'image' => fake()->imageUrl,
                 'code' => 'hi',
                 'stars' => 5,
@@ -437,7 +437,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Sarah Williams',
                 'position' => 'ProTech Industries',
-                'description' => "Jobpilot truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
+                'description' => "NAXAS truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
                 'image' => fake()->imageUrl,
                 'code' => 'hi',
                 'stars' => 5,
@@ -445,7 +445,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Emily Johnson',
                 'position' => 'TechFusion Solutions',
-                'description' => 'Jobpilot has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
+                'description' => 'NAXAS has been a game-changer for my job search. I found my dream job in no time, thanks to their user-friendly interface and extensive job listings. Highly recommended!',
                 'image' => fake()->imageUrl,
                 'code' => 'de',
                 'stars' => 5,
@@ -453,7 +453,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'David Rodriguez',
                 'position' => 'InnovateX Services',
-                'description' => "I can't thank Jobpilot enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
+                'description' => "I can't thank NAXAS enough for their exceptional services. Their personalized job recommendations and application tracking made my job hunt a breeze. I landed an incredible job opportunity that perfectly matched my skills",
                 'image' => fake()->imageUrl,
                 'code' => 'de',
                 'stars' => 5,
@@ -461,7 +461,7 @@ class TestimonialDatabaseSeeder extends Seeder
             [
                 'name' => 'Sarah Williams',
                 'position' => 'ProTech Industries',
-                'description' => "Jobpilot truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
+                'description' => "NAXAS truly understands job seekers' needs. Their platform allowed me to connect with top employers and secure multiple interview invitations. I'm now employed in a company I had only dreamed of before.",
                 'image' => fake()->imageUrl,
                 'code' => 'de',
                 'stars' => 5,

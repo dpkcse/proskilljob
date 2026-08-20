@@ -1652,7 +1652,7 @@ if (! function_exists('loadSystemCurrency')) {
     function loadSystemCurrency()
     {
         return Cache::remember('systemCurrency', now()->addDays(30), function () {
-            // return Modules\Currency\Entities\Currency::where('code', config('jobpilot.currency'))->first();
+            // return Modules\Currency\Entities\Currency::where('code', config('currency.currency'))->first();
             return Modules\Currency\Entities\Currency::where('code', config('templatecookie.currency'))->first();
         });
     }

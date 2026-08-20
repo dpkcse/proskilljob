@@ -24,7 +24,7 @@ it('admin can visit genral settings page', function () {
 it('admin can update genral settings', function () {
     // Prepare data for updating the general settings.
     $data = [
-        'name' => 'Jobpilot test',
+        'name' => 'NAXAS test',
         'email' => 'test@lomeyo.com',
         // Uncomment the following lines if you need to upload files.
         // "dark_logo" => UploadedFile::fake()->create('dark_logo.jpg', 1024),
@@ -43,7 +43,7 @@ it('admin can update genral settings', function () {
 it('admin can update app configuartion', function () {
     // Prepare data for updating the general settings.
     $data = [
-        'name' => 'Jobpilot test',
+        'name' => 'NAXAS test',
         'email' => 'test@lomeyo.com',
         // Uncomment the following lines if you need to upload files.
         // "dark_logo" => UploadedFile::fake()->create('dark_logo.jpg', 1024),

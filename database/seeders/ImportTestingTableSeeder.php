@@ -40,7 +40,7 @@ class ImportTestingTableSeeder extends Seeder
     protected function settingSeed()
     {
         $setting = new Setting;
-        $setting->email = 'jobpilot@templatecookie.com';
+        $setting->email = 'hello@naxas.ai';
         $setting->favicon_image = 'frontend/assets/images/logo/fav.png';
         $setting->sidebar_color = '#092433';
         $setting->sidebar_txt_color = '#C1D6F0';

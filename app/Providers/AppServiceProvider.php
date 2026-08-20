@@ -100,7 +100,7 @@ class AppServiceProvider extends ServiceProvider
             view()->share('appSetup', $appSetup);
 
             view()->share('setting', $setting);
-            // view()->share('currency_symbol', config('jobpilot.currency_symbol'));
+            // view()->share('currency_symbol', config('currency.currency_symbol'));
             view()->share('currency_symbol', config('templatecookie.currency_symbol'));
 
             view()->share('languages', $languages);

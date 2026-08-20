@@ -79,7 +79,7 @@
         @endif
         <ul class="tw-list-none tw-space-y-2.5 tw-p-0 tw-mt-6">
             <li>
-                <a class="tw-inline-flex tw-gap-2 tw-items-center tw-text-base" href="https://www.templatecookie.com/docs/jobpilot/introduction" target="_blank">
+                <a class="tw-inline-flex tw-gap-2 tw-items-center tw-text-base" href="https://www.templatecookie.com/docs/naxas/introduction" target="_blank">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="tw-w-6 tw-h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -99,7 +99,7 @@
                 </a>
             </li>
             <li>
-                <a class="tw-inline-flex tw-gap-2 tw-items-center tw-text-base" href="https://go.templatecookie.com/jobpilot-regular" target="_blank">
+                <a class="tw-inline-flex tw-gap-2 tw-items-center tw-text-base" href="https://go.templatecookie.com/naxas-regular" target="_blank">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="tw-w-5 tw-h-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
