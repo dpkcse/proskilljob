@@ -152,6 +152,8 @@ class SettingsController extends Controller
             // validation
             $request->validate([
                 'footer_phone_no' => ['nullable'],
+                'footer_address' => ['nullable', 'string'],
+                'footer_trade_license_number' => ['nullable', 'string', 'max:255'],
                 'footer_facebook_link' => ['nullable', 'url'],
                 'footer_instagram_link' => ['nullable', 'url'],
                 'footer_twitter_link' => ['nullable', 'url'],
@@ -165,6 +167,8 @@ class SettingsController extends Controller
             // Footer Update
             $cms = cms::first();
             $cms->footer_phone_no = $request->footer_phone_no;
+            $cms->footer_address = $request->footer_address;
+            $cms->footer_trade_license_number = $request->footer_trade_license_number;
             $cms->footer_facebook_link = $request->footer_facebook_link;
             $cms->footer_instagram_link = $request->footer_instagram_link;
             $cms->footer_twitter_link = $request->footer_twitter_link;

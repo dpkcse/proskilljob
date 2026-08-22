@@ -14,6 +14,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class CompanySettingUpdateService
 {
@@ -182,6 +183,12 @@ class CompanySettingUpdateService
             'industry_type' => 'required',
             'team_size' => 'required',
             'establishment_date' => 'nullable',
+            'company_registration_number' => [
+                'required',
+                'string',
+                'max:100',
+                Rule::unique('companies', 'company_registration_number')->ignore(auth()->user()->company->id),
+            ],
         ]);
 
         $company = Company::where('user_id', auth()->id())->first();
@@ -229,6 +236,7 @@ class CompanySettingUpdateService
                 'team_size_id' => $request->team_size,
                 'establishment_date' => $request->establishment_date ?? null,
                 'website' => $request->website,
+                'company_registration_number' => trim($request->company_registration_number),
                 'vision' => $request->vision,
             ]);
         }

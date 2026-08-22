@@ -77,18 +77,25 @@
                     </div>
                 </div>
             @endif
-            <section class="pricing-area mt-5" id="premium_pricing_package">
-                <div class="row">
-                    @forelse ($plans as $plan)
-                        @if ($plan->frontend_show)
-                            <div class="col-xl-4 col-lg-4 col-md-6 rt-mb-24">
-                                <div class="single-price-table mb-4 mb-md-0 {{ $plan->recommended ? 'active' : '' }}">
+            @php
+                $campaignPlans = $plans->where('frontend_show', true);
+            @endphp
+            <section class="pricing-area campaign-pricing-area mt-5" id="premium_pricing_package">
+                @if ($campaignPlans->where('price', '>', 0)->count())
+                    <div class="campaign-discount-banner">
+                        {{ __('hire_now_with_90_percent_discount') }}
+                    </div>
+                @endif
+                <div class="row g-4 campaign-plan-grid">
+                    @forelse ($campaignPlans as $plan)
+                            <div class="col-xl-4 col-lg-4 col-md-6">
+                                <div class="single-price-table campaign-price-card mb-4 mb-md-0 {{ $plan->recommended ? 'active' : '' }}">
                                     <div class="price-header">
-                                        <h6 class="rt-mb-10">{{ $plan->label }}</h6>
+                                        <h6>{{ $plan->label }}</h6>
                                         @if ($plan->recommended)
-                                            <span class="badge bg-primary-500 text-white">{{ __('recommanded') }}</span>
+                                            <span class="recommended-ribbon">{{ __('recommanded') }}</span>
                                         @endif
-                                        <span class="text-gray-500 body-font-3 rt-mb-15 d-block">
+                                        <span class="plan-subtitle d-block">
                                             @if (isset($plan->descriptions) && isset($plan->descriptions[0]))
                                                 {!! $plan->descriptions[0]->description !!}
                                             @else
@@ -103,14 +110,23 @@
                                                 @endif
                                             @endif
                                         </span>
-                                        <div>
-                                            <span
-                                                class="tw-text-[#0A65CC] tw-text-[36px] tw-leading-[44px] tw-font-medium">
-                                                {{ currencyPosition($plan->price, true,$current_currency) }}
-                                            </span>
-                                        </div>
                                     </div>
                                     <div class="price-body">
+                                        <div class="campaign-price-wrap">
+                                            @if ($plan->price > 0)
+                                                <div class="original-price">
+                                                    {{ currencyPosition(($plan->price * 10) + 9, true, $current_currency) }}
+                                                </div>
+                                                <div class="discounted-price">
+                                                    {{ currencyPosition($plan->price, true, $current_currency) }}
+                                                    <small>/month</small>
+                                                </div>
+                                                <span class="discount-badge">90% OFF</span>
+                                                <span class="tax-note">{{ __('vat_included') }}</span>
+                                            @else
+                                                <div class="discounted-price free-price">{{ __('free') }}</div>
+                                            @endif
+                                        </div>
                                         <ul class="rt-list">
                                             <li>
                                                 <span class="tw-inline-flex tw-justify-center tw-items-center tw-w-6 tw-h-6 tw-rounded-full tw-bg-[#eef5fc]">
@@ -196,38 +212,38 @@
                                                     @csrf
                                                     <input type="hidden" class="d-none tw-hidden" name="plan"
                                                         value="{{ $plan->id }}" readonly>
-                                                    <button class="btn btn-primary-50 d-block">
+                                                    <button class="btn campaign-plan-button d-block">
                                                         <span class="button-content-wrapper ">
                                                             <span class="button-icon align-icon-right">
                                                                 <i class="ph-arrow-right"></i>
                                                             </span>
                                                             <span class="button-text">
-                                                                {{ __('get_started') }}
+                                                                {{ __('choose') }} {{ $plan->label }}
                                                             </span>
                                                         </span>
                                                     </button>
                                                 </form>
                                             @else
                                                 <a href="{{ route('website.plan.details', $plan->label) }}"
-                                                    class="btn btn-primary-50 d-block">
+                                                    class="btn campaign-plan-button d-block">
                                                     <span class="button-content-wrapper ">
                                                         <span class="button-icon align-icon-right">
                                                             <i class="ph-arrow-right"></i>
                                                         </span>
                                                         <span class="button-text">
-                                                            {{ __('get_started') }}
+                                                            {{ __('choose') }} {{ $plan->label }}
                                                         </span>
                                                     </span>
                                                 </a>
                                             @endif
                                         @else
-                                            <button type="button" class="btn btn-primary-50 d-block login_required">
+                                            <button type="button" class="btn campaign-plan-button d-block login_required">
                                                 <span class="button-content-wrapper ">
                                                     <span class="button-icon align-icon-right">
                                                         <i class="ph-arrow-right"></i>
                                                     </span>
                                                     <span class="button-text">
-                                                        {{ __('get_started') }}
+                                                    {{ __('choose') }} {{ $plan->label }}
                                                     </span>
                                                 </span>
                                             </button>
@@ -235,7 +251,6 @@
                                     </div>
                                 </div>
                             </div>
-                        @endif
                     @empty
                         <div class="col-md-12">
                             <div class="card text-center">
@@ -416,6 +431,227 @@
             line-height: 20px;
             color: #474C54;
             margin-bottom: 16px;
+        }
+
+        .campaign-pricing-area {
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 48px 0 64px;
+        }
+
+        .campaign-plan-grid {
+            margin-top: 0;
+        }
+
+        .campaign-discount-banner {
+            width: max-content;
+            max-width: calc(100% - 32px);
+            margin: 0 auto 24px;
+            padding: 6px 24px;
+            color: #fff;
+            background: linear-gradient(135deg, #51206f, #7140a0);
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 4px 10px rgba(81, 32, 111, .18);
+        }
+
+        .campaign-price-card {
+            height: 100%;
+            min-height: 0 !important;
+            padding: 0 !important;
+            overflow: hidden;
+            border: 1px solid #e4dbea;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0 10px 28px rgba(42, 19, 58, .08);
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .campaign-price-card:hover,
+        .campaign-price-card.active {
+            transform: translateY(-3px);
+            border-color: #653087;
+            box-shadow: 0 16px 34px rgba(81, 32, 111, .14);
+        }
+
+        .campaign-plan-grid > div + div .campaign-price-card {
+            border-left: 1px solid #e4dbea;
+        }
+
+        .campaign-plan-grid > div:nth-child(odd) .campaign-price-card {
+            border-left: 1px solid #e4dbea;
+        }
+
+        .campaign-plan-grid > div:nth-child(n + 3) .campaign-price-card {
+            border-top: 1px solid #e4dbea;
+        }
+
+        .campaign-price-card .price-header {
+            min-height: 76px;
+            padding: 11px 18px 10px;
+            color: #fff;
+            margin: 0 !important;
+            text-align: center !important;
+            background: linear-gradient(135deg, #51206f, #7140a0);
+            position: relative;
+        }
+
+        .campaign-price-card .price-header h6 {
+            margin: 0 0 5px;
+            color: #fff;
+            font-size: 17px;
+            font-weight: 700;
+            text-align: center !important;
+        }
+
+        .campaign-price-card .plan-subtitle,
+        .campaign-price-card .plan-subtitle * {
+            margin: 0;
+            color: rgba(255, 255, 255, .88) !important;
+            font-size: 10px;
+            line-height: 1.35;
+            text-align: center !important;
+        }
+
+        .recommended-ribbon {
+            display: none;
+        }
+
+        .campaign-price-card .price-body {
+            padding: 12px 20px 4px !important;
+        }
+
+        .campaign-price-wrap {
+            min-height: 105px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .original-price {
+            color: #4f4655;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.2;
+            text-decoration: line-through;
+        }
+
+        .discounted-price {
+            margin: 3px 0 8px;
+            color: #5b2381;
+            font-size: 34px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .discounted-price small {
+            color: #18191c;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .free-price {
+            font-size: 40px;
+        }
+
+        .discount-badge {
+            padding: 3px 10px;
+            color: #38243f;
+            background: #f5e66b;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .tax-note {
+            margin-top: 5px;
+            color: #57505c;
+            font-size: 9px;
+        }
+
+        .campaign-price-card .rt-list {
+            margin: 0;
+            padding: 0;
+        }
+
+        .campaign-price-card .rt-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 0;
+            color: #28202d;
+            border-bottom: 1px solid #f0ebf3;
+            font-size: 11px;
+            text-align: left;
+        }
+
+        .campaign-price-card .rt-list li:last-child {
+            border-bottom: 0;
+        }
+
+        .campaign-price-card .rt-list li > span:first-child {
+            flex: 0 0 auto;
+        }
+
+        .campaign-price-card .rt-list li svg path {
+            stroke: #5b2381;
+        }
+
+        .campaign-price-card .price-footer {
+            padding: 11px 20px 16px !important;
+        }
+
+        .campaign-plan-button {
+            width: 100%;
+            padding: 8px 14px;
+            color: #fff !important;
+            background: linear-gradient(135deg, #51206f, #7140a0);
+            border: 0;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            box-shadow: none;
+        }
+
+        .campaign-plan-button:hover {
+            color: #fff !important;
+            background: linear-gradient(135deg, #42175e, #5e2d85);
+        }
+
+        @media (max-width: 767px) {
+            .campaign-discount-banner {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .campaign-price-card .price-header {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .campaign-price-card .price-body,
+            .campaign-price-card .price-footer {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .campaign-plan-grid > div + div .campaign-price-card {
+                border-left: 1px solid #e4dbea;
+                border-top: 1px solid #e4dbea;
+            }
+
+            .campaign-pricing-area {
+                padding: 32px 0 44px;
+            }
         }
     </style>
 @endsection

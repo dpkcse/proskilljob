@@ -70,6 +70,21 @@
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label class="pointer body-font-4 d-block text-gray-900 rt-mb-8">
+                            {{ __('company_registration_or_trade_license_number') }}
+                            <x-forms.required />
+                        </label>
+                        <div class="fromGroup">
+                            <input name="company_registration_number"
+                                class="form-control @error('company_registration_number') is-invalid @enderror"
+                                type="text" maxlength="100"
+                                value="{{ old('company_registration_number', $user->company->company_registration_number) }}">
+                            @error('company_registration_number')
+                                <span class="invalid-feedback" role="alert"><strong>{{ __($message) }}</strong></span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                        <label class="pointer body-font-4 d-block text-gray-900 rt-mb-8">
                             {{ __('website') }}
                         </label>
                         <div class="fromGroup has-icon2">

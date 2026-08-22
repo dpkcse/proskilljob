@@ -60,7 +60,7 @@
                                                 class="switcher-container tw-px-0 tw-w-full tw-border-2 tw-border-red-600 tw-flex">
                                                 <input id="switcher-toggle-on"
                                                     class="switcher-toggle switcher-toggle-left tw-w-full" name="role"
-                                                    value="candidate" type="radio" checked="">
+                                                    value="candidate" type="radio" {{ old('role', 'candidate') === 'candidate' ? 'checked' : '' }}>
                                                 <label for="switcher-toggle-on"
                                                     class="switcher-button tw-w-full tw-rounded-tl-md  tw-rounded-bl-md"
                                                     id="web-btn">
@@ -69,7 +69,7 @@
                                                 </label>
                                                 <input id="switcher-toggle-off"
                                                     class="switcher-toggle switcher-toggle-right tw-w-full" name="role"
-                                                    value="company" type="radio">
+                                                    value="company" type="radio" {{ old('role') === 'company' ? 'checked' : '' }}>
                                                 <label for="switcher-toggle-off"
                                                     class="switcher-button tw-w-full  tw-rounded-tr-md tw-rounded-br-md"
                                                     id="wp-btn">
@@ -98,6 +98,18 @@
                                                 class="field form-control @error('email') is-invalid @enderror"
                                                 placeholder="{{ __('email_address') }}">
                                             @error('email')
+                                                <span class="invalid-feedback" role="alert">{{ __($message) }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12" id="company-registration-number-group">
+                                        <div class="fromGroup rt-mb-15">
+                                            <input type="text" id="company_registration_number"
+                                                value="{{ old('company_registration_number') }}"
+                                                name="company_registration_number" maxlength="100"
+                                                class="field form-control @error('company_registration_number') is-invalid @enderror"
+                                                placeholder="{{ __('company_registration_or_trade_license_number') }}">
+                                            @error('company_registration_number')
                                                 <span class="invalid-feedback" role="alert">{{ __($message) }}</span>
                                             @enderror
                                         </div>
@@ -392,9 +404,20 @@
     </script>
     <script>
         $(document).ready(function() {
+            toggleCompanyRegistrationField();
             validate();
-            $('#name, #email, #password, #password_confirmation, #term').keyup(validate);
+            $('#name, #email, #password, #password_confirmation, #company_registration_number, #term').on('keyup change', validate);
+            $('input[name="role"]').on('change', function() {
+                toggleCompanyRegistrationField();
+                validate();
+            });
         });
+
+        function toggleCompanyRegistrationField() {
+            const isEmployer = $('input[name="role"]:checked').val() === 'company';
+            $('#company-registration-number-group').toggle(isEmployer);
+            $('#company_registration_number').prop('required', isEmployer);
+        }
 
         function validate() {
             if (
@@ -402,7 +425,8 @@
                 $('#email').val().length > 0 &&
                 $('#password').val().length > 0 &&
                 $('#password_confirmation').val().length > 0 &&
-                $('#term').val().length > 0) {
+                $('#term').is(':checked') &&
+                ($('input[name="role"]:checked').val() !== 'company' || $('#company_registration_number').val().trim().length > 0)) {
                 $('#submitButton').attr('disabled', false);
             } else {
                 $('#submitButton').attr('disabled', true);

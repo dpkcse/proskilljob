@@ -18,16 +18,23 @@
                             <div class="max-312 body-font-4 mt-2 text-gray-500">
                                 {{ __('footer_description') }}
                             </div>
+                            @if ($cms_setting?->footer_address)
                                 <div class="body-font-4 mt-3 text-gray-500">
                                     <div class="d-flex align-items-start">
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-2 mt-1">
                                             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#767E94"/>
                                         </svg>
                                         <div>
-                                            <span class="text-gray-10 fw-medium">{{ __('address') }}: {{ __('footer_address') }}</span>
+                                            <span class="text-gray-10 fw-medium">{{ __('address') }}: {{ $cms_setting->footer_address }}</span>
                                         </div>
                                     </div>
                                 </div>
+                            @endif
+                            @if ($cms_setting?->footer_trade_license_number)
+                                <div class="body-font-4 mt-2 text-gray-500">
+                                    <span class="text-gray-10 fw-medium">{{ __('trade_license_number') }}: {{ $cms_setting->footer_trade_license_number }}</span>
+                                </div>
+                            @endif
                         </div>
                     </address>
                 </div>

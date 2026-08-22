@@ -181,6 +181,19 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 mb-3">
+                                                    <x-forms.label name="company_registration_or_trade_license_number"
+                                                        class="body-font-4 d-block text-gray-900 rt-mb-8" />
+                                                    <div class="fromGroup">
+                                                        <x-forms.input type="text" name="company_registration_number"
+                                                            value="{{ old('company_registration_number', $user->company->company_registration_number) }}"
+                                                            maxlength="100"
+                                                            class="@error('company_registration_number') is-invalid @enderror" />
+                                                        @error('company_registration_number')
+                                                            <span class="text-danger">{{ __($message) }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 mb-3">
                                                     <x-forms.label name="website" :required="false"
                                                         class="body-font-4 d-block text-gray-900 rt-mb-8" />
                                                     <div class="fromGroup has-icon2">

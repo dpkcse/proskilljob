@@ -53,7 +53,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://127.0.0.1:8000'),
-    'asset_url' => env('APP_URL', '/'), // env('ASSET_URL', null)
+    'asset_url' => env('ASSET_URL'),
     'mode' => env('APP_MODE', 'live'),
     'hide_helper' => env('HIDE_HELPER', false),
     'demo_mode' => env('DEMO_MODE', false),

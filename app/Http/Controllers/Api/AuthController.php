@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
@@ -75,8 +76,17 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'role' => ['required', Rule::in(['candidate', 'company'])],
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'company_registration_number' => [
+                'nullable',
+                'required_if:role,company',
+                'string',
+                'max:100',
+                Rule::unique('companies', 'company_registration_number'),
+                Rule::unique('pending_users', 'company_registration_number'),
+            ],
         ]);
 
         $newUsername = Str::slug($request->name);
@@ -95,6 +105,12 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        if ($user->role === 'company') {
+            $user->company()->update([
+                'company_registration_number' => trim($request->company_registration_number),
+            ]);
+        }
 
         try {
             $admins = Admin::all();

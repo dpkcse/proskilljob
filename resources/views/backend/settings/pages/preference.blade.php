@@ -38,6 +38,28 @@
                     </div>
                 </div>
                 <div class="col-sm-12">
+                    <div class="form-group">
+                        <label>{{ __('address') }}:</label>
+                        <textarea class="form-control @error('footer_address') is-invalid @enderror p-2"
+                            name="footer_address" rows="3">{{ old('footer_address', $cms_setting?->footer_address) }}</textarea>
+                        @error('footer_address')
+                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label>{{ __('trade_license_number') }}:</label>
+                        <input type="text"
+                            class="form-control @error('footer_trade_license_number') is-invalid @enderror p-2"
+                            name="footer_trade_license_number"
+                            value="{{ old('footer_trade_license_number', $cms_setting?->footer_trade_license_number) }}">
+                        @error('footer_trade_license_number')
+                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-sm-12">
                     <div class="alert alert-warning">
                         {{ __('leave_the_social_media_input_field_empty_to_remove_the_link_from_website') }}
                     </div>

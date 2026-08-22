@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -78,6 +79,7 @@ class RegisterController extends Controller
             $data,
             [
                 'name' => ['required', 'string', 'max:255'],
+                'role' => ['required', Rule::in(['candidate', 'company'])],
                 'email' => [
                     'required',
                     'string',
@@ -88,6 +90,14 @@ class RegisterController extends Controller
                     'unique:pending_users,email',
                 ],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'company_registration_number' => [
+                    'nullable',
+                    'required_if:role,company',
+                    'string',
+                    'max:100',
+                    Rule::unique('companies', 'company_registration_number'),
+                    Rule::unique('pending_users', 'company_registration_number'),
+                ],
                 'g-recaptcha-response' => config('captcha.active') ? 'required|captcha' : '',
             ],
             [
@@ -127,6 +137,9 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'username' => $username,
             'email' => $data['email'],
+            'company_registration_number' => $data['role'] === 'company'
+                ? trim($data['company_registration_number'])
+                : null,
             'password' => Hash::make($data['password']),
             'created_ip' => request()->ip(),
             'verification_token' => $verificationToken,

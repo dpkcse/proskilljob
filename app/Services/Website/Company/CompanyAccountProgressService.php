@@ -10,6 +10,7 @@ use App\Models\OrganizationType;
 use App\Models\OrganizationTypeTranslation;
 use App\Models\User;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class CompanyAccountProgressService
 {
@@ -49,6 +50,12 @@ class CompanyAccountProgressService
                     'industry_type_id' => 'required|string',
                     'establishment_date' => 'nullable',
                     'website' => 'nullable|url',
+                    'company_registration_number' => [
+                        'required',
+                        'string',
+                        'max:100',
+                        Rule::unique('companies', 'company_registration_number')->ignore($company->id),
+                    ],
                     'vision' => 'required',
                 ]);
 
@@ -236,6 +243,7 @@ class CompanyAccountProgressService
             'establishment_date' => $request->establishment_date ? date('Y-m-d', strtotime($request->establishment_date)) : null,
             'team_size_id' => $request->team_size_id,
             'website' => $request->website,
+            'company_registration_number' => trim($request->company_registration_number),
             'vision' => $request->vision,
         ]);
 

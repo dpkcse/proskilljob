@@ -40,6 +40,12 @@ class EmailVerificationController extends Controller
                 'email_verified_at' => now(),
             ]);
 
+            if ($user->role === 'company') {
+                $user->company()->update([
+                    'company_registration_number' => $pendingUser->company_registration_number,
+                ]);
+            }
+
             // Delete the pending user record and verification token
             $pendingUser->delete();
 

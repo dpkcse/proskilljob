@@ -50,6 +50,10 @@
                                             @endif
                                         </h3>
                                         <p>{{ $company->user->email }}</p>
+                                        <p>
+                                            <strong>{{ __('company_registration_or_trade_license_number') }}:</strong>
+                                            {{ $company->company_registration_number ?: __('not_provided') }}
+                                        </p>
                                         @if ($company->user->socialInfo && $company->user->socialInfo->count() > 0)
                                             <div class="d-flex flex-wrap">
                                                 @foreach ($company->user->socialInfo as $contact)
