@@ -187,7 +187,7 @@
                                                         <x-forms.input type="text" name="company_registration_number"
                                                             value="{{ old('company_registration_number', $user->company->company_registration_number) }}"
                                                             maxlength="100"
-                                                            class="@error('company_registration_number') is-invalid @enderror" />
+                                                            class="{{ $errors->has('company_registration_number') ? 'is-invalid' : '' }}" />
                                                         @error('company_registration_number')
                                                             <span class="text-danger">{{ __($message) }}</span>
                                                         @enderror
