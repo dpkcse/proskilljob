@@ -3,7 +3,7 @@
 namespace App\Services\API\Website\Company\PostingJob;
 
 use App\Http\Traits\CompanyJobTrait;
-use App\Http\Traits\Jobable;
+use App\Http\Traits\JobAble;
 use App\Models\Admin;
 use App\Models\Education;
 use App\Models\Experience;
@@ -23,7 +23,7 @@ use Modules\Language\Entities\Language;
 
 class StoreJobService
 {
-    use ApiResponseHelpers, CompanyJobTrait, Jobable;
+    use ApiResponseHelpers, CompanyJobTrait, JobAble;
 
     public function execute($request)
     {
