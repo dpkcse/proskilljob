@@ -118,6 +118,7 @@
                                                         </a>
                                                     </td>
                                                     <td tabindex="0">
+                                                        @if ($job->job->company)
                                                         <a href="{{ route('company.show', $job->job->company->id) }}" class="company">
                                                             @if ($job->job->company)
                                                                 <img src="{{ asset($job->job->company->logo_url) }}" alt="image">
@@ -130,6 +131,14 @@
                                                                 </p>
                                                             </div>
                                                         </a>
+                                                        @else
+                                                            <div class="company">
+                                                                <x-svg.briefcase-logo />
+                                                                <div>
+                                                                    <p><span>{{ $job->job->company_name }}</span></p>
+                                                                </div>
+                                                            </div>
+                                                        @endif
                                                     </td>
                                                     <td tabindex="0">
                                                         <a href="{{ route('job.show', $job->job->id) }}" class="company">
@@ -142,7 +151,7 @@
                                                             @elseif(strtolower(optional($job->applicationGroup)->name) == strtolower(__('interview'))) badge-success
                                                             @elseif(strtolower(optional($job->applicationGroup)->name) == strtolower(__('rejected'))) badge-danger
                                                             @else badge-secondary @endif">
-                                                            {{ $job->applicationGroup->name ?? __('not_available') }}
+                                                            {{ $job->applicationGroup->name ?? __('pending') }}
                                                         </span>
                                                     </td>
                                                     <td tabindex="0">

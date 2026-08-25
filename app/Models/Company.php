@@ -222,6 +222,14 @@ class Company extends Model implements HasMedia
         return $this->hasMany(ApplicationGroup::class, 'company_id');
     }
 
+    public function defaultApplicationGroup(): ApplicationGroup
+    {
+        return $this->applicationGroups()->firstOrCreate(
+            ['is_deleteable' => false],
+            ['name' => __('no_group'), 'order' => 1]
+        );
+    }
+
     /**
      * Get the company cv views
      *

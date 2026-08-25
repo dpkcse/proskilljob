@@ -97,7 +97,7 @@
     @endif
     <!-- google adsense area end -->
     <!-- category section -->
-    <section class="tw-bg-primary-50 md:tw-py-20 tw-py-12">
+    <section class="home-top-categories tw-bg-primary-50">
         <div class="container">
             <div>
                 <h2>{{ __('top_categories') }}</h2>
@@ -476,11 +476,33 @@
     @include('map::links')
     <style>
         .hero-section-3 {
-            padding: 100px 0px;
+            margin-top: 20px;
+            padding: 140px 0;
             background-image: url('{{ asset('frontend/assets/images/hero-bg-3.jpeg') }}');
             background-repeat: no-repeat;
             background-size: cover;
+            background-position: center;
             position: relative;
+        }
+
+        .home-top-categories {
+            padding: 32px 0;
+        }
+
+        @media (max-width: 991.98px) {
+            .hero-section-3 {
+                padding: 110px 0;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .hero-section-3 {
+                padding: 80px 0;
+            }
+
+            .home-top-categories {
+                padding: 28px 0;
+            }
         }
 
         .hero-section-3::after {

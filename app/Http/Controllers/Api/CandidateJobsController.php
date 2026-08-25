@@ -134,26 +134,34 @@ class CandidateJobsController extends Controller
         }
 
         $candidate = auth('sanctum')->user()->candidate;
-        $job = Job::find($request->job_id);
+        $job = Job::with(['company.user'])->find($request->job_id);
+
+        if (! $job) {
+            return $this->respondError('This job is no longer available.');
+        }
 
         if ($job->apply_on != 'app') {
             return $this->respondError('You can not apply on this job. Because this job is not for apply on website');
         }
+
+        $applicationGroup = $job->company?->defaultApplicationGroup();
 
         DB::table('applied_jobs')->insert([
             'candidate_id' => $candidate->id,
             'job_id' => $job->id,
             'cover_letter' => $request->cover_letter,
             'candidate_resume_id' => $request->resume_id,
-            'application_group_id' => $job->company->applicationGroups->where('is_deleteable', false)->first()->id ?? 1,
+            'application_group_id' => $applicationGroup?->id,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
         // make notification to candidate and company for notify
-        $job->company->user->notify(new ApplyJobNotification(auth('sanctum')->user(), $job->company->user, $job));
+        if ($job->company->user) {
+            $job->company->user->notify(new ApplyJobNotification(auth('sanctum')->user(), $job->company->user, $job));
+        }
 
-        if (auth('sanctum')->user()->recent_activities_alert) {
+        if ($job->company->user && auth('sanctum')->user()->recent_activities_alert) {
             auth('sanctum')->user()->notify(new ApplyJobNotification(auth('sanctum')->user(), $job->company->user, $job));
         }
 

@@ -696,22 +696,42 @@ class WebsiteController extends Controller
             }
 
             $candidate = auth('user')->user()->candidate;
-            $job = Job::find($request->id);
+            $job = Job::with(['company.user'])->find($request->id);
+
+            if (! $job) {
+                flashError(__('this_job_is_no_longer_available'));
+
+                return back();
+            }
+
+            $resumeBelongsToCandidate = CandidateResume::whereKey($request->resume_id)
+                ->where('candidate_id', $candidate->id)
+                ->exists();
+
+            if (! $resumeBelongsToCandidate) {
+                flashError(__('please_select_a_valid_resume'));
+
+                return back();
+            }
+
+            $applicationGroup = $job->company?->defaultApplicationGroup();
 
             DB::table('applied_jobs')->insert([
                 'candidate_id' => $candidate->id,
                 'job_id' => $job->id,
                 'cover_letter' => $request->cover_letter,
                 'candidate_resume_id' => $request->resume_id,
-                'application_group_id' => $job->company->applicationGroups->where('is_deleteable', false)->first()->id ?? 1,
+                'application_group_id' => $applicationGroup?->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
 
             // make notification to candidate and company for notify
-            $job->company->user->notify(new ApplyJobNotification(auth('user')->user(), $job->company->user, $job));
+            if ($job->company->user) {
+                $job->company->user->notify(new ApplyJobNotification(auth('user')->user(), $job->company->user, $job));
+            }
 
-            if (auth('user')->user()->recent_activities_alert) {
+            if ($job->company->user && auth('user')->user()->recent_activities_alert) {
                 auth('user')
                     ->user()
                     ->notify(new ApplyJobNotification(auth('user')->user(), $job->company->user, $job));

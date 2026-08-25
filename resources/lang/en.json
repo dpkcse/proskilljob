@@ -1860,5 +1860,7 @@
     ,"maximum": "Maximum"
     ,"view_current_file": "View current file"
     ,"remove_current_file": "Remove current file"
+    ,"this_job_is_no_longer_available": "This job is no longer available."
+    ,"please_select_a_valid_resume": "Please select a valid resume."
 
 }
