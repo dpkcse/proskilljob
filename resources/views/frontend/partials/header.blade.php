@@ -1,8 +1,16 @@
 @php
     $isHomePage = request()->routeIs('website.home');
+    $portalUser = auth('user')->user();
+    $isAuthenticatedPortal = (bool) $portalUser;
     $headerBgClass = $isHomePage
-        ? (auth('user')->check() ? 'auth-user-bg' : '')
+        ? ($isAuthenticatedPortal ? 'auth-user-bg' : '')
         : 'auth-user-bg';
+    $profileImage = $isAuthenticatedPortal
+        ? ($portalUser->role === 'company'
+            ? $portalUser->company?->logo_url
+            : $portalUser->candidate?->photo)
+        : null;
+    $profileImageFallback = asset('backend/image/default.png');
 @endphp
 
 
@@ -29,6 +37,148 @@ config('templatecookie.default_language'))->first();
         .topbar-notice.auth-user-bg a,
         .topbar-notice.auth-user-bg .link-dark {
             color: #ffffff !important;
+        }
+
+        /* Candidate/employer portal header only. Guest and auth pages are intentionally untouched. */
+        @media (min-width: 992px) {
+            .n-header--bottom.authenticated-portal-header {
+                padding: 16px 0 !important;
+            }
+
+            .authenticated-portal-header > .container > .d-flex {
+                min-height: 64px;
+                flex-wrap: nowrap !important;
+                justify-content: space-between;
+                gap: 28px !important;
+            }
+
+            .authenticated-portal-header .n-header--bottom__left {
+                min-width: 0;
+                flex: 1 1 auto;
+                gap: clamp(24px, 3vw, 52px) !important;
+            }
+
+            .authenticated-portal-header .brand-logo {
+                flex: 0 0 auto;
+            }
+
+            .authenticated-portal-header .brand-logo img {
+                display: block;
+                width: auto;
+                max-width: 170px;
+                height: 42px;
+                object-fit: contain;
+            }
+
+            .authenticated-portal-header .main-menu {
+                position: static;
+                flex: 1 1 auto;
+                min-width: 0;
+            }
+
+            .authenticated-portal-header .main-menu > .container {
+                width: auto;
+                max-width: none;
+                padding: 0;
+            }
+
+            .authenticated-portal-header .menu-active-classes {
+                align-items: center;
+                justify-content: center;
+                gap: clamp(16px, 1.7vw, 30px);
+                white-space: nowrap;
+            }
+
+            .authenticated-portal-header .menu-active-classes > li > a {
+                color: rgba(255, 255, 255, .88) !important;
+                border-top: 0 !important;
+                border-bottom: 2px solid transparent;
+                padding: 10px 0 !important;
+                font-weight: 500;
+            }
+
+            .authenticated-portal-header .menu-active-classes > li > a:hover,
+            .authenticated-portal-header .menu-active-classes > li > a.active {
+                color: #ffffff !important;
+                border-bottom-color: #e31e3c;
+            }
+
+            .authenticated-portal-header .n-header--bottom__right {
+                flex: 0 0 auto;
+                margin-left: 0;
+            }
+
+            .authenticated-portal-header .n-header--bottom__right > .d-flex,
+            .authenticated-portal-header .n-header--bottom__right ul {
+                align-items: center;
+                margin: 0;
+            }
+
+            .authenticated-portal-header .search-icon {
+                margin-right: 20px !important;
+            }
+
+            .authenticated-portal-header .candidate-profile {
+                position: relative;
+                display: inline-flex;
+                width: 46px;
+                height: 46px;
+                align-items: center;
+                justify-content: center;
+                overflow: visible;
+                border: 2px solid rgba(255, 255, 255, .8);
+                border-radius: 50%;
+                background: #ffffff;
+            }
+
+            .authenticated-portal-header .candidate-profile img {
+                display: block;
+                width: 42px;
+                height: 42px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            .authenticated-portal-header .available-alert-header {
+                top: -2px;
+                right: -2px;
+                line-height: 0;
+            }
+
+            .authenticated-portal-header .available-alert-header .circle {
+                position: static;
+            }
+
+            .authenticated-portal-header .btn-light {
+                min-height: 46px;
+                padding: 11px 24px !important;
+                border: 1px solid #ffffff;
+                color: #67256a;
+                font-weight: 600;
+            }
+        }
+
+        @media (min-width: 992px) and (max-width: 1199.98px) {
+            .authenticated-portal-header > .container > .d-flex {
+                gap: 16px !important;
+            }
+
+            .authenticated-portal-header .n-header--bottom__left {
+                gap: 20px !important;
+            }
+
+            .authenticated-portal-header .brand-logo img {
+                max-width: 130px;
+                height: 36px;
+            }
+
+            .authenticated-portal-header .menu-active-classes {
+                gap: 14px;
+            }
+
+            .authenticated-portal-header .menu-active-classes > li > a {
+                font-size: 13px;
+            }
         }
     </style>
     <script>
@@ -92,12 +242,12 @@ config('templatecookie.default_language'))->first();
                         </div>
                         <div class="offcanvas-body">
                             <ol class="quicklinks-list">
-                            <li><a href="/career-guide">Employer List(2)</a></li>
-                            <li><a href="/resume-builder">New Jobs (1)</a></li>
-                            <li><a href="/interview-tips">Deadline Tomorrow (1)</a></li>
-                            <li><a href="/skill-training">Part Time Job (1)</a></li>
-                            <li><a href="/scholarship">Overseas Jobs</a></li>
-                            <li><a href="/blog">Fresher Jobs (2)</a></li>
+                            <li><a href="{{ route('website.company') }}">Employer List ({{ $quickLinks['employers'] }})</a></li>
+                            <li><a href="{{ route('website.job', ['quick_filter' => 'new']) }}">New Jobs ({{ $quickLinks['new_jobs'] }})</a></li>
+                            <li><a href="{{ route('website.job', ['quick_filter' => 'deadline_tomorrow']) }}">Deadline Tomorrow ({{ $quickLinks['deadline_tomorrow'] }})</a></li>
+                            <li><a href="{{ route('website.job', ['quick_filter' => 'part_time']) }}">Part Time Job ({{ $quickLinks['part_time'] }})</a></li>
+                            <li><a href="{{ route('website.job', ['quick_filter' => 'overseas']) }}">Overseas Jobs ({{ $quickLinks['overseas'] }})</a></li>
+                            <li><a href="{{ route('website.job', ['quick_filter' => 'fresher']) }}">Fresher Jobs ({{ $quickLinks['fresher'] }})</a></li>
                             </ol>
                         </div>
                         
@@ -126,7 +276,7 @@ config('templatecookie.default_language'))->first();
                 </div>
             </div>
         </nav>
-        <div class="n-header--bottom {{ $headerBgClass }}">
+        <div class="n-header--bottom {{ $headerBgClass }} {{ $isAuthenticatedPortal ? 'authenticated-portal-header' : '' }}">
             <div class="container position-relative">
                 <div class="d-flex flex-wrap  tw-gap-2 tw-items-center">
                     <div class="n-header--bottom__left d-flex align-items-center menu-header">
@@ -585,10 +735,10 @@ config('templatecookie.default_language'))->first();
                                 <div class="dropdown dropstart">
                                     <a href="javascript:void(0)" class="candidate-profile position-relative"
                                         id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="{{ $profileImage ?: $profileImageFallback }}" alt=""
+                                            onerror="this.onerror=null;this.src='{{ $profileImageFallback }}';">
                                         @company
-                                        <img src="{{ auth()->user()->company->logo_url }}" alt="logo">
                                         @else
-                                        <img src="{{ auth()->user()->candidate->photo }}" alt="photo">
                                         @if (auth()->user()->candidate->status == 'available')
                                         <span class="available-alert-header">
                                             <svg class="circle" width="14" height="14" viewBox="0 0 14 14" fill="none"

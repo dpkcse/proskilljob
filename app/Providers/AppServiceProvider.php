@@ -4,7 +4,11 @@ namespace App\Providers;
 
 use App\Http\Traits\GetMenuTrait;
 use App\Models\Cms;
+use App\Models\Company;
 use App\Models\Cookies;
+use App\Models\ExperienceTranslation;
+use App\Models\Job;
+use App\Models\JobTypeTranslation;
 use App\Models\Page;
 use App\Models\WebsiteSetting;
 use Illuminate\Database\Eloquent\Builder;
@@ -113,6 +117,23 @@ class AppServiceProvider extends ServiceProvider
                 $view->with('public_menu_lists', $this->publicMenu());
                 $view->with('company_menu_lists', $this->companyMenu());
                 $view->with('candidate_menu_lists', $this->candidateMenu());
+
+                $openJobs = Job::withoutEdited()->openPosition();
+                $partTimeId = JobTypeTranslation::where('name', 'Part Time')->value('job_type_id');
+                $fresherId = ExperienceTranslation::where('name', 'Fresher')->value('experience_id');
+                $localCountry = Country::where('name', 'Bangladesh')->value('name') ?? 'Bangladesh';
+
+                $overseasJobs = (clone $openJobs)->whereNotNull('country')->where('country', '!=', '');
+                $overseasJobs->where('country', 'not like', '%'.$localCountry.'%');
+
+                $view->with('quickLinks', [
+                    'employers' => Company::whereHas('user')->count(),
+                    'new_jobs' => (clone $openJobs)->where('created_at', '>=', now()->subDays(7))->count(),
+                    'deadline_tomorrow' => (clone $openJobs)->whereDate('deadline', now()->addDay()->toDateString())->count(),
+                    'part_time' => $partTimeId ? (clone $openJobs)->where('job_type_id', $partTimeId)->count() : 0,
+                    'overseas' => $overseasJobs->count(),
+                    'fresher' => $fresherId ? (clone $openJobs)->where('experience_id', $fresherId)->count() : 0,
+                ]);
             });
 
             if ($setting) {

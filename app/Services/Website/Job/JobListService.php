@@ -18,7 +18,7 @@ class JobListService
     {
         $data = $this->getJobs($request);
 
-        if ($data['total_jobs'] == 0 || $data['total_jobs'] < 18) {
+        if (! $request->filled('quick_filter') && ($data['total_jobs'] == 0 || $data['total_jobs'] < 18)) {
 
             // Mix jobs (Careerjet + Indeed + App Jobs)
             $page = rand(1, 10000);

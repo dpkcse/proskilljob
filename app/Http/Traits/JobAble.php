@@ -7,6 +7,7 @@ use App\Models\BenefitTranslation;
 use App\Models\CandidateResume;
 use App\Models\Education;
 use App\Models\Experience;
+use App\Models\ExperienceTranslation;
 use App\Models\Job;
 use App\Models\JobCategory;
 use App\Models\JobRole;
@@ -195,11 +196,11 @@ trait JobAble
         // country
         $selected_country = session()->get('selected_country');
 
-        if ($selected_country && $selected_country != null) {
+        if ($request->get('quick_filter') !== 'overseas' && $selected_country && $selected_country != null) {
             $country = selected_country()->name;
 
             $query->where('country', 'LIKE', "%$country%");
-        } else {
+        } elseif ($request->get('quick_filter') !== 'overseas') {
             $setting = loadSetting();
             if ($setting->app_country_type == 'single_base') {
                 if ($setting->app_country) {
@@ -208,6 +209,32 @@ trait JobAble
                         $query->where('country', 'LIKE', "%$country->name%");
                     }
                 }
+            }
+        }
+
+        if ($request->filled('quick_filter')) {
+            $query->where('deadline', '>=', now()->toDateString());
+
+            switch ($request->get('quick_filter')) {
+                case 'new':
+                    $query->where('created_at', '>=', now()->subDays(7));
+                    break;
+                case 'deadline_tomorrow':
+                    $query->whereDate('deadline', now()->addDay()->toDateString());
+                    break;
+                case 'part_time':
+                    $partTimeId = JobTypeTranslation::where('name', 'Part Time')->value('job_type_id');
+                    $query->when($partTimeId, fn ($jobQuery) => $jobQuery->where('job_type_id', $partTimeId));
+                    break;
+                case 'overseas':
+                    $localCountry = Country::where('name', 'Bangladesh')->value('name') ?? 'Bangladesh';
+                    $query->whereNotNull('country')->where('country', '!=', '');
+                    $query->where('country', 'not like', '%'.$localCountry.'%');
+                    break;
+                case 'fresher':
+                    $fresherId = ExperienceTranslation::where('name', 'Fresher')->value('experience_id');
+                    $query->when($fresherId, fn ($jobQuery) => $jobQuery->where('experience_id', $fresherId));
+                    break;
             }
         }
 
