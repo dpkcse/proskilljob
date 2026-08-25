@@ -23,7 +23,7 @@
 <div class="card">
     <div class="card-header">{{ __('contact_info') }}</div>
     <div class="card-body">
-        <form action="{{ route('settings.preference.update') }}" method="post">
+        <form action="{{ route('settings.preference.update') }}" method="post" enctype="multipart/form-data">
             @method('put')
             @csrf
             <div class="row">
@@ -57,6 +57,33 @@
                         @error('footer_trade_license_number')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                         @enderror
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label>{{ __('company_profile') }}:</label>
+                        <input type="file"
+                            class="form-control @error('company_profile_file') is-invalid @enderror p-2"
+                            name="company_profile_file" accept=".pdf,.doc,.docx">
+                        <small class="form-text text-muted">{{ __('accepted_files') }}: PDF, DOC, DOCX ({{ __('maximum') }} 10MB)</small>
+                        @error('company_profile_file')
+                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+
+                        @if ($cms_setting?->company_profile_file)
+                            <div class="mt-2">
+                                <a href="{{ asset($cms_setting->company_profile_file) }}" target="_blank" rel="noopener">
+                                    <i class="fas fa-file-alt mr-1"></i>{{ __('view_current_file') }}
+                                </a>
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox" value="1"
+                                        id="remove_company_profile_file" name="remove_company_profile_file">
+                                    <label class="form-check-label text-danger" for="remove_company_profile_file">
+                                        {{ __('remove_current_file') }}
+                                    </label>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="col-sm-12">

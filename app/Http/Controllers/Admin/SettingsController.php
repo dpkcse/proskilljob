@@ -154,6 +154,8 @@ class SettingsController extends Controller
                 'footer_phone_no' => ['nullable'],
                 'footer_address' => ['nullable', 'string'],
                 'footer_trade_license_number' => ['nullable', 'string', 'max:255'],
+                'company_profile_file' => ['nullable', 'file', 'mimes:pdf,doc,docx', 'max:10240'],
+                'remove_company_profile_file' => ['nullable', 'boolean'],
                 'footer_facebook_link' => ['nullable', 'url'],
                 'footer_instagram_link' => ['nullable', 'url'],
                 'footer_twitter_link' => ['nullable', 'url'],
@@ -169,6 +171,21 @@ class SettingsController extends Controller
             $cms->footer_phone_no = $request->footer_phone_no;
             $cms->footer_address = $request->footer_address;
             $cms->footer_trade_license_number = $request->footer_trade_license_number;
+
+            if ($request->boolean('remove_company_profile_file') && $cms->company_profile_file) {
+                File::delete(public_path($cms->company_profile_file));
+                $cms->company_profile_file = null;
+            }
+
+            if ($request->hasFile('company_profile_file')) {
+                if ($cms->company_profile_file) {
+                    File::delete(public_path($cms->company_profile_file));
+                }
+
+                $uploadedFile = uploadFileToPublic($request->file('company_profile_file'), 'company-profile');
+                $cms->company_profile_file = $uploadedFile?->getPathname();
+            }
+
             $cms->footer_facebook_link = $request->footer_facebook_link;
             $cms->footer_instagram_link = $request->footer_instagram_link;
             $cms->footer_twitter_link = $request->footer_twitter_link;

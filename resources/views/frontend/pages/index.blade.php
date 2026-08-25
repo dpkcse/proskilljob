@@ -93,7 +93,7 @@
                         </div>
                     </div>
                     <div class="col-xl-6 d-flex align-items-center">
-                        <div class="banner-mockup d-none d-xl-block w-100 text-right">
+                        <div class="banner-mockup home-hero-image d-none d-xl-block w-100 text-right">
                             <div class="addimg-1 position-parent video-btn-center">
                                 @if ($cms_setting->home_page_banner_image)
                                     <img src="{{ asset($cms_setting->home_page_banner_image) }}" alt="home page banner"

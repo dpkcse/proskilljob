@@ -43,6 +43,13 @@
                     <ul class="rt-usefulllinks2">
                         <li><a href="{{ route('website.about') }}">{{ __('about') }}</a></li>
                         <li><a href="{{ route('website.contact') }}">{{ __('contact') }}</a></li>
+                        @if ($cms_setting?->company_profile_file)
+                            <li>
+                                <a href="{{ asset($cms_setting->company_profile_file) }}" target="_blank" rel="noopener">
+                                    {{ __('company_profile') }}
+                                </a>
+                            </li>
+                        @endif
                         @guest
                             <li><a href="{{ route('website.plan') }}">{{ __('pricing') }}</a></li>
                         @endguest

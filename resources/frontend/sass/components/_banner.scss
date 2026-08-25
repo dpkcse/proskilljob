@@ -177,6 +177,27 @@ section.banner-section {
 .banner-mockup {
   text-align: right;
 }
+
+.home-hero-image {
+  overflow: visible;
+
+  img,
+  svg {
+    display: block;
+    width: 135%;
+    max-width: none;
+    height: auto;
+    margin-left: -18%;
+  }
+
+  @media (max-width: 1399.98px) {
+    img,
+    svg {
+      width: 125%;
+      margin-left: -12%;
+    }
+  }
+}
 .banner-content2 {
   padding-left: 80px;
   padding-top: 242px;
@@ -238,4 +259,3 @@ section.banner-section {
     max-width: 745px;
   }
 }
-
