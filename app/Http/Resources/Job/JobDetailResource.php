@@ -27,7 +27,7 @@ class JobDetailResource extends JsonResource
             'max_salary' => $this->max_salary,
             'salary_mode' => $this->salary_mode,
             'custom_salary' => $this->custom_salary,
-            'job_type' => $this->job_type->name,
+            'job_type' => $this->job_type?->name,
             'deadline' => $this->deadline,
             'job_start' => $this->job_start,
             'job_end' => $this->job_end,
@@ -53,15 +53,15 @@ class JobDetailResource extends JsonResource
             'role' => $this->role->name ?? null,
             'experience' => $this->experience->name ?? null,
             'education' => $this->education->name ?? null,
-            'company' => [
-                'name' => $this->company->user->name ?? null,
-                'slug' => $this->company->user->username ?? null,
-                'logo' => asset($this->company->logo),
-                'website' => $this->company->website ?? null,
-                'address' => $this->company->address ?? null,
-                'contact_info' => $this->company->contact_info ?? null,
-                'social_links' => $this->company->social_links ?? null,
-            ],
+            'company' => $this->company ? [
+                'name' => $this->company->user?->name,
+                'slug' => $this->company->user?->username,
+                'logo' => $this->company->logo_url,
+                'website' => $this->company->website,
+                'address' => $this->company->address,
+                'contact_info' => $this->company->contact_info,
+                'social_links' => $this->company->social_links,
+            ] : null,
 
             // 'job' => [
             //     'title' => $job->title,

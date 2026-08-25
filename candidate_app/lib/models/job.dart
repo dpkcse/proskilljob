@@ -36,4 +36,3 @@ class Job {
         bookmarked: json['bookmarked'] == true || json['bookmarked'] == 1,
       );
 }
-

@@ -19,7 +19,10 @@ class ForceAppUrl
         $appHost = parse_url($appUrl, PHP_URL_HOST);
         $requestHost = $request->getHost();
 
-        if ($appHost && $requestHost !== $appHost) {
+        // Mobile clients and local emulators can legitimately reach the API
+        // through a different host (for example Android's 10.0.2.2). API
+        // responses must never be redirected to the browser-facing APP_URL.
+        if (! $request->is('api/*') && $appHost && $requestHost !== $appHost) {
             $redirectUrl = $appUrl.$request->getRequestUri();
 
             return redirect()->to($redirectUrl, 301);

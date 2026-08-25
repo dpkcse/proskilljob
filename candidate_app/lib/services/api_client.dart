@@ -22,7 +22,8 @@ class ApiClient {
 
   Future<void> saveToken(String token) async {
     _token = token;
-    await (await SharedPreferences.getInstance()).setString('auth_token', token);
+    await (await SharedPreferences.getInstance())
+        .setString('auth_token', token);
   }
 
   Future<void> clearToken() async {
@@ -53,14 +54,19 @@ class ApiClient {
       };
 
   Map<String, dynamic> _decode(http.Response response) {
-    final dynamic decoded = response.body.isEmpty ? {} : jsonDecode(response.body);
-    final data = decoded is Map<String, dynamic> ? decoded : <String, dynamic>{};
+    final dynamic decoded =
+        response.body.isEmpty ? {} : jsonDecode(response.body);
+    final data =
+        decoded is Map<String, dynamic> ? decoded : <String, dynamic>{};
     if (response.statusCode >= 200 && response.statusCode < 300) return data;
     final errors = data['errors'];
-    final message = data['message'] ??
-        (errors is Map && errors.isNotEmpty ? errors.values.first.toString() : null) ??
-        'অনুরোধটি সম্পন্ন হয়নি';
+    final firstError =
+        errors is Map && errors.isNotEmpty ? errors.values.first : null;
+    final validationMessage = firstError is List && firstError.isNotEmpty
+        ? '${firstError.first}'
+        : firstError?.toString();
+    final message =
+        validationMessage ?? data['message'] ?? 'অনুরোধটি সম্পন্ন হয়নি';
     throw ApiException('$message', response.statusCode);
   }
 }
-

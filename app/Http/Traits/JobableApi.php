@@ -22,7 +22,7 @@ trait JobableApi
     {
         if (auth('sanctum')->user()) {
 
-            $query = Job::with('company.user', 'category', 'job_type:id,name')
+            $query = Job::with('company.user', 'category', 'job_type:id')
                 ->withCount([
                     'bookmarkJobs', 'appliedJobs',
                     'bookmarkJobs as bookmarked' => function ($q) {
@@ -34,7 +34,7 @@ trait JobableApi
                 ->active()->withoutEdited();
         } else {
 
-            $query = Job::with('company.user', 'category', 'job_type:id,name')
+            $query = Job::with('company.user', 'category', 'job_type:id')
                 ->withCount([
                     'bookmarkJobs', 'appliedJobs',
                     'bookmarkJobs as bookmarked' => function ($q) {

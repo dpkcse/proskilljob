@@ -19,7 +19,7 @@ class JobApiService
     public function execute($request)
     {
         if (auth('sanctum')->user()) {
-            $query = Job::with('company.user', 'category', 'job_type:id')
+            $query = Job::with('company.user', 'category', 'job_type')
                 ->withCount([
                     'bookmarkJobs', 'appliedJobs',
                     'bookmarkJobs as bookmarked' => function ($q) {
@@ -31,7 +31,7 @@ class JobApiService
                 ->active()->withoutEdited();
         } else {
 
-            $query = Job::with('company.user', 'category', 'job_type:id')
+            $query = Job::with('company.user', 'category', 'job_type')
                 ->withCount([
                     'bookmarkJobs', 'appliedJobs',
                     'bookmarkJobs as bookmarked' => function ($q) {
@@ -164,7 +164,7 @@ class JobApiService
 
         // Job type filter
         if ($request->has('job_type') && $request->job_type != null) {
-            $job_type_id = JobType::where('name', $request->job_type)->value('id');
+            $job_type_id = JobType::whereTranslation('name', $request->job_type)->value('id');
             $query->where('job_type_id', $job_type_id);
         }
 
@@ -179,10 +179,10 @@ class JobApiService
                 'slug' => $data->slug,
                 'job_details' => route('website.job.details', $data->slug),
                 'company_name' => $data->company && $data->company->user ? $data->company->user->name : '',
-                'company_logo' => $data->company->logo_url,
-                'job_type' => $data->job_type->name,
-                'job_role' => $data->role->name,
-                'category' => $data->category->name,
+                'company_logo' => $data->company?->logo_url ?? '',
+                'job_type' => $data->job_type?->name ?? '',
+                'job_role' => $data->role?->name ?? '',
+                'category' => $data->category?->name ?? '',
                 'country' => $data->country,
                 'is_featured' => $data->featured,
                 'is_highlighted' => $data->highlight,
