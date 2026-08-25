@@ -239,7 +239,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Share' => Jorenvh\Share\ShareFacade::class,
-        'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
         'PayPal' => Srmklive\PayPal\Facades\PayPal::class,
         'Rave' => KingFlamez\Rave\Facade\Rave::class,
         'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
