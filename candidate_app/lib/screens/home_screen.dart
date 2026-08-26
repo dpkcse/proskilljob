@@ -45,18 +45,27 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SafeArea(
             child: IndexedStack(index: tab, children: [
           _LandingPage(
+              state: widget.state,
               search: search,
               onSearch: () {
-                setState(() => tab = 1);
                 widget.state.loadJobs(keyword: search.text.trim());
               },
+              onOpenJobs: () => setState(() => tab = 1),
               onRegister: openRegister,
               onLogin: openLogin),
           _JobsPage(state: widget.state, search: search),
-          const _PlaceholderPage(
-              icon: Icons.apartment_rounded, title: 'Companies'),
-          const _PlaceholderPage(
-              icon: Icons.chat_bubble_outline, title: 'Messages'),
+          _CandidateAreaPage(
+              state: widget.state,
+              icon: Icons.bookmark_outline,
+              title: 'Saved Jobs',
+              signedInMessage: 'Your saved jobs will appear here.',
+              onLogin: openLogin),
+          _CandidateAreaPage(
+              state: widget.state,
+              icon: Icons.assignment_outlined,
+              title: 'Applications',
+              signedInMessage: 'Track every application from one place.',
+              onLogin: openLogin),
           ProfileScreen(
               state: widget.state,
               onLogin: openLogin,
@@ -78,13 +87,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 selectedIcon: Icon(Icons.work, color: AppColors.red),
                 label: 'Jobs'),
             NavigationDestination(
-                icon: Icon(Icons.apartment_outlined),
-                selectedIcon: Icon(Icons.apartment, color: AppColors.red),
-                label: 'Companies'),
+                icon: Icon(Icons.bookmark_outline),
+                selectedIcon: Icon(Icons.bookmark, color: AppColors.red),
+                label: 'Saved'),
             NavigationDestination(
-                icon: Icon(Icons.chat_bubble_outline),
-                selectedIcon: Icon(Icons.chat_bubble, color: AppColors.red),
-                label: 'Messages'),
+                icon: Icon(Icons.assignment_outlined),
+                selectedIcon: Icon(Icons.assignment, color: AppColors.red),
+                label: 'Applications'),
             NavigationDestination(
                 icon: Icon(Icons.person_outline),
                 selectedIcon: Icon(Icons.person, color: AppColors.red),
@@ -96,155 +105,139 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class _LandingPage extends StatelessWidget {
   const _LandingPage(
-      {required this.search,
+      {required this.state,
+      required this.search,
       required this.onSearch,
+      required this.onOpenJobs,
       required this.onRegister,
       required this.onLogin});
+  final AppState state;
   final TextEditingController search;
   final VoidCallback onSearch;
+  final VoidCallback onOpenJobs;
   final VoidCallback onRegister;
   final VoidCallback onLogin;
   @override
-  Widget build(BuildContext context) =>
-      ListView(padding: const EdgeInsets.fromLTRB(22, 24, 22, 26), children: [
-        const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [BrandLogo(), Icon(Icons.menu_rounded, size: 34)]),
-        const SizedBox(height: 38),
-        Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            decoration: BoxDecoration(
-                border: Border.all(color: AppColors.border),
-                borderRadius: BorderRadius.circular(12)),
-            child: const Row(mainAxisSize: MainAxisSize.min, children: [
-              Icon(Icons.work_outline, color: AppColors.purple, size: 19),
-              SizedBox(width: 8),
-              Text('10,000+ Jobs',
-                  style: TextStyle(fontWeight: FontWeight.w600)),
-              Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Text('•', style: TextStyle(color: AppColors.muted))),
-              Icon(Icons.circle, color: Color(0xff4b5272), size: 16),
-              SizedBox(width: 7),
-              Flexible(
-                  child: Text('500+ Companies',
-                      style: TextStyle(fontWeight: FontWeight.w600))),
-            ])),
-        const SizedBox(height: 28),
-        RichText(
-            text: const TextSpan(
-                style: TextStyle(
-                    fontSize: 42, height: 1.08, fontWeight: FontWeight.w800),
-                children: [
-              TextSpan(text: 'Perfect Job\nMatches, '),
-              TextSpan(
-                  text: 'Faster', style: TextStyle(color: AppColors.purple)),
-            ])),
-        const SizedBox(height: 14),
-        const Text(
-            'Discover opportunities, connect with top companies and grow your career.',
-            style:
-                TextStyle(fontSize: 19, height: 1.45, color: AppColors.muted)),
-        const SizedBox(height: 28),
-        TextField(
-            controller: search,
-            onSubmitted: (_) => onSearch(),
-            style: const TextStyle(color: AppColors.background),
-            decoration: InputDecoration(
-                filled: true,
-                fillColor: const Color(0xfff7f7fa),
-                hintText: 'Job title, keyword or company',
-                hintStyle: const TextStyle(color: Color(0xff777b8b)),
-                suffixIcon: IconButton(
-                    onPressed: onSearch,
-                    icon: const Icon(Icons.search, color: Color(0xff555c76))))),
-        const SizedBox(height: 14),
-        _ActionTile(
-            color: AppColors.red,
-            title: 'Find a Job',
-            subtitle: 'For Job Seekers',
-            onTap: onSearch),
-        const SizedBox(height: 12),
-        _ActionTile(
-            color: const Color(0xfff5f5f8),
-            title: 'Find Talent',
-            subtitle: 'For Employers',
-            darkText: true,
-            onTap: () {}),
-        const SizedBox(height: 22),
-        Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-                border: Border.all(color: const Color(0xff6b1532)),
-                borderRadius: BorderRadius.circular(15)),
-            child: Column(children: [
-              const Text('Join thousands of professionals',
-                  style: TextStyle(color: AppColors.muted)),
-              const SizedBox(height: 14),
-              SizedBox(
-                  width: double.infinity,
-                  child: FilledButton.icon(
-                      style: FilledButton.styleFrom(
+  Widget build(BuildContext context) => RefreshIndicator(
+      onRefresh: () async {
+        await state.loadJobs(keyword: search.text.trim());
+        if (state.loggedIn) await state.loadProfile();
+      },
+      child: ListView(
+          physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics()),
+          padding: const EdgeInsets.fromLTRB(18, 24, 18, 30),
+          children: [
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              const BrandLogo(compact: true),
+              state.loggedIn
+                  ? Row(children: [
+                      const Badge(
+                          backgroundColor: AppColors.red,
+                          child:
+                              Icon(Icons.notifications_none_rounded, size: 27)),
+                      const SizedBox(width: 12),
+                      CircleAvatar(
+                          radius: 17,
                           backgroundColor: AppColors.purple,
-                          padding: const EdgeInsets.all(15)),
-                      onPressed: onRegister,
-                      icon: const Icon(Icons.person_add_alt),
-                      label: const Text('Create Free Account'))),
-              const SizedBox(height: 10),
-              SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton.icon(
-                      style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.all(15),
-                          side: const BorderSide(color: AppColors.border)),
+                          child: Text(
+                              _initials('${state.currentUser['name'] ?? 'C'}'),
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700))),
+                    ])
+                  : TextButton.icon(
                       onPressed: onLogin,
-                      icon: const Icon(Icons.login),
-                      label: const Text('Log In'))),
-            ])),
-      ]);
-}
+                      icon: const Icon(Icons.login, size: 18),
+                      label: const Text('Log In')),
+            ]),
+            const SizedBox(height: 22),
+            Text(
+                state.loggedIn
+                    ? 'Find your next opportunity'
+                    : 'Find the right job for you',
+                style:
+                    const TextStyle(fontSize: 27, fontWeight: FontWeight.w800)),
+            const SizedBox(height: 7),
+            Text(
+                state.loggedIn
+                    ? 'Fresh opportunities matched to your career.'
+                    : 'Explore trusted jobs before creating an account.',
+                style: const TextStyle(color: AppColors.muted)),
+            const SizedBox(height: 18),
+            TextField(
+                controller: search,
+                onSubmitted: (_) => onSearch(),
+                decoration: InputDecoration(
+                    hintText: 'Job title, keyword or company',
+                    prefixIcon: const Icon(Icons.search),
+                    suffixIcon: IconButton(
+                        onPressed: onSearch,
+                        icon: const Icon(Icons.tune_rounded)))),
+            const SizedBox(height: 14),
+            SizedBox(
+                height: 45,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: state.categories.length + 1,
+                    itemBuilder: (_, index) {
+                      if (index == 0) {
+                        return _FilterChip('All',
+                            selected: state.selectedCategoryId == null,
+                            onTap: () => state.selectCategory(null,
+                                keyword: search.text.trim()));
+                      }
+                      final category = state.categories[index - 1];
+                      return _FilterChip(category.name,
+                          selected: state.selectedCategoryId == category.id,
+                          onTap: () => state.selectCategory(category.id,
+                              keyword: search.text.trim()));
+                    })),
+            const SizedBox(height: 18),
+            state.loggedIn
+                ? _CandidateSummary(state: state)
+                : _GuestBenefitCard(onRegister: onRegister, onLogin: onLogin),
+            const SizedBox(height: 24),
+            _SectionHeader(
+                title: state.loggedIn ? 'Recommended for You' : 'Popular Jobs',
+                onViewAll: onOpenJobs),
+            const SizedBox(height: 12),
+            if (state.busy) const LinearProgressIndicator(color: AppColors.red),
+            if (state.error != null)
+              _InlineError(message: state.error!, onRetry: onSearch),
+            ...state.jobs.take(6).map((job) => Padding(
+                padding: const EdgeInsets.only(bottom: 9),
+                child: _JobCard(job: job, state: state))),
+            if (!state.busy && state.jobs.isEmpty)
+              const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 28),
+                  child: Center(child: Text('No jobs found'))),
+            if (state.categories.isNotEmpty) ...[
+              const SizedBox(height: 20),
+              const Text('Browse by Category',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
+              const SizedBox(height: 12),
+              Wrap(
+                  spacing: 9,
+                  runSpacing: 9,
+                  children: state.categories
+                      .take(8)
+                      .map((category) => ActionChip(
+                          avatar: const Icon(Icons.work_outline, size: 17),
+                          label: Text(category.name),
+                          onPressed: () => state.selectCategory(category.id,
+                              keyword: search.text.trim())))
+                      .toList()),
+            ],
+            const SizedBox(height: 24),
+            const _CareerCard(),
+          ]));
 
-class _ActionTile extends StatelessWidget {
-  const _ActionTile(
-      {required this.color,
-      required this.title,
-      required this.subtitle,
-      required this.onTap,
-      this.darkText = false});
-  final Color color;
-  final String title;
-  final String subtitle;
-  final bool darkText;
-  final VoidCallback onTap;
-  @override
-  Widget build(BuildContext context) => Material(
-      color: color,
-      borderRadius: BorderRadius.circular(14),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(14),
-        child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
-            child: Row(children: [
-              Expanded(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                    Text(title,
-                        style: TextStyle(
-                            fontSize: 19,
-                            fontWeight: FontWeight.w700,
-                            color: darkText ? AppColors.purple : Colors.white)),
-                    Text(subtitle,
-                        style: TextStyle(
-                            color: darkText
-                                ? const Color(0xff6c7080)
-                                : Colors.white70)),
-                  ])),
-              Icon(Icons.chevron_right,
-                  size: 30, color: darkText ? AppColors.purple : Colors.white),
-            ])),
-      ));
+  static String _initials(String value) {
+    final parts = value.trim().split(RegExp(r'\s+'));
+    return parts.take(2).where((e) => e.isNotEmpty).map((e) => e[0]).join();
+  }
 }
 
 class _JobsPage extends StatelessWidget {
@@ -326,6 +319,181 @@ class _JobsPage extends StatelessWidget {
                 child: Center(child: Text('No jobs found'))),
         ],
       ));
+}
+
+class _GuestBenefitCard extends StatelessWidget {
+  const _GuestBenefitCard({required this.onRegister, required this.onLogin});
+  final VoidCallback onRegister;
+  final VoidCallback onLogin;
+
+  @override
+  Widget build(BuildContext context) => Container(
+        padding: const EdgeInsets.all(18),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+              colors: [Color(0xff351369), Color(0xff171131)]),
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: const Color(0xff5930a0)),
+        ),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Row(children: [
+            Icon(Icons.auto_awesome, color: Color(0xffb891ff)),
+            SizedBox(width: 8),
+            Expanded(
+                child: Text('Get more from your job search',
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.w800))),
+          ]),
+          const SizedBox(height: 8),
+          const Text(
+              'Create a free account to apply, save jobs, receive alerts and track applications.',
+              style: TextStyle(height: 1.4, color: AppColors.muted)),
+          const SizedBox(height: 15),
+          Row(children: [
+            Expanded(
+                child: FilledButton(
+                    style: FilledButton.styleFrom(
+                        backgroundColor: AppColors.purple),
+                    onPressed: onRegister,
+                    child: const Text('Create Free Account'))),
+            const SizedBox(width: 9),
+            OutlinedButton(onPressed: onLogin, child: const Text('Log In')),
+          ]),
+        ]),
+      );
+}
+
+class _CandidateSummary extends StatelessWidget {
+  const _CandidateSummary({required this.state});
+  final AppState state;
+
+  int _value(String key) => int.tryParse('${state.dashboard[key] ?? 0}') ?? 0;
+
+  @override
+  Widget build(BuildContext context) {
+    final user = state.currentUser;
+    final completion = int.tryParse(
+            '${state.dashboard['profileComplated'] ?? user['profile_complete'] ?? 0}') ??
+        0;
+    return Container(
+      padding: const EdgeInsets.all(17),
+      decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: AppColors.border)),
+      child: Column(children: [
+        Row(children: [
+          Expanded(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                Text('Welcome back, ${user['name'] ?? 'Candidate'}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontSize: 17, fontWeight: FontWeight.w800)),
+                const SizedBox(height: 5),
+                Text('Profile $completion% complete',
+                    style:
+                        const TextStyle(fontSize: 12, color: AppColors.muted)),
+              ])),
+          SizedBox(
+              width: 78,
+              child: LinearProgressIndicator(
+                  value: completion.clamp(0, 100) / 100,
+                  minHeight: 7,
+                  borderRadius: BorderRadius.circular(8),
+                  backgroundColor: AppColors.border,
+                  color: AppColors.purple)),
+        ]),
+        const SizedBox(height: 16),
+        Row(children: [
+          _MiniStat(value: _value('appliedJobs'), label: 'Applied'),
+          _MiniStat(value: _value('favoriteJobs'), label: 'Saved'),
+          _MiniStat(value: _value('notifications'), label: 'Alerts'),
+        ]),
+      ]),
+    );
+  }
+}
+
+class _MiniStat extends StatelessWidget {
+  const _MiniStat({required this.value, required this.label});
+  final int value;
+  final String label;
+  @override
+  Widget build(BuildContext context) => Expanded(
+          child: Column(children: [
+        Text('$value',
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
+        Text(label,
+            style: const TextStyle(fontSize: 12, color: AppColors.muted)),
+      ]));
+}
+
+class _SectionHeader extends StatelessWidget {
+  const _SectionHeader({required this.title, required this.onViewAll});
+  final String title;
+  final VoidCallback onViewAll;
+  @override
+  Widget build(BuildContext context) => Row(children: [
+        Expanded(
+            child: Text(title,
+                style: const TextStyle(
+                    fontSize: 20, fontWeight: FontWeight.w800))),
+        TextButton(onPressed: onViewAll, child: const Text('View all')),
+      ]);
+}
+
+class _InlineError extends StatelessWidget {
+  const _InlineError({required this.message, required this.onRetry});
+  final String message;
+  final VoidCallback onRetry;
+  @override
+  Widget build(BuildContext context) => Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppColors.border)),
+      child: Row(children: [
+        const Icon(Icons.cloud_off_outlined, color: AppColors.muted),
+        const SizedBox(width: 10),
+        Expanded(
+            child: Text(message,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontSize: 12, color: AppColors.muted))),
+        IconButton(onPressed: onRetry, icon: const Icon(Icons.refresh)),
+      ]));
+}
+
+class _CareerCard extends StatelessWidget {
+  const _CareerCard();
+  @override
+  Widget build(BuildContext context) => Container(
+      padding: const EdgeInsets.all(17),
+      decoration: BoxDecoration(
+          color: AppColors.surfaceSoft,
+          borderRadius: BorderRadius.circular(17),
+          border: Border.all(color: AppColors.border)),
+      child: const Row(children: [
+        CircleAvatar(
+            backgroundColor: Color(0xff2b1a55),
+            child: Icon(Icons.school_outlined, color: AppColors.purple)),
+        SizedBox(width: 13),
+        Expanded(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text('Career Resources',
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800)),
+          SizedBox(height: 3),
+          Text('CV tips, interview preparation and career guidance',
+              style: TextStyle(fontSize: 12, color: AppColors.muted)),
+        ])),
+        Icon(Icons.chevron_right, color: AppColors.muted),
+      ]));
 }
 
 class _FilterChip extends StatelessWidget {
@@ -419,10 +587,20 @@ class _JobCard extends StatelessWidget {
       ));
 }
 
-class _PlaceholderPage extends StatelessWidget {
-  const _PlaceholderPage({required this.icon, required this.title});
+class _CandidateAreaPage extends StatelessWidget {
+  const _CandidateAreaPage({
+    required this.state,
+    required this.icon,
+    required this.title,
+    required this.signedInMessage,
+    required this.onLogin,
+  });
+  final AppState state;
   final IconData icon;
   final String title;
+  final String signedInMessage;
+  final VoidCallback onLogin;
+
   @override
   Widget build(BuildContext context) => Center(
           child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -430,7 +608,21 @@ class _PlaceholderPage extends StatelessWidget {
         const SizedBox(height: 12),
         Text(title,
             style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w700)),
-        const SizedBox(height: 6),
-        const Text('Coming soon', style: TextStyle(color: AppColors.muted)),
+        const SizedBox(height: 7),
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 35),
+            child: Text(
+                state.loggedIn
+                    ? signedInMessage
+                    : 'Log in to sync and manage your ${title.toLowerCase()}.',
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: AppColors.muted))),
+        if (!state.loggedIn) ...[
+          const SizedBox(height: 20),
+          FilledButton.icon(
+              onPressed: onLogin,
+              icon: const Icon(Icons.login),
+              label: const Text('Log In')),
+        ],
       ]));
 }

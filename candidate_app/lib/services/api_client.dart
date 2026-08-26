@@ -65,8 +65,14 @@ class ApiClient {
     final validationMessage = firstError is List && firstError.isNotEmpty
         ? '${firstError.first}'
         : firstError?.toString();
-    final message =
-        validationMessage ?? data['message'] ?? 'অনুরোধটি সম্পন্ন হয়নি';
+    final nestedData = data['data'];
+    final nestedMessage =
+        nestedData is Map ? nestedData['message'] ?? nestedData['error'] : null;
+    final message = validationMessage ??
+        data['message'] ??
+        data['error'] ??
+        nestedMessage ??
+        'অনুরোধটি সম্পন্ন হয়নি';
     throw ApiException('$message', response.statusCode);
   }
 }

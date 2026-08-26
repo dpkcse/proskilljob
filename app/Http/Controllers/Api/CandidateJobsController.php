@@ -41,9 +41,9 @@ class CandidateJobsController extends Controller
                 'slug' => $data->slug,
                 'job_details' => route('website.job.details', $data->slug),
                 'company_name' => $data->company && $data->company->user ? $data->company->user->name : '',
-                'company_logo' => $data->company->logo_url,
-                'job_type' => $data->job_type->name,
-                'job_role' => $data->role->name,
+                'company_logo' => $data->company?->logo_url ?? '',
+                'job_type' => $data->job_type?->name ?? '',
+                'job_role' => $data->role?->name ?? '',
                 'country' => $data->country,
                 'deadline' => $data->deadline,
                 'job_start' => $data->job_start,
@@ -116,9 +116,11 @@ class CandidateJobsController extends Controller
     public function jobApply(Request $request)
     {
         $request->validate([
+            'job_id' => 'required|integer',
             'resume_id' => 'required',
             'cover_letter' => 'required|max:2000',
         ], [
+            'job_id.required' => 'Please select a job',
             'resume_id.required' => 'Please select resume',
             'cover_letter.required' => 'Please enter cover letter',
         ]);
@@ -144,6 +146,13 @@ class CandidateJobsController extends Controller
             return $this->respondError('You can not apply on this job. Because this job is not for apply on website');
         }
 
+        if (DB::table('applied_jobs')
+            ->where('candidate_id', $candidate->id)
+            ->where('job_id', $job->id)
+            ->exists()) {
+            return $this->respondError('You have already applied for this job.');
+        }
+
         $applicationGroup = $job->company?->defaultApplicationGroup();
 
         DB::table('applied_jobs')->insert([
@@ -157,12 +166,16 @@ class CandidateJobsController extends Controller
         ]);
 
         // make notification to candidate and company for notify
-        if ($job->company->user) {
-            $job->company->user->notify(new ApplyJobNotification(auth('sanctum')->user(), $job->company->user, $job));
-        }
+        try {
+            if ($job->company?->user) {
+                $job->company->user->notify(new ApplyJobNotification(auth('sanctum')->user(), $job->company->user, $job));
+            }
 
-        if ($job->company->user && auth('sanctum')->user()->recent_activities_alert) {
-            auth('sanctum')->user()->notify(new ApplyJobNotification(auth('sanctum')->user(), $job->company->user, $job));
+            if ($job->company?->user && auth('sanctum')->user()->recent_activities_alert) {
+                auth('sanctum')->user()->notify(new ApplyJobNotification(auth('sanctum')->user(), $job->company->user, $job));
+            }
+        } catch (\Throwable $exception) {
+            report($exception);
         }
 
         return $this->respondWithSuccess([

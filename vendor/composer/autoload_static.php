@@ -1641,6 +1641,7 @@ class ComposerStaticInit4e7b30729f00fe1c0998e869cea37156
         'App\\Models\\OrganizationType' => __DIR__ . '/../..' . '/app/Models/OrganizationType.php',
         'App\\Models\\OrganizationTypeTranslation' => __DIR__ . '/../..' . '/app/Models/OrganizationTypeTranslation.php',
         'App\\Models\\OurMission' => __DIR__ . '/../..' . '/app/Models/OurMission.php',
+        'App\\Models\\Page' => __DIR__ . '/../..' . '/app/Models/Page.php',
         'App\\Models\\PaymentSetting' => __DIR__ . '/../..' . '/app/Models/PaymentSetting.php',
         'App\\Models\\PendingUser' => __DIR__ . '/../..' . '/app/Models/PendingUser.php',
         'App\\Models\\Profession' => __DIR__ . '/../..' . '/app/Models/Profession.php',

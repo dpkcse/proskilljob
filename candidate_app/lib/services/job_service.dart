@@ -50,4 +50,25 @@ class JobService {
     return payload is Map &&
         (payload['status'] == true || payload['status'] == 1);
   }
+
+  Future<String> apply({
+    required int jobId,
+    required int resumeId,
+    required String coverLetter,
+  }) async {
+    if (!api.isAuthenticated) throw const ApiException('আগে লগইন করুন', 401);
+    final response = await api.post('/candidate/jobs/apply', body: {
+      'job_id': jobId,
+      'resume_id': resumeId,
+      'cover_letter': coverLetter,
+    });
+    dynamic payload = response['data'];
+    if (payload is Map && payload['data'] != null) payload = payload['data'];
+    if (payload is Map && payload['status'] == false) {
+      throw ApiException('${payload['message'] ?? 'Application failed'}');
+    }
+    return payload is Map
+        ? '${payload['message'] ?? 'Application submitted successfully!'}'
+        : 'Application submitted successfully!';
+  }
 }

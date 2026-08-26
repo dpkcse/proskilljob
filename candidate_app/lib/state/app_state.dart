@@ -30,15 +30,20 @@ class AppState extends ChangeNotifier {
 
   Future<void> initialize() async {
     await api.restoreToken();
+    await _loadInitialData();
+  }
+
+  Future<void> _loadInitialData() async {
     try {
       categories = await jobsApi.getCategories();
     } catch (_) {
       categories = const [];
     }
-    if (loggedIn) {
-      await loadProfile();
-    }
-    await loadJobs();
+    notifyListeners();
+    await Future.wait<void>([
+      loadJobs(),
+      if (loggedIn) loadProfile(),
+    ]);
   }
 
   Future<void> loadJobs({String keyword = '', int? categoryId}) async {

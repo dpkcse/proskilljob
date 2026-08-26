@@ -31,6 +31,9 @@ Flutter candidate app for the ProSkill Laravel API.
    Production:
    `flutter run --release --dart-define=API_BASE_URL=https://YOUR_DOMAIN.com/api`
 
+   When `API_BASE_URL` is omitted, release builds use
+   `https://proskilljob.com/api` by default.
+
 ## Production requirements
 
 - HTTPS-enabled public Laravel domain

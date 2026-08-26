@@ -250,6 +250,7 @@ return array(
     'App\\Models\\OrganizationType' => $baseDir . '/app/Models/OrganizationType.php',
     'App\\Models\\OrganizationTypeTranslation' => $baseDir . '/app/Models/OrganizationTypeTranslation.php',
     'App\\Models\\OurMission' => $baseDir . '/app/Models/OurMission.php',
+    'App\\Models\\Page' => $baseDir . '/app/Models/Page.php',
     'App\\Models\\PaymentSetting' => $baseDir . '/app/Models/PaymentSetting.php',
     'App\\Models\\PendingUser' => $baseDir . '/app/Models/PendingUser.php',
     'App\\Models\\Profession' => $baseDir . '/app/Models/Profession.php',
