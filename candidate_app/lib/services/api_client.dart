@@ -47,6 +47,26 @@ class ApiClient {
         headers: _headers, body: jsonEncode(body ?? {})));
   }
 
+  Future<Map<String, dynamic>> postMultipart(
+    String path, {
+    required Map<String, dynamic> fields,
+    required String fileField,
+    required String filePath,
+  }) async {
+    final request = http.MultipartRequest(
+        'POST', Uri.parse('${AppConfig.apiBaseUrl}$path'));
+    request.headers.addAll({
+      'Accept': 'application/json',
+      if (_token != null) 'Authorization': 'Bearer $_token',
+    });
+    fields.forEach((key, value) {
+      if (value != null) request.fields[key] = '$value';
+    });
+    request.files.add(await http.MultipartFile.fromPath(fileField, filePath));
+    final streamed = await _client.send(request);
+    return _decode(await http.Response.fromStream(streamed));
+  }
+
   Map<String, String> get _headers => {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -54,8 +74,20 @@ class ApiClient {
       };
 
   Map<String, dynamic> _decode(http.Response response) {
-    final dynamic decoded =
-        response.body.isEmpty ? {} : jsonDecode(response.body);
+    dynamic decoded;
+    try {
+      decoded = response.body.isEmpty ? {} : jsonDecode(response.body);
+    } on FormatException {
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return <String, dynamic>{};
+      }
+      throw ApiException(
+        response.statusCode >= 500
+            ? 'সার্ভারে সাময়িক সমস্যা হয়েছে। কিছুক্ষণ পর আবার চেষ্টা করুন।'
+            : 'সার্ভার থেকে সঠিক উত্তর পাওয়া যায়নি।',
+        response.statusCode,
+      );
+    }
     final data =
         decoded is Map<String, dynamic> ? decoded : <String, dynamic>{};
     if (response.statusCode >= 200 && response.statusCode < 300) return data;

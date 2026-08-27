@@ -41,7 +41,14 @@ class FetchCandidateSettingService
                 'education_id' => (int) $candidate->education_id,
                 'experience_id' => (int) $candidate->experience_id,
                 'website' => $candidate->website,
+                'nationality' => $candidate->nationality,
                 'date_of_birth' => formatTime($candidate->birth_date, 'Y-m-d'),
+                'district' => $candidate->district,
+                'place' => $candidate->place,
+                'address' => $candidate->neighborhood,
+                'postcode' => $candidate->postcode,
+                'permanent_address' => $candidate->permanent_address,
+                'international_address' => $candidate->international_address,
                 'experience_list' => Experience::all()->map(function ($item) {
                     return [
                         'id' => $item->id,
@@ -106,13 +113,13 @@ class FetchCandidateSettingService
     {
         return $this->respondWithSuccess([
             'data' => [
-                'social_media' => $candidate_user->socialInfo->map(function ($item) {
+                'social_media' => $candidate_user->socialInfo?->map(function ($item) {
                     return [
                         'id' => $item->id,
                         'social_media' => $item->social_media,
                         'url' => $item->url,
                     ];
-                }),
+                }) ?? [],
                 'social_media_list' => SocialMediaEnum::toArray(),
             ],
         ]);
@@ -120,18 +127,22 @@ class FetchCandidateSettingService
 
     protected function getContactInfo($candidate_user, $candidate)
     {
+        $contact = $candidate_user->contactInfo;
+
         return $this->respondWithSuccess([
             'data' => [
                 'contact_info' => [
-                    'phone' => $candidate_user->contactInfo->phone,
-                    'secondary_phone' => $candidate_user->contactInfo->secondary_phone,
+                    'phone' => $contact?->phone,
+                    'secondary_phone' => $contact?->secondary_phone,
                     'whatsapp_no' => $candidate->whatsapp_number,
-                    'secondary_email' => $candidate_user->contactInfo->email,
+                    'email' => $contact?->email ?? $candidate_user->email,
+                    'secondary_email' => $contact?->secondary_email,
                 ],
                 'location' => [
                     'country' => $candidate->country,
                     'city' => $candidate->city,
                     'address' => $candidate->address,
+                    'exact_location' => $candidate->exact_location,
                     'latitude' => $candidate->lat,
                     'longitude' => $candidate->long,
                 ],

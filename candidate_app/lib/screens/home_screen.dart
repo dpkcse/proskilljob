@@ -372,9 +372,10 @@ class _CandidateSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = state.currentUser;
-    final completion = int.tryParse(
+    final remaining = int.tryParse(
             '${state.dashboard['profileComplated'] ?? user['profile_complete'] ?? 0}') ??
         0;
+    final completion = (100 - remaining).clamp(0, 100);
     return Container(
       padding: const EdgeInsets.all(17),
       decoration: BoxDecoration(

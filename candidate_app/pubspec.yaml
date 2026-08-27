@@ -13,6 +13,7 @@ dependencies:
   http: ^1.2.2
   shared_preferences: ^2.3.2
   flutter_html: ^3.0.0-beta.2
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:
@@ -33,3 +34,4 @@ flutter:
   assets:
     - assets/branding/proskill_job_logo.png
     - assets/branding/app_icon.png
+    - assets/branding/proskill_loading_mark.png

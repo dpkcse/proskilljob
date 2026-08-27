@@ -27,7 +27,12 @@ class CandidateController extends Controller
             $candidate->user_id = auth('sanctum')->id();
             $candidate->save();
         }
-        $data['profileComplated'] = $candidate->profile_complete;
+        $candidate->loadMissing(['skills', 'resumes', 'user.contactInfo', 'user.socialInfo']);
+        $remaining = $this->profileRemaining($candidate);
+        if ((int) $candidate->profile_complete !== $remaining) {
+            $candidate->update(['profile_complete' => $remaining]);
+        }
+        $data['profileComplated'] = $remaining;
         $data['appliedJobs'] = $candidate->appliedJobs->count();
         $data['favoriteJobs'] = $candidate->bookmarkJobs->count();
         $data['notifications'] = auth('sanctum')->user()->notifications()->count();
@@ -35,6 +40,37 @@ class CandidateController extends Controller
         return $this->respondWithSuccess([
             'data' => $data,
         ]);
+    }
+
+    private function profileRemaining(Candidate $candidate): int
+    {
+        $user = $candidate->user;
+        $contact = $user?->contactInfo;
+        $completed = 0;
+
+        if ($user?->name && $candidate->title && $candidate->experience_id && $candidate->education_id && $candidate->birth_date) {
+            $completed += 25;
+        }
+        if ($candidate->profession_id && $candidate->bio && $candidate->status && $candidate->gender) {
+            $completed += 25;
+        }
+        if ($contact?->phone && ($contact?->email || $user?->email)) {
+            $completed += 20;
+        }
+        if ($candidate->country && $candidate->address) {
+            $completed += 10;
+        }
+        if ($candidate->resumes->isNotEmpty()) {
+            $completed += 10;
+        }
+        if ($candidate->skills->isNotEmpty()) {
+            $completed += 5;
+        }
+        if ($candidate->photo) {
+            $completed += 5;
+        }
+
+        return max(0, 100 - $completed);
     }
 
     public function candidate()

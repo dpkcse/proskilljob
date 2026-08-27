@@ -49,9 +49,9 @@ class User extends Authenticatable implements MustVerifyEmail
                     }
 
                     $user->company()->create([
-                        'industry_type_id' => IndustryType::first()->id,
-                        'organization_type_id' => OrganizationType::first()->id,
-                        'team_size_id' => TeamSize::first()->id,
+                        'industry_type_id' => IndustryType::value('id'),
+                        'organization_type_id' => OrganizationType::value('id'),
+                        'team_size_id' => TeamSize::value('id'),
                     ]);
                 } else {
                     if (! setting('candidate_account_auto_activation')) {
@@ -59,10 +59,10 @@ class User extends Authenticatable implements MustVerifyEmail
                     }
 
                     $user->candidate()->create([
-                        'role_id' => JobRole::first()->id,
-                        'profession_id' => Profession::first()->id,
-                        'experience_id' => Experience::first()->id,
-                        'education_id' => Education::first()->id,
+                        'role_id' => JobRole::value('id'),
+                        'profession_id' => Profession::value('id'),
+                        'experience_id' => Experience::value('id'),
+                        'education_id' => Education::value('id'),
                     ]);
                 }
                 $user->contactInfo()->create([

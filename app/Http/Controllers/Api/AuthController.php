@@ -19,7 +19,9 @@ use F9Web\ApiResponseHelpers;
 use Firebase\Auth\Token\Exception\InvalidToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -98,18 +100,34 @@ class AuthController extends Controller
             $username = Str::slug($newUsername);
         }
 
-        $user = User::create([
-            'role' => $request->role == 'candidate' ? 'candidate' : 'company',
-            'name' => $request->name,
-            'username' => $username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        try {
+            $user = DB::transaction(function () use ($request, $username) {
+                $user = User::create([
+                    'role' => $request->role == 'candidate' ? 'candidate' : 'company',
+                    'name' => $request->name,
+                    'username' => $username,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                ]);
 
-        if ($user->role === 'company') {
-            $user->company()->update([
-                'company_registration_number' => trim($request->company_registration_number),
+                if ($user->role === 'company') {
+                    $user->company()->update([
+                        'company_registration_number' => trim($request->company_registration_number),
+                    ]);
+                }
+
+                return $user;
+            });
+        } catch (\Throwable $th) {
+            Log::error('API registration failed', [
+                'email' => $request->email,
+                'role' => $request->role,
+                'exception' => $th,
             ]);
+
+            return response()->json([
+                'message' => 'Account could not be created. Please try again shortly.',
+            ], 500);
         }
 
         try {
@@ -121,24 +139,31 @@ class AuthController extends Controller
         }
 
         // if mail configured, send notification to candidate and company
-        if (checkMailConfig()) {
-            if ($user->role == 'candidate') {
-                $candidate_account_auto_activation_enabled = Setting::where('candidate_account_auto_activation', 1)->count();
+        try {
+            if (checkMailConfig()) {
+                if ($user->role == 'candidate') {
+                    $candidate_account_auto_activation_enabled = Setting::where('candidate_account_auto_activation', 1)->count();
 
-                if ($candidate_account_auto_activation_enabled) {
-                    Notification::route('mail', $user->email)->notify(new CandidateCreateNotification($user, $request->password));
-                } else {
-                    Notification::route('mail', $user->email)->notify(new CandidateCreateApprovalPendingNotification($user, $request->password));
-                }
-            } elseif ($user->role == 'company') {
-                $employer_auto_activation_enabled = Setting::where('employer_auto_activation', 1)->count();
+                    if ($candidate_account_auto_activation_enabled) {
+                        Notification::route('mail', $user->email)->notify(new CandidateCreateNotification($user, $request->password));
+                    } else {
+                        Notification::route('mail', $user->email)->notify(new CandidateCreateApprovalPendingNotification($user, $request->password));
+                    }
+                } elseif ($user->role == 'company') {
+                    $employer_auto_activation_enabled = Setting::where('employer_auto_activation', 1)->count();
 
-                if ($employer_auto_activation_enabled) {
-                    Notification::route('mail', $user->email)->notify(new CompanyCreatedNotification($user, $request->password));
-                } else {
-                    Notification::route('mail', $user->email)->notify(new CompanyCreateApprovalPendingNotification($user, $request->password));
+                    if ($employer_auto_activation_enabled) {
+                        Notification::route('mail', $user->email)->notify(new CompanyCreatedNotification($user, $request->password));
+                    } else {
+                        Notification::route('mail', $user->email)->notify(new CompanyCreateApprovalPendingNotification($user, $request->password));
+                    }
                 }
             }
+        } catch (\Throwable $th) {
+            Log::warning('Registration email could not be sent', [
+                'user_id' => $user->id,
+                'exception' => $th,
+            ]);
         }
 
         if ($user) {

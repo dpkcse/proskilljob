@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 
 class UpdateCandidateSettingService
@@ -65,13 +66,23 @@ class UpdateCandidateSettingService
         $dateTime = Carbon::createFromFormat('Y-m-d', $request->date_of_birth);
         $date = $request['date_of_birth'] = $dateTime->toDateString();
 
-        $candidate->update([
+        $candidateData = [
             'title' => $request->title,
             'experience_id' => $request->experience_id,
             'education_id' => $request->education_id,
             'website' => $request->website,
             'birth_date' => $date,
-        ]);
+            'nationality' => $request->nationality,
+        ];
+        foreach ([
+            'district', 'place', 'neighborhood', 'postcode',
+            'permanent_address', 'international_address',
+        ] as $field) {
+            if (Schema::hasColumn('candidates', $field)) {
+                $candidateData[$field] = $request->{$field};
+            }
+        }
+        $candidate->update($candidateData);
 
         // image
         if ($request->hasFile('image')) {
@@ -166,14 +177,14 @@ class UpdateCandidateSettingService
         // skill & language
         $skills = $request->skills;
 
-        if ($skills) {
+        if ($request->has('skills')) {
             DB::table('candidate_skill')
                 ->where('candidate_id', $candidate->id)
                 ->delete();
 
             $skillsArray = [];
 
-            foreach ($skills as $skill) {
+            foreach ($skills ?? [] as $skill) {
                 $skill_exists = SkillTranslation::where('skill_id', $skill)->orWhere('name', $skill)->first();
 
                 if (! $skill_exists) {
@@ -194,8 +205,8 @@ class UpdateCandidateSettingService
             $candidate->skills()->attach($skillsArray);
         }
 
-        if ($request->languages) {
-            $candidate->languages()->sync($request->languages);
+        if ($request->has('languages')) {
+            $candidate->languages()->sync($request->languages ?? []);
         }
 
         return $this->respondWithSuccess([
@@ -340,6 +351,7 @@ class UpdateCandidateSettingService
         // Location
         $candidate->update([
             'country' => $request->country,
+            'city' => $request->city,
             'address' => $request->address,
             'exact_location' => $request->exact_location,
             'lat' => $request->lat,
