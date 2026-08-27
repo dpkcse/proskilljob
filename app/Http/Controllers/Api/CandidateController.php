@@ -162,7 +162,12 @@ class CandidateController extends Controller
 
     public function getResumeById($id)
     {
-        $resume = CandidateResume::select(['id', 'name', 'file'])->findOrFail($id);
+        $candidate = auth('sanctum')->user()->candidate;
+        abort_if(! $candidate, 404);
+
+        $resume = $candidate->resumes()
+            ->select(['candidate_resumes.id', 'candidate_resumes.name', 'candidate_resumes.file'])
+            ->findOrFail($id);
 
         return $this->respondWithSuccess([
             'data' => [
@@ -176,25 +181,27 @@ class CandidateController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:100',
+            'resume_file' => 'nullable|mimes:pdf,doc,docx|max:5120',
         ]);
 
-        $resume = CandidateResume::findOrFail($id);
-        $data['name'] = $request->name;
-
-        // cv
-        if ($request->hasFile('resume_file')) {
-            $validator = Validator::make($request->all(), [
-                'name' => 'required|max:100',
-            ]);
-            deleteFile($resume->file);
-            $pdfPath = 'file/candidates/';
-            $file = uploadFileToPublic($request->resume_file, $pdfPath);
-            $data['file'] = $file;
-        }
         if ($validator->fails()) {
             return response()->json(
                 ['errors' => $validator->messages()], 422
             );
+        }
+
+        $candidate = auth('sanctum')->user()->candidate;
+        abort_if(! $candidate, 404);
+
+        $resume = $candidate->resumes()->findOrFail($id);
+        $data = ['name' => $request->name];
+
+        // cv
+        if ($request->hasFile('resume_file')) {
+            $pdfPath = 'file/candidates/';
+            $file = uploadFileToPublic($request->resume_file, $pdfPath);
+            deleteFile($resume->file);
+            $data['file'] = $file;
         }
 
         $resume->update($data);
@@ -209,7 +216,10 @@ class CandidateController extends Controller
 
     public function deleteResume($id)
     {
-        $resume = CandidateResume::findOrFail($id);
+        $candidate = auth('sanctum')->user()->candidate;
+        abort_if(! $candidate, 404);
+
+        $resume = $candidate->resumes()->findOrFail($id);
         deleteFile($resume->file);
         $resume->delete();
 

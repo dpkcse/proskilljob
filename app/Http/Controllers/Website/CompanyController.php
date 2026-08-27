@@ -442,6 +442,8 @@ class CompanyController extends Controller
      */
     public function editJob(Job $job)
     {
+        $this->ensureOwnedJob($job);
+
         try {
             $data['jobCategories'] = $this->uniqueSortedByName(JobCategory::all());
             $data['roles'] = $this->uniqueSortedByName(JobRole::all());
@@ -481,6 +483,8 @@ class CompanyController extends Controller
      */
     public function updateJob(JobCreateRequest $request, Job $job)
     {
+        $this->ensureOwnedJob($job);
+
         try {
             (new CompanyUpdateService)->execute($request, $job);
 
@@ -499,6 +503,8 @@ class CompanyController extends Controller
      */
     public function showPromoteJob(Job $job)
     {
+        $this->ensureOwnedJob($job);
+
         try {
             return view('frontend.pages.company.job-created-success', [
                 'jobCreated' => $job,
@@ -517,6 +523,8 @@ class CompanyController extends Controller
      */
     public function jobPromote(Job $job)
     {
+        $this->ensureOwnedJob($job);
+
         try {
             if (! auth('user')->check() || authUser()->role != 'company') {
                 return abort(403);
@@ -539,6 +547,8 @@ class CompanyController extends Controller
      */
     public function promoteJob(Request $request, Job $jobCreated)
     {
+        $this->ensureOwnedJob($jobCreated);
+
         try {
             (new CompanyPromoteJobService)->execute($request, $jobCreated);
 
@@ -587,6 +597,10 @@ class CompanyController extends Controller
      */
     public function companyBookmarkCandidate(Request $request, Candidate $candidate)
     {
+        if ($request->filled('cat')) {
+            currentCompany()->bookmarkCategories()->findOrFail($request->cat);
+        }
+
         try {
             $company = currentCompany();
 
@@ -721,6 +735,8 @@ class CompanyController extends Controller
      */
     public function downloadTransactionInvoice(Earning $transaction)
     {
+        $this->ensureOwnedTransaction($transaction);
+
         try {
             $transaction = $transaction->load('plan', 'company.user.contactInfo');
             $pdf = PDF::loadView('frontend.pages.invoice.download-invoice', compact('transaction'))->setOptions(['defaultFont' => 'sans-serif']);
@@ -740,11 +756,9 @@ class CompanyController extends Controller
      */
     public function viewTransactionInvoice(Earning $transaction)
     {
-        try {
-            if (currentCompany()->id != $transaction->company_id) {
-                abort(404);
-            }
+        $this->ensureOwnedTransaction($transaction);
 
+        try {
             $transaction = $transaction->load('plan', 'company.user.contactInfo');
 
             return view('frontend.pages.invoice.preview-invoice', compact('transaction'));
@@ -810,6 +824,8 @@ class CompanyController extends Controller
      */
     public function makeJobExpire(Job $job)
     {
+        $this->ensureOwnedJob($job);
+
         try {
             $job->update(['status' => 'expired']);
 
@@ -830,6 +846,8 @@ class CompanyController extends Controller
      */
     public function makeJobActive(Job $job)
     {
+        $this->ensureOwnedJob($job);
+
         try {
 
             if ($job->deadline < now()) {
@@ -907,6 +925,8 @@ class CompanyController extends Controller
      */
     public function bookmarkCategoriesEdit(CompanyBookmarkCategory $category)
     {
+        $this->ensureOwnedBookmarkCategory($category);
+
         try {
             $categories = CompanyBookmarkCategory::where('company_id', auth()->user()->company->id)->paginate(12);
             $dataCount = CompanyBookmarkCategory::where('company_id', auth()->user()->company->id)->count();
@@ -926,6 +946,8 @@ class CompanyController extends Controller
      */
     public function bookmarkCategoriesUpdate(Request $request, CompanyBookmarkCategory $category)
     {
+        $this->ensureOwnedBookmarkCategory($category);
+
         try {
             $category->update(['name' => $request->name]);
 
@@ -946,6 +968,8 @@ class CompanyController extends Controller
      */
     public function bookmarkCategoriesDestroy(CompanyBookmarkCategory $category)
     {
+        $this->ensureOwnedBookmarkCategory($category);
+
         try {
             $category->delete();
 
@@ -966,6 +990,8 @@ class CompanyController extends Controller
      */
     public function jobClone(Job $job)
     {
+        $this->ensureOwnedJob($job);
+
         try {
             $user = authUser();
             $user_plan = $user->company->userPlan;
@@ -1039,6 +1065,21 @@ class CompanyController extends Controller
         }
     }
 
+    private function ensureOwnedJob(Job $job): void
+    {
+        abort_unless($job->company_id === currentCompany()->id, 404);
+    }
+
+    private function ensureOwnedBookmarkCategory(CompanyBookmarkCategory $category): void
+    {
+        abort_unless($category->company_id === currentCompany()->id, 404);
+    }
+
+    private function ensureOwnedTransaction(Earning $transaction): void
+    {
+        abort_unless($transaction->company_id === currentCompany()->id, 404);
+    }
+
     public function manageQuestion()
     {
         try {
@@ -1063,11 +1104,15 @@ class CompanyController extends Controller
 
     public function storeQuestion(Request $request)
     {
-        try {
-            if ($request->get('isEditing') == 'true' && $request->get('editingId')) {
-                $toEdit = CompanyQuestion::query()->findOrFail($request->get('editingId'));
+        $questionToEdit = null;
+        if ($request->get('isEditing') == 'true' && $request->get('editingId')) {
+            $questionToEdit = currentCompany()->questions()
+                ->findOrFail($request->get('editingId'));
+        }
 
-                $toEdit->update([
+        try {
+            if ($questionToEdit) {
+                $questionToEdit->update([
                     'title' => $request->get('newQuestion'),
                     'required' => $request->has('isRequired'),
                 ]);
@@ -1110,6 +1155,8 @@ class CompanyController extends Controller
 
     public function deleteQuestion(CompanyQuestion $question)
     {
+        abort_unless($question->company_id === currentCompany()->id, 404);
+
         $question->delete();
         flashSuccess(__('question_deleted_success'));
 

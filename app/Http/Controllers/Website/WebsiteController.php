@@ -118,17 +118,17 @@ class WebsiteController extends Controller
         try {
             $data = (new IndexPageService)->execute();
 
-            if ($this?->setting?->landing_page == 2) {
+            if ($this->setting?->landing_page == 2) {
                 return view('frontend.pages.index-2', $data);
-            } elseif ($this->setting->landing_page == 3) {
+            } elseif ($this->setting?->landing_page == 3) {
                 return view('frontend.pages.index-3', $data);
             } else {
                 return view('frontend.pages.index', $data);
             }
         } catch (\Exception $e) {
-            flashError('An error occurred: '.$e->getMessage());
+            report($e);
 
-            return back();
+            return response()->view('errors.500', [], 500);
         }
     }
 
@@ -763,7 +763,6 @@ class WebsiteController extends Controller
      *
      * @return void
      */
-
     public function careerResources()
     {
         return redirect()->route('website.career.resource', ['slug' => 'career-advice']);

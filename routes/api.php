@@ -102,7 +102,7 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::post('/store-token-anonymous-user', [CloudMessageController::class, 'storeTokenAnonymous'])->name('store.token.anonymous.user');
 
 //  Candidate Apis
-Route::middleware('auth:sanctum')->prefix('candidate')->group(function () {
+Route::middleware(['auth:sanctum', 'api_candidate:candidate'])->prefix('candidate')->group(function () {
     Route::controller(WebsiteController::class)->group(function () {
         Route::get('/jobs', 'ifLoggedinCadidateJobs');
         Route::get('/jobs/{job:slug}', 'jobDetails');

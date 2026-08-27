@@ -2,7 +2,6 @@
 
 namespace App\Services\API\Website\Company\PostingJob;
 
-use App\Models\Job;
 use App\Models\Setting;
 use F9Web\ApiResponseHelpers;
 
@@ -12,7 +11,9 @@ class PromoteJobService
 
     public function execute($request)
     {
-        $jobCreated = Job::whereSlug($request->slug)->first();
+        $jobCreated = auth('sanctum')->user()->company->jobs()
+            ->whereSlug($request->slug)
+            ->first();
 
         if (! $jobCreated) {
             return $this->respondNotFound(__('job_not_found'));

@@ -228,6 +228,27 @@ it('candidate basic info update with valid data', function () {
     ]);
 });
 
+it('stores candidate nationality when supplied', function () {
+    $experience = Experience::factory()->create();
+    $education = Education::factory()->create();
+    $user = User::factory()->create(['role' => 'candidate']);
+
+    $this->actingAs($user)
+        ->put(route('candidate.settingUpdate'), [
+            'name' => 'John Doe',
+            'birth_date' => '1990-01-01',
+            'education' => $education->id,
+            'experience' => $experience->id,
+            'nationality' => 'Bangladeshi',
+            'type' => 'basic',
+        ]);
+
+    $this->assertDatabaseHas('candidates', [
+        'user_id' => $user->id,
+        'nationality' => 'Bangladeshi',
+    ]);
+});
+
 it('updates candidate contact and address information from settings', function () {
     $this->seed([
         JobTypeSeeder::class,
@@ -443,14 +464,16 @@ it('can update candidate education', function () {
     ]);
 
     // Creating instances of Experience and Education
-    $experience = Experience::factory()->create();
-    $education = Education::factory()->create();
+    Experience::factory()->create();
+    Education::factory()->create();
 
     // Creating a candidate user and acting as them
     $user = User::factory()->create(['role' => 'candidate']);
 
     // Creating a CandidateEducation and associating it with the user
-    CandidateEducation::factory()->create(['candidate_id' => $user->id]);
+    $candidateEducation = CandidateEducation::factory()->create([
+        'candidate_id' => $user->candidate->id,
+    ]);
 
     $this->actingAs($user);
 
@@ -460,7 +483,7 @@ it('can update candidate education', function () {
         'degree' => 'Updated Degree',
         'year' => 2022,
         'notes' => 'Updated notes',
-        'education_id' => $education->id,
+        'education_id' => $candidateEducation->id,
         'type' => 'experience',
     ];
 
@@ -469,8 +492,8 @@ it('can update candidate education', function () {
 
     // Asserting that the education is updated in the database
     $this->assertDatabaseHas('candidate_education', [
-        'id' => $experience->id,
-        'candidate_id' => $education->id,
+        'id' => $candidateEducation->id,
+        'candidate_id' => $user->candidate->id,
         'level' => 'Updated Level',
         'degree' => 'Updated Degree',
         'year' => 2022,
@@ -494,17 +517,71 @@ it('can delete a candidate education', function () {
     $user = User::factory()->create(['role' => 'candidate']);
 
     // Creating a CandidateEducation and associating it with the user
-    CandidateEducation::factory()->create(['candidate_id' => $user->id]);
+    $candidateEducation = CandidateEducation::factory()->create([
+        'candidate_id' => $user->candidate->id,
+    ]);
 
     $this->actingAs($user);
 
     // Making a DELETE request to delete the candidate's education
-    $this->delete(route('candidate.educations.destroy', $user->id))
+    $this->delete(route('candidate.educations.destroy', $candidateEducation))
         ->assertStatus(302) // Asserting the response status is a redirect (302)
         ->assertRedirect(); // Asserting a redirect
 
     // Asserting that the candidate education count in the database is now 0
     $this->assertDatabaseCount('candidate_education', 0);
+});
+
+it('can store candidate education with the new payload', function () {
+    $user = User::factory()->create(['role' => 'candidate']);
+
+    $this->actingAs($user)->post(route('candidate.educations.store'), [
+        'exam_name' => 'Bachelor/Honors',
+        'degree_name' => 'BSc',
+        'major_subject' => 'Computer Science',
+        'institute_name' => 'Example University',
+        'passing_year' => '2022',
+        'result_type' => 'cgpa_4',
+        'result' => 3.75,
+    ])->assertRedirect();
+
+    $this->assertDatabaseHas('candidate_education', [
+        'candidate_id' => $user->candidate->id,
+        'exam_name' => 'Bachelor/Honors',
+        'degree_name' => 'BSc',
+        'level' => 'Bachelor/Honors',
+        'degree' => 'BSc',
+        'year' => 2022,
+    ]);
+});
+
+it('cannot update or delete another candidate education', function () {
+    $owner = User::factory()->create(['role' => 'candidate']);
+    $otherCandidate = User::factory()->create(['role' => 'candidate']);
+    $education = CandidateEducation::factory()->create([
+        'candidate_id' => $owner->candidate->id,
+        'level' => 'Original Level',
+    ]);
+
+    $this->actingAs($otherCandidate)
+        ->put(route('candidate.educations.update'), [
+            'education_id' => $education->id,
+            'level' => 'Unauthorized Level',
+            'degree' => 'Unauthorized Degree',
+            'year' => 2024,
+        ])
+        ->assertNotFound();
+
+    $this->assertDatabaseHas('candidate_education', [
+        'id' => $education->id,
+        'level' => 'Original Level',
+    ]);
+
+    $this->actingAs($otherCandidate)
+        ->deleteJson(route('candidate.educations.destroy', $education))
+        ->assertForbidden();
+
+    $this->assertDatabaseHas('candidate_education', ['id' => $education->id]);
 });
 
 it('deleted user', function () {

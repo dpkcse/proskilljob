@@ -25,6 +25,8 @@ class CreateJobCategoryTranslationsTable extends Migration
         \Artisan::call('db:seed --class=JobCategoryTranslationSeeder --force');
 
         Schema::table('job_categories', function (Blueprint $table) {
+            $table->dropUnique(['name']);
+            $table->dropUnique(['slug']);
             $table->dropColumn(['name', 'slug']);
         });
     }

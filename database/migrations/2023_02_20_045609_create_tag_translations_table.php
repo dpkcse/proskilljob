@@ -26,6 +26,7 @@ class CreateTagTranslationsTable extends Migration
         Artisan::call('db:seed --class=TagTranslationSeeder');
 
         Schema::table('tags', function (Blueprint $table) {
+            $table->dropUnique(['name']);
             $table->dropColumn(['name', 'slug']);
         });
     }

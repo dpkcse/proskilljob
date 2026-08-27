@@ -47,6 +47,9 @@ class AppServiceProvider extends ServiceProvider
 
         Paginator::useBootstrap();
 
+        // Keep shared views renderable when the module is disabled or during tests.
+        view()->share('hasActiveCandidatePlan', false);
+
         if (! app()->runningInConsole()) {
 
             // Caching global Variables
@@ -112,36 +115,36 @@ class AppServiceProvider extends ServiceProvider
             view()->share('headerCurrencies', $headerCurrencies);
             view()->share('custom_pages', Page::all());
 
-            // menu data
-            view()->composer('frontend.partials.header', function ($view) {
-                $view->with('public_menu_lists', $this->publicMenu());
-                $view->with('company_menu_lists', $this->companyMenu());
-                $view->with('candidate_menu_lists', $this->candidateMenu());
-
-                $openJobs = Job::withoutEdited()->openPosition();
-                $partTimeId = JobTypeTranslation::where('name', 'Part Time')->value('job_type_id');
-                $fresherId = ExperienceTranslation::where('name', 'Fresher')->value('experience_id');
-                $localCountry = Country::where('name', 'Bangladesh')->value('name') ?? 'Bangladesh';
-
-                $overseasJobs = (clone $openJobs)->whereNotNull('country')->where('country', '!=', '');
-                $overseasJobs->where('country', 'not like', '%'.$localCountry.'%');
-
-                $view->with('quickLinks', [
-                    'employers' => Company::whereHas('user')->count(),
-                    'new_jobs' => (clone $openJobs)->where('created_at', '>=', now()->subDays(7))->count(),
-                    'deadline_tomorrow' => (clone $openJobs)->whereDate('deadline', now()->addDay()->toDateString())->count(),
-                    'part_time' => $partTimeId ? (clone $openJobs)->where('job_type_id', $partTimeId)->count() : 0,
-                    'overseas' => $overseasJobs->count(),
-                    'fresher' => $fresherId ? (clone $openJobs)->where('experience_id', $fresherId)->count() : 0,
-                ]);
-            });
-
             if ($setting) {
                 if ($setting->commingsoon_mode) {
                     session()->put('commingsoon_mode', $setting->commingsoon_mode);
                 }
             }
         }
+
+        // Header data must also be composed while rendering views in feature tests.
+        view()->composer('frontend.partials.header', function ($view) {
+            $view->with('public_menu_lists', $this->publicMenu());
+            $view->with('company_menu_lists', $this->companyMenu());
+            $view->with('candidate_menu_lists', $this->candidateMenu());
+
+            $openJobs = Job::withoutEdited()->openPosition();
+            $partTimeId = JobTypeTranslation::where('name', 'Part Time')->value('job_type_id');
+            $fresherId = ExperienceTranslation::where('name', 'Fresher')->value('experience_id');
+            $localCountry = Country::where('name', 'Bangladesh')->value('name') ?? 'Bangladesh';
+
+            $overseasJobs = (clone $openJobs)->whereNotNull('country')->where('country', '!=', '');
+            $overseasJobs->where('country', 'not like', '%'.$localCountry.'%');
+
+            $view->with('quickLinks', [
+                'employers' => Company::whereHas('user')->count(),
+                'new_jobs' => (clone $openJobs)->where('created_at', '>=', now()->subDays(7))->count(),
+                'deadline_tomorrow' => (clone $openJobs)->whereDate('deadline', now()->addDay()->toDateString())->count(),
+                'part_time' => $partTimeId ? (clone $openJobs)->where('job_type_id', $partTimeId)->count() : 0,
+                'overseas' => $overseasJobs->count(),
+                'fresher' => $fresherId ? (clone $openJobs)->where('experience_id', $fresherId)->count() : 0,
+            ]);
+        });
 
         Builder::macro('whereLike', function ($attributes, string $searchTerm) {
             $this->where(function (Builder $query) use ($attributes, $searchTerm) {

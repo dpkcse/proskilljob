@@ -83,27 +83,27 @@ trait HasCandidateResume
      */
     public function resumeUpdate(Request $request)
     {
-        $request->validate([
-            'resume_name' => 'required',
+        $data = $request->validate([
+            'resume_id' => ['required', 'integer'],
+            'resume_name' => ['required', 'string', 'max:255'],
+            'resume_file' => ['nullable', 'mimes:pdf,doc,docx', 'max:5120'],
         ]);
 
-        $resume = CandidateResume::where('id', $request->resume_id)->first();
         $candidate = auth()->user()->candidate;
-        $data['name'] = $request->resume_name;
-        $data['candidate_id'] = $candidate->id;
+        abort_if(! $candidate, 404);
+
+        $resume = $candidate->resumes()->findOrFail($data['resume_id']);
+        $updateData = ['name' => $data['resume_name']];
 
         // cv
-        if ($request->resume_file) {
-            $request->validate([
-                'resume_file' => 'required|mimes:pdf,doc,docx|max:5120',
-            ]);
-            deleteFile($resume->file);
+        if ($request->hasFile('resume_file')) {
             $pdfPath = 'file/candidates/';
             $file = uploadFileToPublic($request->resume_file, $pdfPath);
-            $data['file'] = $file;
+            deleteFile($resume->file);
+            $updateData['file'] = $file;
         }
 
-        $resume->update($data);
+        $resume->update($updateData);
 
         return back()->with('success', 'Resume updated successfully');
     }
@@ -115,6 +115,8 @@ trait HasCandidateResume
      */
     public function resumeDelete(CandidateResume $resume)
     {
+        abort_if($resume->candidate_id !== currentCandidate()?->id, 403);
+
         deleteFile($resume->file);
         $resume->delete();
 
@@ -128,17 +130,15 @@ trait HasCandidateResume
      */
     public function cvShow(Request $request)
     {
-        $cv = CandidateResume::FindOrFail($request->cv);
+        $data = $request->validate([
+            'cv' => ['required', 'integer'],
+        ]);
 
-        abort_if(! auth()->check(), 403);
+        $candidate = auth()->user()->candidate;
+        abort_if(! $candidate, 404);
 
-        $user = auth()->user();
-        $candidate = $user->candidate;
+        $cv = $candidate->resumes()->findOrFail($data['cv']);
 
-        if ($cv->candidate_id != $candidate->id) {
-            abort(403);
-        }
-
-        return response()->file($cv->file);
+        return response()->file(public_path($cv->file));
     }
 }

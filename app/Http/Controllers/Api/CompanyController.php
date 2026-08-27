@@ -41,7 +41,7 @@ class CompanyController extends Controller
         // Recent 4 Jobs
         $data['recentJobs'] = auth('sanctum')->user()->company->jobs()
             ->select(['id', 'title', 'company_id', 'country', 'max_salary', 'min_salary', 'job_type_id', 'slug', 'deadline', 'job_start', 'job_end', 'status'])
-            ->latest()->with('company:id', 'job_type:id,name')->withCount('appliedJobs')->take(4)->get();
+            ->latest()->with('company:id', 'job_type:id')->withCount('appliedJobs')->take(4)->get();
         $data['savedCandidateCount'] = auth('sanctum')->user()->company->bookmarkCandidates()->count();
 
         return $this->respondWithSuccess([
@@ -65,6 +65,8 @@ class CompanyController extends Controller
 
     public function editJob(Job $job)
     {
+        $this->ensureOwnedJob($job);
+
         return $this->respondWithSuccess([
             'data' => (new FetchEditJobDataService)->execute($job),
         ]);
@@ -72,6 +74,8 @@ class CompanyController extends Controller
 
     public function updateJob(Request $request, Job $job)
     {
+        $this->ensureOwnedJob($job);
+
         return $this->respondWithSuccess([
             'data' => (new UpdateJobService)->execute($request, $job),
         ]);
@@ -79,6 +83,8 @@ class CompanyController extends Controller
 
     public function promoteJob(Request $request)
     {
+        $this->ensureOwnedJobSlug($request->slug);
+
         return $this->respondWithSuccess([
             'data' => (new PromoteJobService)->execute($request),
         ]);
@@ -86,6 +92,8 @@ class CompanyController extends Controller
 
     public function cloneJob(Request $request)
     {
+        $this->ensureOwnedJobSlug($request->slug);
+
         return $this->respondWithSuccess([
             'data' => (new CloneJobService)->execute($request),
         ]);
@@ -93,6 +101,8 @@ class CompanyController extends Controller
 
     public function changeJobStatus(Request $request)
     {
+        $this->ensureOwnedJobSlug($request->slug);
+
         return $this->respondWithSuccess([
             'data' => (new JobStatusUpdateService)->execute($request),
         ]);
@@ -114,6 +124,8 @@ class CompanyController extends Controller
 
     public function editBookmarkCategories(CompanyBookmarkCategory $category)
     {
+        $this->ensureOwnedBookmarkCategory($category);
+
         return $this->respondWithSuccess([
             'data' => $category,
         ]);
@@ -121,6 +133,8 @@ class CompanyController extends Controller
 
     public function updateBookmarkCategories(Request $request, CompanyBookmarkCategory $category)
     {
+        $this->ensureOwnedBookmarkCategory($category);
+
         return $this->respondWithSuccess([
             'data' => (new UpdateBookmarkCategoryService)->execute($request, $category),
         ]);
@@ -128,6 +142,8 @@ class CompanyController extends Controller
 
     public function deleteBookmarkCategories(CompanyBookmarkCategory $category)
     {
+        $this->ensureOwnedBookmarkCategory($category);
+
         $category->delete();
 
         return $this->respondOk(__('category_deleted_successfully'));
@@ -142,6 +158,8 @@ class CompanyController extends Controller
 
     public function bookmarkCandidate(Request $request)
     {
+        $this->ensureOwnedBookmarkCategoryId($request->category_id);
+
         return $this->respondWithSuccess([
             'data' => (new CandidateBookmarkService)->execute($request),
         ]);
@@ -165,6 +183,8 @@ class CompanyController extends Controller
 
     public function updateApplicationGroup(Request $request, ApplicationGroup $group)
     {
+        $this->ensureOwnedApplicationGroup($group);
+
         return $this->respondWithSuccess([
             'data' => (new UpdateApplicationGroupService)->execute($request, $group),
         ]);
@@ -172,6 +192,8 @@ class CompanyController extends Controller
 
     public function deleteApplicationGroup(ApplicationGroup $group)
     {
+        $this->ensureOwnedApplicationGroup($group);
+
         return $this->respondWithSuccess([
             'data' => (new DeleteApplicationGroupService)->execute($group),
         ]);
@@ -222,7 +244,8 @@ class CompanyController extends Controller
 
     public function downloadInvoice($id)
     {
-        $transaction = Earning::findOrFail($id);
+        $transaction = auth('sanctum')->user()->company->transactions()
+            ->findOrFail($id);
         $data['transaction'] = $transaction->load('plan', 'company.user.contactInfo');
         $data['logo'] = setting()->dark_logo_url ?? asset('frontend/assets/images/logo/logo.png');
 
@@ -253,5 +276,46 @@ class CompanyController extends Controller
 
         }
 
+    }
+
+    private function ensureOwnedJob(Job $job): void
+    {
+        abort_unless(
+            $job->company_id === auth('sanctum')->user()->company->id,
+            404
+        );
+    }
+
+    private function ensureOwnedJobSlug(?string $slug): void
+    {
+        auth('sanctum')->user()->company->jobs()
+            ->whereSlug($slug)
+            ->firstOrFail();
+    }
+
+    private function ensureOwnedApplicationGroup(ApplicationGroup $group): void
+    {
+        abort_unless(
+            $group->company_id === auth('sanctum')->user()->company->id,
+            404
+        );
+    }
+
+    private function ensureOwnedBookmarkCategory(CompanyBookmarkCategory $category): void
+    {
+        abort_unless(
+            $category->company_id === auth('sanctum')->user()->company->id,
+            404
+        );
+    }
+
+    private function ensureOwnedBookmarkCategoryId($categoryId): void
+    {
+        if ($categoryId === null || $categoryId === '') {
+            return;
+        }
+
+        auth('sanctum')->user()->company->bookmarkCategories()
+            ->findOrFail($categoryId);
     }
 }

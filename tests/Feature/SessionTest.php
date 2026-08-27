@@ -1,6 +1,20 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
+use Modules\Currency\Entities\Currency;
+
+it('uses the configured currency when no currency record or session exists', function () {
+    session()->forget('current_currency');
+    Cache::forget('systemCurrency');
+    Currency::query()->delete();
+
+    $currency = currentCurrency();
+
+    expect($currency->code)->toBe(config('templatecookie.currency'))
+        ->and($currency->symbol)->toBe(config('templatecookie.currency_symbol'))
+        ->and(currencyPosition(100))->toBe(config('templatecookie.currency_symbol').' 100');
+});
 
 it('logs the user out and destroy session data', function () {
     // Create a user session with some session data

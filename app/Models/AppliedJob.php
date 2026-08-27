@@ -47,6 +47,14 @@ class AppliedJob extends Model
     }
 
     /**
+     * Candidate relationship used by API application responses.
+     */
+    public function apiCandidate()
+    {
+        return $this->belongsTo(Candidate::class, 'candidate_id');
+    }
+
+    /**
      * Get the resume that owns the AppliedJob
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

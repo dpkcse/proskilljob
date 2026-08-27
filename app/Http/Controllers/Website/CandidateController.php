@@ -8,19 +8,19 @@ use App\Http\Traits\CandidateSkillAble;
 use App\Http\Traits\HasCandidateResume;
 use App\Models\AppliedJob;
 use App\Models\Candidate;
+use App\Models\CandidateEducation;
 use App\Models\CandidateLanguage;
 use App\Models\CandidateResume;
 use App\Models\Company;
-use App\Models\SearchCountry;
 use App\Models\ContactInfo;
 use App\Models\Education;
-use App\Models\Experience;
-use App\Models\JobRole;
-use App\Models\JobCategory;
-use App\Models\Profession;
-use App\Models\Skill;
 use App\Models\EducationInstitution;
-use App\Models\CandidateEducation;
+use App\Models\Experience;
+use App\Models\JobCategory;
+use App\Models\JobRole;
+use App\Models\Profession;
+use App\Models\SearchCountry;
+use App\Models\Skill;
 use App\Services\Website\Candidate\CandidateSettingUpdateService;
 use App\Services\Website\Candidate\DashboardService;
 use Illuminate\Http\Request;
@@ -281,7 +281,8 @@ class CandidateController extends Controller
             return back();
         }
     }
-     /**
+
+    /**
      * Store candidate professional reference.
      */
     public function referenceStore(Request $request)
@@ -346,7 +347,6 @@ class CandidateController extends Controller
         return back()->with('success', __('reference_deleted_successfully'));
     }
 
-
     /**
      * Candidate username update
      *
@@ -406,26 +406,35 @@ class CandidateController extends Controller
     {
         $request->session()->put('type', 'education');
 
+        $request->merge([
+            'exam_name' => $request->input('exam_name') ?: $request->input('level'),
+            'degree_name' => $request->input('degree_name') ?: $request->input('degree'),
+            'passing_year' => $request->input('passing_year') ?: $request->input('year'),
+        ]);
+
         $data = $request->validate([
-            'is_institute_accredited'   => ['nullable', 'in:0,1'],
-            'exam_name'                 => ['required', 'string', 'max:255'],
-            'degree_name'               => ['nullable', 'string', 'max:255'],
-            'major_subject'             => ['nullable', 'string', 'max:255'],
-            'institute_name'            => ['required', 'string', 'max:255'],
-            'passing_year'              => ['nullable', 'digits:4'],
-            'result_type'               => ['nullable', 'in:gpa_5,cgpa_4,percentage,division,other'],
-            'result'                    => ['nullable', 'numeric', 'min:0'],
-            'board'                     => ['nullable', 'string', 'max:255'],
-            'skills'                    => ['nullable', 'array'],
-            'skills.*'                  => ['integer'],
+            'is_institute_accredited' => ['nullable', 'in:0,1'],
+            'exam_name' => ['required', 'string', 'max:255'],
+            'degree_name' => ['nullable', 'string', 'max:255'],
+            'major_subject' => ['nullable', 'string', 'max:255'],
+            'institute_name' => ['nullable', 'string', 'max:255'],
+            'passing_year' => ['nullable', 'digits:4'],
+            'result_type' => ['nullable', 'in:gpa_5,cgpa_4,percentage,division,other'],
+            'result' => ['nullable', 'numeric', 'min:0'],
+            'board' => ['nullable', 'string', 'max:255'],
+            'notes' => ['nullable', 'string'],
+            'skills' => ['nullable', 'array'],
+            'skills.*' => ['integer', 'exists:skills,id'],
         ]);
 
         $this->validateEducationResult($data);
 
         return DB::transaction(function () use ($data) {
 
-            $instName = trim($data['institute_name']);
-            $institution = EducationInstitution::firstOrCreate(['name' => $instName]);
+            $instName = trim((string) ($data['institute_name'] ?? ''));
+            $institution = $instName !== ''
+                ? EducationInstitution::firstOrCreate(['name' => $instName])
+                : null;
 
             $educationPayload = [
                 'candidate_id' => currentCandidate()->id,
@@ -441,7 +450,7 @@ class CandidateController extends Controller
                 $educationPayload['major_subject'] = $data['major_subject'] ?? null;
             }
             if (Schema::hasColumn('candidate_education', 'education_institution_id')) {
-                $educationPayload['education_institution_id'] = $institution->id;
+                $educationPayload['education_institution_id'] = $institution?->id;
             }
             if (Schema::hasColumn('candidate_education', 'institute_name')) {
                 $educationPayload['institute_name'] = $instName;
@@ -460,6 +469,9 @@ class CandidateController extends Controller
             }
             if (Schema::hasColumn('candidate_education', 'is_institute_accredited')) {
                 $educationPayload['is_institute_accredited'] = $data['is_institute_accredited'] ?? null;
+            }
+            if (Schema::hasColumn('candidate_education', 'notes')) {
+                $educationPayload['notes'] = $data['notes'] ?? null;
             }
 
             // legacy columns
@@ -485,20 +497,27 @@ class CandidateController extends Controller
     {
         $request->session()->put('type', 'education');
 
-        $data = $request->validate([
-            'education_id'              => ['required', 'integer'],
+        $request->merge([
+            'exam_name' => $request->input('exam_name') ?: $request->input('level'),
+            'degree_name' => $request->input('degree_name') ?: $request->input('degree'),
+            'passing_year' => $request->input('passing_year') ?: $request->input('year'),
+        ]);
 
-            'is_institute_accredited'   => ['nullable', 'in:0,1'],
-            'exam_name'                 => ['required', 'string', 'max:255'],
-            'degree_name'               => ['nullable', 'string', 'max:255'],
-            'major_subject'             => ['nullable', 'string', 'max:255'],
-            'institute_name'            => ['required', 'string', 'max:255'],
-            'passing_year'              => ['nullable', 'digits:4'],
-            'result_type'               => ['nullable', 'in:gpa_5,cgpa_4,percentage,division,other'],
-            'result'                    => ['nullable', 'numeric', 'min:0'],
-            'board'                     => ['nullable', 'string', 'max:255'],
-            'skills'                    => ['nullable', 'array'],
-            'skills.*'                  => ['integer'],
+        $data = $request->validate([
+            'education_id' => ['required', 'integer'],
+
+            'is_institute_accredited' => ['nullable', 'in:0,1'],
+            'exam_name' => ['required', 'string', 'max:255'],
+            'degree_name' => ['nullable', 'string', 'max:255'],
+            'major_subject' => ['nullable', 'string', 'max:255'],
+            'institute_name' => ['nullable', 'string', 'max:255'],
+            'passing_year' => ['nullable', 'digits:4'],
+            'result_type' => ['nullable', 'in:gpa_5,cgpa_4,percentage,division,other'],
+            'result' => ['nullable', 'numeric', 'min:0'],
+            'board' => ['nullable', 'string', 'max:255'],
+            'notes' => ['nullable', 'string'],
+            'skills' => ['nullable', 'array'],
+            'skills.*' => ['integer', 'exists:skills,id'],
         ]);
 
         $this->validateEducationResult($data);
@@ -509,8 +528,10 @@ class CandidateController extends Controller
                 ->where('candidate_id', currentCandidate()->id)
                 ->firstOrFail();
 
-            $instName = trim($data['institute_name']);
-            $institution = EducationInstitution::firstOrCreate(['name' => $instName]);
+            $instName = trim((string) ($data['institute_name'] ?? ''));
+            $institution = $instName !== ''
+                ? EducationInstitution::firstOrCreate(['name' => $instName])
+                : null;
 
             $educationPayload = [];
 
@@ -524,7 +545,7 @@ class CandidateController extends Controller
                 $educationPayload['major_subject'] = $data['major_subject'] ?? null;
             }
             if (Schema::hasColumn('candidate_education', 'education_institution_id')) {
-                $educationPayload['education_institution_id'] = $institution->id;
+                $educationPayload['education_institution_id'] = $institution?->id;
             }
             if (Schema::hasColumn('candidate_education', 'institute_name')) {
                 $educationPayload['institute_name'] = $instName;
@@ -543,6 +564,9 @@ class CandidateController extends Controller
             }
             if (Schema::hasColumn('candidate_education', 'is_institute_accredited')) {
                 $educationPayload['is_institute_accredited'] = $data['is_institute_accredited'] ?? null;
+            }
+            if (Schema::hasColumn('candidate_education', 'notes')) {
+                $educationPayload['notes'] = $data['notes'] ?? null;
             }
 
             // legacy columns
@@ -623,5 +647,4 @@ class CandidateController extends Controller
 
         return back()->with($success ? 'success' : 'error', $message);
     }
-
 }

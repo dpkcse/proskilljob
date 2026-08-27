@@ -856,7 +856,14 @@ if (! function_exists('getCurrencyRate')) {
 if (! function_exists('currentCurrency')) {
     function currentCurrency()
     {
-        return session('current_currency') ?? loadSystemCurrency();
+        return session('current_currency')
+            ?? loadSystemCurrency()
+            ?? (object) [
+                'code' => config('templatecookie.currency', 'USD'),
+                'symbol' => config('templatecookie.currency_symbol', '$'),
+                'symbol_position' => config('templatecookie.currency_symbol_position', 'left'),
+                'rate' => 1,
+            ];
     }
 }
 
@@ -918,15 +925,15 @@ if (! function_exists('metaData')) {
     {
         $current_language = currentLanguage() ?: loadDefaultLanguage(); // current language
         $page = Seo::where('page_slug', $page)->first(); // get page
-        $exist_content = $page ? $page->contents()->where('language_code', $current_language->code)->first() : null; // get page content orderBy page && language
-        $content = '';
-        if ($exist_content) {
-            $content = $exist_content;
-        } else {
-            $content = $page->contents()?->where('language_code', 'en')->first() ?? '';
+        if (! $page) {
+            return '';
         }
 
-        return $content; // return response
+        $languageCode = $current_language?->code ?? config('templatecookie.default_language', 'en');
+
+        return $page->contents()->where('language_code', $languageCode)->first()
+            ?? $page->contents()->where('language_code', 'en')->first()
+            ?? '';
     }
 }
 

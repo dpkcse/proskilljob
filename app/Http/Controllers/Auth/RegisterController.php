@@ -16,6 +16,7 @@ use App\Notifications\EmailVerifyNotification;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -258,6 +259,11 @@ class RegisterController extends Controller
     {
         // If email verification is enabled, redirect to verification notice
         if (setting('email_verification')) {
+            // RegistersUsers logs in the temporary, unsaved user returned by
+            // create(). Keep the visitor unauthenticated until verification
+            // creates the real user account.
+            Auth::logout();
+
             return redirect()->route('verification.notice', ['email' => $user->email])
                 ->with('success', 'Registration successful! Please check your email to verify your account.');
         }

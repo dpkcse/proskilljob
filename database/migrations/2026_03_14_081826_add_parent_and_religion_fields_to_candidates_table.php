@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('candidates', function (Blueprint $table) {
             if (! Schema::hasColumn('candidates', 'father_name')) {
-                $table->string('father_name')->nullable()->after('nationality');
+                $table->string('father_name')->nullable();
             }
             if (! Schema::hasColumn('candidates', 'mother_name')) {
                 $table->string('mother_name')->nullable()->after('father_name');

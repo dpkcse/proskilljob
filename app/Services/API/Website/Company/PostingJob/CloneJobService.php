@@ -2,7 +2,6 @@
 
 namespace App\Services\API\Website\Company\PostingJob;
 
-use App\Models\Job;
 use F9Web\ApiResponseHelpers;
 
 class CloneJobService
@@ -11,7 +10,9 @@ class CloneJobService
 
     public function execute($request)
     {
-        $job = Job::whereSlug($request->slug)->first();
+        $job = auth('sanctum')->user()->company->jobs()
+            ->whereSlug($request->slug)
+            ->first();
 
         if (! $job) {
             return $this->respondNotFound(__('job_not_found'));

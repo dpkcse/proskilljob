@@ -23,7 +23,7 @@ class DashboardService
         $jobs = $candidate->appliedJobs()
             ->with([
                 'company.user',
-                'job_type:id,name',
+                'job_type:id',
             ])
             ->withCount(['bookmarkJobs as bookmarked' => function ($q) use ($candidate) {
                 $q->where('candidate_id', $candidate->id);

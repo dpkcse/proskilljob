@@ -9,19 +9,10 @@ use Kreait\Firebase\Contract\Messaging;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
+use Throwable;
 
 class CloudMessageController extends Controller
 {
-    public $messaging;
-
-    public $factory;
-
-    public function __construct(Messaging $messaging)
-    {
-        $this->factory = (new Factory)->withServiceAccount(storage_path('firebase_credentials.json'));
-        $this->messaging = $this->factory->createMessaging();
-    }
-
     public function storeTokenAnonymous(Request $request)
     {
 
@@ -108,7 +99,7 @@ class CloudMessageController extends Controller
         $message = CloudMessage::withTarget('topic', $topic)->withNotification($notification);
 
         try {
-            $response = $this->messaging->sendMulticast($message, $deviceTokens);
+            $response = $this->firebaseMessaging()->sendMulticast($message, $deviceTokens);
 
             return response()->json([
                 'data' => [
@@ -116,7 +107,7 @@ class CloudMessageController extends Controller
                 ],
             ], 200);
 
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             return response()->json([
                 'data' => [
                     'message' => $e->getMessage(),
@@ -154,7 +145,7 @@ class CloudMessageController extends Controller
         $message = CloudMessage::withTarget('topic', $topic)->withNotification($notification);
 
         try {
-            $response = $this->messaging->sendMulticast($message, $deviceTokens);
+            $response = $this->firebaseMessaging()->sendMulticast($message, $deviceTokens);
 
             return response()->json([
                 'data' => [
@@ -162,7 +153,7 @@ class CloudMessageController extends Controller
                 ],
             ], 200);
 
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             return response()->json([
                 'data' => [
                     'message' => $e->getMessage(),
@@ -170,5 +161,21 @@ class CloudMessageController extends Controller
             ], 500);
 
         }
+    }
+
+    private function firebaseMessaging(): Messaging
+    {
+        $credentials = config('firebase.projects.'.config('firebase.default', 'app').'.credentials');
+        $legacyCredentials = storage_path('firebase_credentials.json');
+
+        if (! $credentials && is_file($legacyCredentials)) {
+            $credentials = $legacyCredentials;
+        }
+
+        if (! $credentials) {
+            throw new \RuntimeException('Firebase credentials are not configured.');
+        }
+
+        return (new Factory)->withServiceAccount($credentials)->createMessaging();
     }
 }

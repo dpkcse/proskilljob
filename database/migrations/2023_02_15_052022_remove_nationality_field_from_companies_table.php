@@ -13,13 +13,8 @@ class RemoveNationalityFieldFromCompaniesTable extends Migration
      */
     public function up()
     {
-        if (\DB::getDriverName() !== 'sqlite') {
-            Schema::table('companies', function (Blueprint $table) {
-                $table->dropForeign(['nationality_id']);
-            });
-        }
-
         Schema::table('companies', function (Blueprint $table) {
+            $table->dropForeign(['nationality_id']);
             $table->dropColumn(['nationality_id']);
         });
     }

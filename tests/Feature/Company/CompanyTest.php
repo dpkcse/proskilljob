@@ -12,10 +12,42 @@ use App\Models\JobType;
 use App\Models\JobTypeTranslation;
 use App\Models\ManualPayment;
 use App\Models\OrganizationType;
+use App\Models\PendingUser;
 use App\Models\Profession;
 use App\Models\SalaryType;
+use App\Models\Setting;
 use App\Models\TeamSize;
+use App\Models\User;
 use Modules\Plan\Entities\Plan;
+
+function registerAndVerifyCompany(): User
+{
+    Setting::first()->update(['email_verification' => true]);
+
+    $attributes = [
+        'role' => 'company',
+        'name' => 'Jon Doe',
+        'email' => 'foo@bar.com',
+        'company_registration_number' => 'COMP-TEST-001',
+        'password' => 'password',
+        'password_confirmation' => 'password',
+    ];
+
+    test()->assertGuest();
+    test()->post(route('register'), $attributes)
+        ->assertRedirect(route('verification.notice', ['email' => $attributes['email']]));
+    test()->assertGuest();
+
+    $pendingUser = PendingUser::where('email', $attributes['email'])->firstOrFail();
+
+    expect(User::where('email', $attributes['email'])->exists())->toBeFalse();
+
+    test()->get(route('verification.verify.email', $pendingUser->verification_token))
+        ->assertRedirect(route('company.dashboard', ['verified' => true]));
+    test()->assertAuthenticated();
+
+    return auth()->user();
+}
 
 beforeEach(function () {
     IndustryType::factory()->create();
@@ -125,19 +157,7 @@ test('company can have any active plan', function () {
 });
 
 test('after register a company profile progress is zero', function () {
-    $attr = [
-        'role' => 'company',
-        'name' => 'Jon Doe',
-        'email' => 'foo@bar.com',
-        'password' => 'password',
-        'password_confirmation' => 'password',
-    ];
-
-    $this->assertGuest();
-    $this->post(route('register'), $attr);
-    $this->assertAuthenticated();
-
-    $authenticatedUser = auth()->user();
+    $authenticatedUser = registerAndVerifyCompany();
     expect($authenticatedUser->company->profile_completion)->toBe(false);
 
     $this->get(route('company.account-progress'))->assertSee('0%');
@@ -145,19 +165,7 @@ test('after register a company profile progress is zero', function () {
 });
 
 test('shows profile 25 % complete in profile tab', function () {
-    $attr = [
-        'role' => 'company',
-        'name' => 'Jon Doe',
-        'email' => 'foo@bar.com',
-        'password' => 'password',
-        'password_confirmation' => 'password',
-    ];
-
-    $this->assertGuest();
-    $this->post(route('register'), $attr);
-    $this->assertAuthenticated();
-
-    $authenticatedUser = auth()->user();
+    $authenticatedUser = registerAndVerifyCompany();
     expect($authenticatedUser->company->profile_completion)->toBe(false);
 
     $this->get(route('company.account-progress').'?profile')
@@ -166,19 +174,7 @@ test('shows profile 25 % complete in profile tab', function () {
 });
 
 test('shows profile 50 % complete in social tab', function () {
-    $attr = [
-        'role' => 'company',
-        'name' => 'Jon Doe',
-        'email' => 'foo@bar.com',
-        'password' => 'password',
-        'password_confirmation' => 'password',
-    ];
-
-    $this->assertGuest();
-    $this->post(route('register'), $attr);
-    $this->assertAuthenticated();
-
-    $authenticatedUser = auth()->user();
+    $authenticatedUser = registerAndVerifyCompany();
     expect($authenticatedUser->company->profile_completion)->toBe(false);
 
     $this->get(route('company.account-progress').'?social')
@@ -186,19 +182,7 @@ test('shows profile 50 % complete in social tab', function () {
 });
 
 test('shows profile 100 % complete after contact submit', function () {
-    $attr = [
-        'role' => 'company',
-        'name' => 'Jon Doe',
-        'email' => 'foo@bar.com',
-        'password' => 'password',
-        'password_confirmation' => 'password',
-    ];
-
-    $this->assertGuest();
-    $this->post(route('register'), $attr);
-    $this->assertAuthenticated();
-
-    $authenticatedUser = auth()->user();
+    $authenticatedUser = registerAndVerifyCompany();
     expect($authenticatedUser->company->profile_completion)->toBe(false);
 
     session()->put('location', [

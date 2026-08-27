@@ -23,7 +23,9 @@ class CreateCitiesTable extends Migration
             $table->foreign('state_id')->references('id')->on('states');
             $table->timestamps();
         });
-        Artisan::call('db:seed --class=CitySeeder --force');
+        if (! app()->environment('testing')) {
+            Artisan::call('db:seed --class=CitySeeder --force');
+        }
     }
 
     /**

@@ -25,6 +25,7 @@ class CreateJobRoleTranslationsTable extends Migration
         \Artisan::call('db:seed --class=JobRoleTranslationSeeder --force');
 
         Schema::table('job_roles', function (Blueprint $table) {
+            $table->dropUnique(['slug']);
             $table->dropColumn(['name', 'slug']);
         });
     }

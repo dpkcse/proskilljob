@@ -13,9 +13,9 @@ class CompanyApiMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next, string $role = 'company')
     {
-        if (auth()->user()->role == 'company') {
+        if ($request->user()?->role === $role) {
             return $next($request);
         }
 

@@ -160,6 +160,11 @@ class Company extends Model implements HasMedia
         return $this->hasOne(CompanyBookmarkCategory::class, 'company_id');
     }
 
+    public function bookmarkCategories(): HasMany
+    {
+        return $this->hasMany(CompanyBookmarkCategory::class, 'company_id');
+    }
+
     /**
      * Get the company bookmarked candidates
      *

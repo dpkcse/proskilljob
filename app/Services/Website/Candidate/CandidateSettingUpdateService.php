@@ -101,15 +101,16 @@ class CandidateSettingUpdateService
         if ($request->type == 'experience_skill') {
             $this->experienceSkillAdd($request, $candidate);
             flashSuccess(__('profile_updated'));
+
             return back();
         }
 
         if ($request->type == 'experience_skill_delete') {
             $this->experienceSkillDelete($request, $candidate);
             flashSuccess(__('profile_updated'));
+
             return back();
         }
-
 
         if ($request->type == 'account') {
 
@@ -160,7 +161,7 @@ class CandidateSettingUpdateService
             'age' => 'nullable|integer|min:1|max:100|required_without:birth_date',
             'education' => 'required',
             'experience' => 'required',
-            'nationality' => 'required',
+            'nationality' => 'nullable|string|max:255',
         ];
         if (! setting('candidate_birth_date_active')) {
             unset($rules['birth_date'], $rules['age']);
@@ -197,8 +198,11 @@ class CandidateSettingUpdateService
             'education_id' => $education->id,
             'website' => $request->website,
             'birth_date' => $date ?? null,
-            'nationality' => $request->nationality,
         ];
+
+        if (Schema::hasColumn('candidates', 'nationality')) {
+            $candidateData['nationality'] = $request->nationality;
+        }
 
         if (Schema::hasColumn('candidates', 'father_name')) {
             $candidateData['father_name'] = $request->father_name;
@@ -209,7 +213,6 @@ class CandidateSettingUpdateService
         if (Schema::hasColumn('candidates', 'religion')) {
             $candidateData['religion'] = $request->religion;
         }
-
 
         if (Schema::hasColumn('candidates', 'locality')) {
             $candidateData['locality'] = $request->bd_district_name;
@@ -240,7 +243,6 @@ class CandidateSettingUpdateService
             $candidateData['bd_post_office'] = $request->postcode;
         }
 
-        
         if (Schema::hasColumn('candidates', 'permanent_address')) {
             $candidateData['permanent_address'] = trim(implode(', ', array_filter([
                 $request->permanent_neighborhood,
@@ -252,13 +254,13 @@ class CandidateSettingUpdateService
         if (Schema::hasColumn('candidates', 'international_address')) {
             $candidateData['international_address'] = $request->international_address;
         }
-        
+
         $candidate->update($candidateData);
 
         // image
         // image (Candidate photo) - 300x300
         // Candidate photo (300x300)
-         if ($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
             $request->validate([
                 'image' => 'image|mimes:jpeg,png,jpg|max:5120',
             ]);
@@ -266,15 +268,14 @@ class CandidateSettingUpdateService
             // পুরোনো ফটো থাকলে ডিলিট
             deleteImage($candidate->getRawOriginal('photo')); // অথবা accessor ফিক্স করলে সরাসরি $candidate->photo
 
-            $path  = 'uploads/images/candidates';
+            $path = 'uploads/images/candidates';
             $image = uploadImage($request->file('image'), $path, [300, 300]);
 
             $candidate->update([
                 'photo' => $image, // DB-তে শুধু path স্টোর হচ্ছে
             ]);
         }
-        
-        
+
         /**
          * Signature image - 300x80
          */
@@ -287,7 +288,7 @@ class CandidateSettingUpdateService
             deleteImage($candidate->signature);
 
             // আলাদা ফোল্ডার চাইলে:
-            $signaturePath  = 'uploads/images/candidates';
+            $signaturePath = 'uploads/images/candidates';
             $signatureImage = uploadImage($request->file('signature'), $signaturePath, [300, 80]);
 
             $candidate->update([
@@ -595,13 +596,14 @@ class CandidateSettingUpdateService
         return true;
     }
 
-        /**
+    /**
      * Candidate extrac ariculer Update
      * *
      * @param  \Illuminate\Http\Request  $request
      * @return bool
      */
-    public function extracariculerUpdate($request){
+    public function extracariculerUpdate($request)
+    {
         $user = User::find(auth()->id());
 
         $user->extracurricularInfo()->delete();
@@ -636,6 +638,7 @@ class CandidateSettingUpdateService
 
         return true;
     }
+
     /**
      * Candidate visibility setting update
      *
@@ -725,6 +728,7 @@ class CandidateSettingUpdateService
 
         return true;
     }
+
     /**
      * Add candidate experience skill (category + skill + learned sources)
      */
@@ -766,6 +770,4 @@ class CandidateSettingUpdateService
 
         return true;
     }
-
-
 }

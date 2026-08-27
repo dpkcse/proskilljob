@@ -36,9 +36,20 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('experience_translations');
         Schema::table('experiences', function (Blueprint $table) {
-            $table->dropColumn(['name']);
+            $table->string('name')->nullable();
         });
+
+        \DB::table('experience_translations')
+            ->orderByRaw('CASE WHEN locale = ? THEN 0 ELSE 1 END', [config('app.locale', 'en')])
+            ->get()
+            ->unique('experience_id')
+            ->each(function ($translation) {
+                \DB::table('experiences')
+                    ->where('id', $translation->experience_id)
+                    ->update(['name' => $translation->name]);
+            });
+
+        Schema::dropIfExists('experience_translations');
     }
 };

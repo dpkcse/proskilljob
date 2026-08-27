@@ -8,21 +8,12 @@ use App\Http\Resources\Company\CompanyResource;
 use App\Models\User;
 use Firebase\Auth\Token\Exception\InvalidToken;
 use Illuminate\Http\Request;
+use Kreait\Firebase\Contract\Auth;
 use Kreait\Firebase\Factory;
-use Kreait\Laravel\Firebase\Facades\Firebase;
+use Throwable;
 
 class SocialAuthController extends Controller
 {
-    public $auth;
-
-    public $factory;
-
-    public function __construct()
-    {
-        $this->factory = (new Factory)->withServiceAccount(storage_path('firebase_credentials.json'));
-        $this->auth = $this->factory->createAuth();
-    }
-
     public function socialAuthentication(Request $request)
     {
 
@@ -40,12 +31,31 @@ class SocialAuthController extends Controller
         $accessToken = $request->firebaseToken;
         $provider = $providerArray[$request->provider];
 
-        $signInResult = $this->auth->signInWithIdpAccessToken($provider, $accessToken, $redirectUrl = null, $oauthTokenSecret = null, $linkingIdToken = null, $rawNonce = null);
+        try {
+            $auth = $this->firebaseAuth();
+            if (! $auth) {
+                return response()->json([
+                    'data' => [
+                        'message' => 'Social authentication is temporarily unavailable.',
+                    ],
+                ], 503);
+            }
+
+            $signInResult = $auth->signInWithIdpAccessToken($provider, $accessToken, $redirectUrl = null, $oauthTokenSecret = null, $linkingIdToken = null, $rawNonce = null);
+        } catch (Throwable $e) {
+            report($e);
+
+            return response()->json([
+                'data' => [
+                    'message' => 'Social authentication is temporarily unavailable.',
+                ],
+            ], 503);
+        }
 
         $idTokenString = $signInResult->idToken();
 
         try {
-            $verifiedIdToken = $this->auth->verifyIdToken($idTokenString);
+            $verifiedIdToken = $auth->verifyIdToken($idTokenString);
         } catch (\InvalidArgumentException $e) {
             return response()->json([
                 'data' => [
@@ -58,7 +68,7 @@ class SocialAuthController extends Controller
                     'message' => 'Unauthorized - Token is invalide: '.$e->getMessage(),
                 ],
             ], 401);
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             return response()->json([
                 'data' => [
                     'message' => $e->getMessage(),
@@ -117,5 +127,21 @@ class SocialAuthController extends Controller
             ],
         ], 200);
 
+    }
+
+    private function firebaseAuth(): ?Auth
+    {
+        $credentials = config('firebase.projects.'.config('firebase.default', 'app').'.credentials');
+        $legacyCredentials = storage_path('firebase_credentials.json');
+
+        if (! $credentials && is_file($legacyCredentials)) {
+            $credentials = $legacyCredentials;
+        }
+
+        if (! $credentials) {
+            return null;
+        }
+
+        return (new Factory)->withServiceAccount($credentials)->createAuth();
     }
 }

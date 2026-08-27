@@ -13,11 +13,18 @@ class AddPlanIdFieldToEarningsTable extends Migration
      */
     public function up()
     {
-        if (\DB::getDriverName() !== 'sqlite') {
+        if (\DB::getDriverName() === 'sqlite') {
             Schema::table('earnings', function (Blueprint $table) {
-                $table->dropForeign(['plan_id']);
+                $table->unsignedBigInteger('plan_id')->nullable()->change();
+                $table->enum('payment_type', ['subscription_based', 'per_job_based'])->default('subscription_based');
             });
+
+            return;
         }
+
+        Schema::table('earnings', function (Blueprint $table) {
+            $table->dropForeign(['plan_id']);
+        });
 
         Schema::table('earnings', function (Blueprint $table) {
             $table->dropColumn('plan_id');
@@ -36,11 +43,18 @@ class AddPlanIdFieldToEarningsTable extends Migration
      */
     public function down()
     {
-        if (\DB::getDriverName() !== 'sqlite') {
+        if (\DB::getDriverName() === 'sqlite') {
             Schema::table('earnings', function (Blueprint $table) {
-                $table->dropForeign(['plan_id']);
+                $table->dropColumn('payment_type');
+                $table->unsignedBigInteger('plan_id')->nullable(false)->change();
             });
+
+            return;
         }
+
+        Schema::table('earnings', function (Blueprint $table) {
+            $table->dropForeign(['plan_id']);
+        });
 
         Schema::table('earnings', function (Blueprint $table) {
             $table->dropColumn(['plan_id', 'payment_type']);

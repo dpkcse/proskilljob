@@ -82,6 +82,7 @@ class Kernel extends HttpKernel
         'security' => \App\Http\Middleware\SecurityMiddleware::class,
 
         'api_company' => \App\Http\Middleware\Api\CompanyApiMiddleware::class,
+        'api_candidate' => \App\Http\Middleware\Api\CompanyApiMiddleware::class,
         'api_has_plan' => \App\Http\Middleware\Api\HasPlanApiMiddleware::class,
     ];
 }

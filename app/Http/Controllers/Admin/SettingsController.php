@@ -38,7 +38,7 @@ class SettingsController extends Controller
 {
     use UploadAble;
 
-    public Setting $setting;
+    public ?Setting $setting;
 
     public function __construct()
     {

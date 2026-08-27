@@ -25,6 +25,7 @@ class CreateBenefitTranslationsTable extends Migration
         \Artisan::call('db:seed --class=BenefitTranslationSeeder --force');
 
         Schema::table('benefits', function (Blueprint $table) {
+            $table->dropUnique(['name']);
             $table->dropColumn(['name', 'slug']);
         });
     }
