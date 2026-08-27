@@ -18,11 +18,16 @@ class DashboardService
             $candidate->save();
         }
 
-        $appliedJobs = $candidate->appliedJobs->count();
-        $favoriteJobs = $candidate->bookmarkJobs->count();
-        $jobs = $candidate->appliedJobs()->withCount(['bookmarkJobs as bookmarked' => function ($q) use ($candidate) {
-            $q->where('candidate_id', $candidate->id);
-        }])
+        $appliedJobs = $candidate->appliedJobs()->count();
+        $favoriteJobs = $candidate->bookmarkJobs()->count();
+        $jobs = $candidate->appliedJobs()
+            ->with([
+                'company.user',
+                'job_type:id,name',
+            ])
+            ->withCount(['bookmarkJobs as bookmarked' => function ($q) use ($candidate) {
+                $q->where('candidate_id', $candidate->id);
+            }])
             ->latest()
             ->limit(4)
             ->get(['id', 'company_id', 'title', 'slug', 'role_id', 'job_type_id', 'country', 'salary_mode', 'min_salary', 'max_salary', 'custom_salary', 'deadline_active']);

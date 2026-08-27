@@ -153,15 +153,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     socials
       ..clear()
       ..addAll(_mapList(data['social_media']).map((item) => _SocialEntry(
-            platform: '${item['social_media'] ?? 'linkedin'}',
+            platform: _socialValue(item['social_media']),
             url: '${item['url'] ?? ''}',
           )));
     final values = data['social_media_list'];
-    if (values is List && values.isNotEmpty) {
-      socialPlatforms = values.map((item) => '$item').toList();
-    } else if (values is Map && values.isNotEmpty) {
-      socialPlatforms = values.values.map((item) => '$item').toList();
+    final platforms = <String>{};
+    if (values is Map) {
+      platforms.addAll(values.keys.map(_socialValue));
+    } else if (values is List) {
+      platforms.addAll(values.map(_socialValue));
     }
+    platforms.addAll(socials.map((item) => item.platform));
+    if (platforms.isNotEmpty) socialPlatforms = platforms.toList();
   }
 
   @override
@@ -704,6 +707,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   String? _emptyToNull(dynamic value) =>
       value == null || '$value'.isEmpty ? null : '$value';
+  static String _socialValue(dynamic value) {
+    final normalized = '${value ?? ''}'.trim().toLowerCase();
+    return normalized.isEmpty ? 'other' : normalized;
+  }
+
   static String _titleCase(String value) =>
       value.isEmpty ? value : '${value[0].toUpperCase()}${value.substring(1)}';
 }

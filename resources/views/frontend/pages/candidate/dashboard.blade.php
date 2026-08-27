@@ -106,7 +106,7 @@
                                                 <td>
                                                     <div class="rt-single-icon-box tw-gap-5">
                                                         <div class="tw-w-[68px] tw-h-[68px]">
-                                                            <img class="tw-w-[68px] tw-h-[68px] tw-rounded-md" src="{{ asset($job->company->logo_url) }}" alt="logo"
+                                                            <img class="tw-w-[68px] tw-h-[68px] tw-rounded-md" src="{{ $job->company?->logo_url ?? asset('backend/image/default.png') }}" alt="logo"
                                                                 draggable="false">
                                                         </div>
                                                         <div class="iconbox-content">
@@ -118,7 +118,7 @@
                                                                     </a>
                                                                     <span
                                                                         class="badge rounded-pill bg-primary-50 text-primary-500">
-                                                                        {{ ucfirst($job->job_type ? $job->job_type->name : '') }}
+                                                                        {{ ucfirst($job->job_type?->name ?? '') }}
                                                                     </span>
                                                                 </div>
                                                                 <div class="body-font-4 text-gray-600 pt-2">
