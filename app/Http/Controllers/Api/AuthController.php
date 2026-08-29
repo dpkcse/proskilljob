@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Candidate\CandidateResource;
 use App\Http\Resources\Company\CompanyResource;
 use App\Models\Admin;
+use App\Models\PendingUser;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\VerificationCode;
@@ -15,6 +16,7 @@ use App\Notifications\CandidateCreateApprovalPendingNotification;
 use App\Notifications\CandidateCreateNotification;
 use App\Notifications\CompanyCreateApprovalPendingNotification;
 use App\Notifications\CompanyCreatedNotification;
+use App\Notifications\EmailVerifyNotification;
 use F9Web\ApiResponseHelpers;
 use Firebase\Auth\Token\Exception\InvalidToken;
 use Illuminate\Http\Request;
@@ -79,7 +81,7 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'role' => ['required', Rule::in(['candidate', 'company'])],
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users|unique:pending_users,email',
             'password' => 'required|string|min:8|confirmed',
             'company_registration_number' => [
                 'nullable',
@@ -92,12 +94,17 @@ class AuthController extends Controller
         ]);
 
         $newUsername = Str::slug($request->name);
-        $oldUserName = User::where('username', $newUsername)->first();
+        $oldUserName = User::where('username', $newUsername)->exists()
+            || PendingUser::where('username', $newUsername)->exists();
 
         if ($oldUserName) {
             $username = Str::slug($newUsername).'_'.Str::random(5);
         } else {
             $username = Str::slug($newUsername);
+        }
+
+        if (setting('email_verification')) {
+            return $this->registerPendingUser($request, $username);
         }
 
         try {
@@ -176,6 +183,131 @@ class AuthController extends Controller
         return $this->respondError('Registration Failed');
     }
 
+    public function verificationStatus(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+
+        $user = User::where('email', $request->email)->first();
+        if ($user?->email_verified_at) {
+            return $this->respondWithSuccess([
+                'data' => ['verified' => true],
+                'message' => 'Email verified successfully.',
+            ]);
+        }
+
+        $pendingUser = PendingUser::where('email', $request->email)->first();
+
+        return $this->respondWithSuccess([
+            'data' => [
+                'verified' => false,
+                'pending' => (bool) $pendingUser,
+                'expired' => $pendingUser?->isExpired() ?? false,
+            ],
+            'message' => $pendingUser?->isExpired()
+                ? 'Verification link has expired. Please resend the email.'
+                : 'Email verification is still pending.',
+        ]);
+    }
+
+    public function resendVerification(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+
+        $pendingUser = PendingUser::where('email', $request->email)->first();
+        if (! $pendingUser) {
+            return $this->respondError('No pending registration was found for this email.');
+        }
+
+        $token = Str::random(60);
+        $pendingUser->update([
+            'verification_token' => $token,
+            'expires_at' => now()->addHours(24),
+        ]);
+        DB::table('password_resets')->updateOrInsert(
+            ['email' => $pendingUser->email],
+            ['token' => $token, 'created_at' => now()]
+        );
+
+        try {
+            $this->sendVerificationEmail($pendingUser->email, $token);
+        } catch (\Throwable $th) {
+            Log::warning('API verification email resend failed', [
+                'email' => $pendingUser->email,
+                'exception' => $th,
+            ]);
+
+            return response()->json([
+                'message' => 'Verification email could not be sent. Please try again shortly.',
+            ], 503);
+        }
+
+        return $this->respondWithSuccess([
+            'message' => 'A new verification email has been sent.',
+        ]);
+    }
+
+    private function registerPendingUser(Request $request, string $username)
+    {
+        $token = Str::random(60);
+
+        try {
+            $pendingUser = DB::transaction(function () use ($request, $username, $token) {
+                $pendingUser = PendingUser::create([
+                    'role' => $request->role,
+                    'name' => $request->name,
+                    'username' => $username,
+                    'email' => $request->email,
+                    'company_registration_number' => $request->role === 'company'
+                        ? trim($request->company_registration_number)
+                        : null,
+                    'password' => Hash::make($request->password),
+                    'created_ip' => $request->ip(),
+                    'verification_token' => $token,
+                    'expires_at' => now()->addHours(24),
+                ]);
+
+                DB::table('password_resets')->updateOrInsert(
+                    ['email' => $request->email],
+                    ['token' => $token, 'created_at' => now()]
+                );
+
+                return $pendingUser;
+            });
+
+            $this->sendVerificationEmail($pendingUser->email, $token);
+        } catch (\Throwable $th) {
+            PendingUser::where('email', $request->email)->delete();
+            DB::table('password_resets')->where('email', $request->email)->delete();
+            Log::error('API pending registration failed', [
+                'email' => $request->email,
+                'exception' => $th,
+            ]);
+
+            return response()->json([
+                'message' => 'Verification email could not be sent. Please check the address and try again.',
+            ], 503);
+        }
+
+        return $this->respondWithSuccess([
+            'data' => [
+                'requires_verification' => true,
+                'email' => $pendingUser->email,
+                'expires_at' => $pendingUser->expires_at?->toIso8601String(),
+            ],
+            'message' => 'Registration received. Please verify your email address.',
+        ]);
+    }
+
+    private function sendVerificationEmail(string $email, string $token): void
+    {
+        if (! checkMailConfig()) {
+            throw new \RuntimeException('Mail configuration is incomplete.');
+        }
+
+        Notification::route('mail', $email)
+            ->notify(new EmailVerifyNotification($email, $token));
+    }
+
     public function profile()
     {
         $user = Auth::user();
@@ -194,21 +326,33 @@ class AuthController extends Controller
         $customer = User::where('email', $request->email)->first();
         $code = rand(100000, 999999);
 
+        $customer->verificationCodes()->reset()->delete();
         $customer->verificationCodes()->create([
             'code' => $code,
             'type' => 'reset_password',
+            'expire_at' => now()->addMinutes(10),
         ]);
 
-        if (checkMailConfig()) {
+        try {
+            if (! checkMailConfig()) {
+                throw new \RuntimeException('Mail configuration is incomplete.');
+            }
             $customer->notify(new ResetPassword($code));
+        } catch (\Throwable $th) {
+            $customer->verificationCodes()->reset()->delete();
+            Log::warning('Password reset email could not be sent', [
+                'user_id' => $customer->id,
+                'exception' => $th,
+            ]);
+
+            return response()->json([
+                'message' => 'Password reset email could not be sent. Please try again shortly.',
+            ], 503);
         }
 
         return $this->respondWithSuccess([
             'data' => [
                 'message' => 'We have emailed you password reset code',
-
-                // testing only should remove in production
-                'code' => $code,
             ],
         ]);
     }
@@ -218,7 +362,7 @@ class AuthController extends Controller
         $this->validate($request, [
             'code' => 'required',
             'email' => 'required|string|max:100|email|exists:users,email',
-            'password' => 'required|min:8|max:50',
+            'password' => 'required|min:8|max:50|confirmed',
         ]);
 
         $customer = User::where('email', $request->email)->first();
@@ -229,14 +373,18 @@ class AuthController extends Controller
 
         if (! $verificationCode) {
             return $this->respondError('Invalid code');
-        } elseif ($verificationCode && now()->isAfter($verificationCode->expire_at)) {
+        } elseif (! $verificationCode->expire_at || now()->isAfter($verificationCode->expire_at)) {
             return $this->respondError('Code expired');
         }
 
         if ($customer) {
-            $customer->update([
-                'password' => bcrypt($request->password),
-            ]);
+            DB::transaction(function () use ($customer, $request) {
+                $customer->update([
+                    'password' => bcrypt($request->password),
+                ]);
+                $customer->tokens()->delete();
+                $customer->verificationCodes()->reset()->delete();
+            });
 
             return $this->respondWithSuccess([
                 'data' => [

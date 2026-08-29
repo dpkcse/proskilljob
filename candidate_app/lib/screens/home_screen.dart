@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../models/job.dart';
 import '../state/app_state.dart';
 import '../theme/app_theme.dart';
@@ -40,6 +41,23 @@ class _HomeScreenState extends State<HomeScreen> {
   void openLogin() => Navigator.push(context,
       MaterialPageRoute(builder: (_) => LoginScreen(state: widget.state)));
 
+  void openNotifications() {
+    if (!widget.state.loggedIn) {
+      openLogin();
+      return;
+    }
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (_) => _NotificationsScreen(state: widget.state)));
+  }
+
+  void openFilters() => showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColors.surface,
+      builder: (_) => _JobFilterSheet(state: widget.state, search: search));
+
   @override
   Widget build(BuildContext context) => Scaffold(
         body: SafeArea(
@@ -50,16 +68,19 @@ class _HomeScreenState extends State<HomeScreen> {
               onSearch: () {
                 widget.state.loadJobs(keyword: search.text.trim());
               },
+              onFilter: openFilters,
               onOpenJobs: () => setState(() => tab = 1),
               onRegister: openRegister,
-              onLogin: openLogin),
-          _JobsPage(state: widget.state, search: search),
-          _CandidateAreaPage(
+              onLogin: openLogin,
+              onProfile: () => setState(() => tab = 4),
+              onNotifications: openNotifications),
+          _JobsPage(
               state: widget.state,
-              icon: Icons.bookmark_outline,
-              title: 'Saved Jobs',
-              signedInMessage: 'Your saved jobs will appear here.',
+              search: search,
+              onFilter: openFilters,
+              onNotifications: openNotifications,
               onLogin: openLogin),
+          _SavedJobsPage(state: widget.state, onLogin: openLogin),
           _CandidateAreaPage(
               state: widget.state,
               icon: Icons.assignment_outlined,
@@ -73,7 +94,12 @@ class _HomeScreenState extends State<HomeScreen> {
         ])),
         bottomNavigationBar: NavigationBar(
           selectedIndex: tab,
-          onDestinationSelected: (value) => setState(() => tab = value),
+          onDestinationSelected: (value) {
+            setState(() => tab = value);
+            if (value == 2 && widget.state.loggedIn) {
+              widget.state.loadSavedJobs();
+            }
+          },
           backgroundColor: AppColors.background,
           indicatorColor: Colors.transparent,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
@@ -108,15 +134,21 @@ class _LandingPage extends StatelessWidget {
       {required this.state,
       required this.search,
       required this.onSearch,
+      required this.onFilter,
       required this.onOpenJobs,
       required this.onRegister,
-      required this.onLogin});
+      required this.onLogin,
+      required this.onProfile,
+      required this.onNotifications});
   final AppState state;
   final TextEditingController search;
   final VoidCallback onSearch;
+  final VoidCallback onFilter;
   final VoidCallback onOpenJobs;
   final VoidCallback onRegister;
   final VoidCallback onLogin;
+  final VoidCallback onProfile;
+  final VoidCallback onNotifications;
   @override
   Widget build(BuildContext context) => RefreshIndicator(
       onRefresh: () async {
@@ -132,19 +164,28 @@ class _LandingPage extends StatelessWidget {
               const BrandLogo(compact: true),
               state.loggedIn
                   ? Row(children: [
-                      const Badge(
+                      Badge(
                           backgroundColor: AppColors.red,
-                          child:
-                              Icon(Icons.notifications_none_rounded, size: 27)),
+                          child: IconButton(
+                              onPressed: onNotifications,
+                              icon: const Icon(Icons.notifications_none_rounded,
+                                  size: 27))),
                       const SizedBox(width: 12),
-                      CircleAvatar(
-                          radius: 17,
-                          backgroundColor: AppColors.purple,
-                          child: Text(
-                              _initials('${state.currentUser['name'] ?? 'C'}'),
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700))),
+                      Semantics(
+                          button: true,
+                          label: 'Open profile',
+                          child: InkWell(
+                              onTap: onProfile,
+                              customBorder: const CircleBorder(),
+                              child: CircleAvatar(
+                                  radius: 17,
+                                  backgroundColor: AppColors.purple,
+                                  child: Text(
+                                      _initials(
+                                          '${state.currentUser['name'] ?? 'C'}'),
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700))))),
                     ])
                   : TextButton.icon(
                       onPressed: onLogin,
@@ -172,8 +213,11 @@ class _LandingPage extends StatelessWidget {
                     hintText: 'Job title, keyword or company',
                     prefixIcon: const Icon(Icons.search),
                     suffixIcon: IconButton(
-                        onPressed: onSearch,
-                        icon: const Icon(Icons.tune_rounded)))),
+                        onPressed: onFilter,
+                        icon: Badge(
+                            isLabelVisible: state.activeFilterCount > 0,
+                            label: Text('${state.activeFilterCount}'),
+                            child: const Icon(Icons.tune_rounded))))),
             const SizedBox(height: 14),
             SizedBox(
                 height: 45,
@@ -208,7 +252,7 @@ class _LandingPage extends StatelessWidget {
               _InlineError(message: state.error!, onRetry: onSearch),
             ...state.jobs.take(6).map((job) => Padding(
                 padding: const EdgeInsets.only(bottom: 9),
-                child: _JobCard(job: job, state: state))),
+                child: _JobCard(job: job, state: state, onLogin: onLogin))),
             if (!state.busy && state.jobs.isEmpty)
               const Padding(
                   padding: EdgeInsets.symmetric(vertical: 28),
@@ -241,9 +285,17 @@ class _LandingPage extends StatelessWidget {
 }
 
 class _JobsPage extends StatelessWidget {
-  const _JobsPage({required this.state, required this.search});
+  const _JobsPage(
+      {required this.state,
+      required this.search,
+      required this.onFilter,
+      required this.onNotifications,
+      required this.onLogin});
   final AppState state;
   final TextEditingController search;
+  final VoidCallback onFilter;
+  final VoidCallback onNotifications;
+  final VoidCallback onLogin;
   @override
   Widget build(BuildContext context) => RefreshIndicator(
       onRefresh: () => state.loadJobs(keyword: search.text.trim()),
@@ -252,14 +304,15 @@ class _JobsPage extends StatelessWidget {
             parent: BouncingScrollPhysics()),
         padding: const EdgeInsets.fromLTRB(18, 24, 18, 30),
         children: [
-          const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                BrandLogo(compact: true),
-                Badge(
-                    backgroundColor: AppColors.red,
-                    child: Icon(Icons.notifications_none_rounded, size: 29))
-              ]),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            const BrandLogo(compact: true),
+            Badge(
+                backgroundColor: AppColors.red,
+                child: IconButton(
+                    onPressed: onNotifications,
+                    icon:
+                        const Icon(Icons.notifications_none_rounded, size: 29)))
+          ]),
           const SizedBox(height: 24),
           TextField(
               controller: search,
@@ -268,9 +321,11 @@ class _JobsPage extends StatelessWidget {
                   hintText: 'Job title, keyword or company',
                   prefixIcon: const Icon(Icons.search),
                   suffixIcon: IconButton(
-                      onPressed: () =>
-                          state.loadJobs(keyword: search.text.trim()),
-                      icon: const Icon(Icons.arrow_forward)))),
+                      onPressed: onFilter,
+                      icon: Badge(
+                          isLabelVisible: state.activeFilterCount > 0,
+                          label: Text('${state.activeFilterCount}'),
+                          child: const Icon(Icons.tune_rounded))))),
           const SizedBox(height: 16),
           SizedBox(
               height: 52,
@@ -312,7 +367,7 @@ class _JobsPage extends StatelessWidget {
                     style: const TextStyle(color: AppColors.muted))),
           ...state.jobs.map((job) => Padding(
               padding: const EdgeInsets.only(bottom: 9),
-              child: _JobCard(job: job, state: state))),
+              child: _JobCard(job: job, state: state, onLogin: onLogin))),
           if (!state.busy && state.jobs.isEmpty)
             const Padding(
                 padding: EdgeInsets.symmetric(vertical: 35),
@@ -473,28 +528,268 @@ class _InlineError extends StatelessWidget {
 class _CareerCard extends StatelessWidget {
   const _CareerCard();
   @override
-  Widget build(BuildContext context) => Container(
-      padding: const EdgeInsets.all(17),
-      decoration: BoxDecoration(
-          color: AppColors.surfaceSoft,
+  Widget build(BuildContext context) => Material(
+      color: Colors.transparent,
+      child: InkWell(
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => const _CareerResourcesScreen())),
           borderRadius: BorderRadius.circular(17),
-          border: Border.all(color: AppColors.border)),
-      child: const Row(children: [
-        CircleAvatar(
-            backgroundColor: Color(0xff2b1a55),
-            child: Icon(Icons.school_outlined, color: AppColors.purple)),
-        SizedBox(width: 13),
-        Expanded(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('Career Resources',
-              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800)),
-          SizedBox(height: 3),
-          Text('CV tips, interview preparation and career guidance',
-              style: TextStyle(fontSize: 12, color: AppColors.muted)),
-        ])),
-        Icon(Icons.chevron_right, color: AppColors.muted),
-      ]));
+          child: Container(
+              padding: const EdgeInsets.all(17),
+              decoration: BoxDecoration(
+                  color: AppColors.surfaceSoft,
+                  borderRadius: BorderRadius.circular(17),
+                  border: Border.all(color: AppColors.border)),
+              child: const Row(children: [
+                CircleAvatar(
+                    backgroundColor: Color(0xff2b1a55),
+                    child:
+                        Icon(Icons.school_outlined, color: AppColors.purple)),
+                SizedBox(width: 13),
+                Expanded(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                      Text('Career Resources',
+                          style: TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.w800)),
+                      SizedBox(height: 3),
+                      Text('CV tips, interview preparation and career guidance',
+                          style:
+                              TextStyle(fontSize: 12, color: AppColors.muted)),
+                    ])),
+                Icon(Icons.chevron_right, color: AppColors.muted),
+              ]))));
+}
+
+class _CareerResourcesScreen extends StatelessWidget {
+  const _CareerResourcesScreen();
+
+  static const resources = [
+    (
+      'Career Advice',
+      'Build a practical roadmap for long-term growth.',
+      Icons.explore_outlined,
+      'https://proskilljob.com/career-advice'
+    ),
+    (
+      'Interview Tips',
+      'Prepare confidently and improve every interview.',
+      Icons.record_voice_over_outlined,
+      'https://proskilljob.com/interview-tips'
+    ),
+    (
+      'Resume Writing Tips',
+      'Create an ATS-friendly, recruiter-ready CV.',
+      Icons.description_outlined,
+      'https://proskilljob.com/resume-writing-tips'
+    ),
+    (
+      'Cover Letter Guide',
+      'Write a focused and convincing cover letter.',
+      Icons.mark_email_read_outlined,
+      'https://proskilljob.com/cover-letter'
+    ),
+    (
+      'Education Guide',
+      'Choose skills, courses and credentials wisely.',
+      Icons.school_outlined,
+      'https://proskilljob.com/education-guide'
+    ),
+  ];
+
+  Future<void> _open(BuildContext context, String url) async {
+    final opened =
+        await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    if (!opened && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Page could not be opened.')));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+      appBar: AppBar(title: const Text('Career Resources')),
+      body: ListView(
+          padding: const EdgeInsets.fromLTRB(18, 8, 18, 30),
+          children: [
+            Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                        colors: [Color(0xff2c165d), AppColors.surface]),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: AppColors.border)),
+                child: const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(Icons.auto_awesome, color: AppColors.purple),
+                      SizedBox(height: 12),
+                      Text('Grow with expert guidance',
+                          style: TextStyle(
+                              fontSize: 23, fontWeight: FontWeight.w800)),
+                      SizedBox(height: 7),
+                      Text(
+                          'Practical resources to strengthen your profile, applications and interviews.',
+                          style: TextStyle(color: AppColors.muted)),
+                    ])),
+            const SizedBox(height: 18),
+            ...resources.map((item) => _resourceCard(context, item)),
+          ]));
+
+  Widget _resourceCard(
+          BuildContext context, (String, String, IconData, String) item) =>
+      Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: Card(
+              child: InkWell(
+                  borderRadius: BorderRadius.circular(16),
+                  onTap: () => _open(context, item.$4),
+                  child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Row(children: [
+                        CircleAvatar(
+                            backgroundColor: const Color(0xff2b1a55),
+                            child: Icon(item.$3, color: AppColors.purple)),
+                        const SizedBox(width: 14),
+                        Expanded(
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                              Text(item.$1,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16)),
+                              const SizedBox(height: 4),
+                              Text(item.$2,
+                                  style: const TextStyle(
+                                      color: AppColors.muted, fontSize: 12)),
+                            ])),
+                        const Icon(Icons.open_in_new_rounded,
+                            size: 19, color: AppColors.muted),
+                      ])))));
+}
+
+class _JobFilterSheet extends StatefulWidget {
+  const _JobFilterSheet({required this.state, required this.search});
+  final AppState state;
+  final TextEditingController search;
+
+  @override
+  State<_JobFilterSheet> createState() => _JobFilterSheetState();
+}
+
+class _JobFilterSheetState extends State<_JobFilterSheet> {
+  late String jobType = widget.state.selectedJobType;
+  late String experience = widget.state.selectedExperience;
+  late String sortBy = widget.state.selectedSort;
+  late bool remote = widget.state.remoteOnly;
+  late final minSalary =
+      TextEditingController(text: widget.state.minSalary?.toString() ?? '');
+  late final maxSalary =
+      TextEditingController(text: widget.state.maxSalary?.toString() ?? '');
+
+  @override
+  void dispose() {
+    minSalary.dispose();
+    maxSalary.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => SafeArea(
+      child: Padding(
+          padding: EdgeInsets.fromLTRB(
+              20, 14, 20, 20 + MediaQuery.viewInsetsOf(context).bottom),
+          child: SingleChildScrollView(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                Center(
+                    child: Container(
+                        width: 42,
+                        height: 4,
+                        decoration: BoxDecoration(
+                            color: AppColors.border,
+                            borderRadius: BorderRadius.circular(4)))),
+                const SizedBox(height: 18),
+                const Text('Filter Jobs',
+                    style:
+                        TextStyle(fontSize: 23, fontWeight: FontWeight.w800)),
+                const SizedBox(height: 18),
+                _dropdown('Job Type', jobType, widget.state.jobTypes,
+                    (value) => setState(() => jobType = value ?? '')),
+                const SizedBox(height: 14),
+                _dropdown('Experience', experience, widget.state.experiences,
+                    (value) => setState(() => experience = value ?? '')),
+                const SizedBox(height: 14),
+                _dropdown('Sort By', sortBy, const ['latest', 'featured'],
+                    (value) => setState(() => sortBy = value ?? '')),
+                const SizedBox(height: 14),
+                Row(children: [
+                  Expanded(child: _salaryField('Minimum salary', minSalary)),
+                  const SizedBox(width: 10),
+                  Expanded(child: _salaryField('Maximum salary', maxSalary)),
+                ]),
+                SwitchListTile.adaptive(
+                    contentPadding: EdgeInsets.zero,
+                    title: const Text('Remote jobs only'),
+                    subtitle: const Text('Show work-from-home opportunities'),
+                    value: remote,
+                    onChanged: (value) => setState(() => remote = value)),
+                const SizedBox(height: 12),
+                Row(children: [
+                  Expanded(
+                      child: OutlinedButton(
+                          onPressed: () async {
+                            Navigator.pop(context);
+                            await widget.state.clearJobFilters(
+                                keyword: widget.search.text.trim());
+                          },
+                          child: const Text('Clear'))),
+                  const SizedBox(width: 12),
+                  Expanded(
+                      flex: 2,
+                      child: FilledButton.icon(
+                          onPressed: () async {
+                            Navigator.pop(context);
+                            await widget.state.applyJobFilters(
+                                jobType: jobType,
+                                experience: experience,
+                                sortBy: sortBy,
+                                remote: remote,
+                                salaryMin: int.tryParse(minSalary.text.trim()),
+                                salaryMax: int.tryParse(maxSalary.text.trim()),
+                                keyword: widget.search.text.trim());
+                          },
+                          icon: const Icon(Icons.search),
+                          label: const Text('Apply Filters'))),
+                ]),
+              ]))));
+
+  Widget _dropdown(String label, String value, List<String> values,
+          ValueChanged<String?> onChanged) =>
+      DropdownButtonFormField<String>(
+          initialValue: value.isEmpty ? null : value,
+          decoration: InputDecoration(labelText: label),
+          items: values
+              .map((item) => DropdownMenuItem(
+                  value: item,
+                  child: Text(item == 'latest'
+                      ? 'Latest first'
+                      : item == 'featured'
+                          ? 'Featured jobs'
+                          : item)))
+              .toList(),
+          onChanged: onChanged);
+
+  Widget _salaryField(String label, TextEditingController controller) =>
+      TextField(
+          controller: controller,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(labelText: label));
 }
 
 class _FilterChip extends StatelessWidget {
@@ -524,9 +819,11 @@ class _FilterChip extends StatelessWidget {
 }
 
 class _JobCard extends StatelessWidget {
-  const _JobCard({required this.job, required this.state});
+  const _JobCard(
+      {required this.job, required this.state, required this.onLogin});
   final Job job;
   final AppState state;
+  final VoidCallback onLogin;
   @override
   Widget build(BuildContext context) => Card(
           child: InkWell(
@@ -582,10 +879,179 @@ class _JobCard extends StatelessWidget {
                     ]),
                   ])),
               const SizedBox(width: 7),
-              Icon(job.bookmarked ? Icons.bookmark : Icons.bookmark_border,
-                  color: job.bookmarked ? AppColors.red : AppColors.muted),
+              IconButton(
+                  tooltip: job.bookmarked ? 'Unsave job' : 'Save job',
+                  onPressed: () async {
+                    if (!state.loggedIn) {
+                      onLogin();
+                      return;
+                    }
+                    try {
+                      final saved = await state.toggleSaved(job);
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(saved
+                                ? 'Job saved successfully.'
+                                : 'Job removed from saved jobs.')));
+                      }
+                    } catch (e) {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(content: Text('$e')));
+                      }
+                    }
+                  },
+                  icon: Icon(
+                      job.bookmarked ? Icons.bookmark : Icons.bookmark_border,
+                      color: job.bookmarked ? AppColors.red : AppColors.muted)),
             ])),
       ));
+}
+
+class _SavedJobsPage extends StatelessWidget {
+  const _SavedJobsPage({required this.state, required this.onLogin});
+  final AppState state;
+  final VoidCallback onLogin;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!state.loggedIn) {
+      return _CandidateAreaPage(
+          state: state,
+          icon: Icons.bookmark_outline,
+          title: 'Saved Jobs',
+          signedInMessage: 'Your saved jobs will appear here.',
+          onLogin: onLogin);
+    }
+    return RefreshIndicator(
+        onRefresh: state.loadSavedJobs,
+        child: ListView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: const EdgeInsets.fromLTRB(18, 24, 18, 30),
+            children: [
+              const Text('Saved Jobs',
+                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.w800)),
+              const SizedBox(height: 6),
+              Text('${state.savedJobs.length} jobs saved for later',
+                  style: const TextStyle(color: AppColors.muted)),
+              const SizedBox(height: 20),
+              if (state.savedJobsBusy)
+                const LinearProgressIndicator(color: AppColors.red),
+              ...state.savedJobs.map((job) => Padding(
+                  padding: const EdgeInsets.only(bottom: 9),
+                  child: _JobCard(job: job, state: state, onLogin: onLogin))),
+              if (!state.savedJobsBusy && state.savedJobs.isEmpty)
+                const Padding(
+                    padding: EdgeInsets.only(top: 90),
+                    child: Column(children: [
+                      Icon(Icons.bookmark_add_outlined,
+                          size: 58, color: AppColors.purple),
+                      SizedBox(height: 14),
+                      Text('No saved jobs yet',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w700)),
+                      SizedBox(height: 6),
+                      Text('Tap the bookmark icon on a job to save it.',
+                          style: TextStyle(color: AppColors.muted)),
+                    ])),
+            ]));
+  }
+}
+
+class _NotificationsScreen extends StatefulWidget {
+  const _NotificationsScreen({required this.state});
+  final AppState state;
+
+  @override
+  State<_NotificationsScreen> createState() => _NotificationsScreenState();
+}
+
+class _NotificationsScreenState extends State<_NotificationsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    widget.state.addListener(_refresh);
+    widget.state.loadNotifications();
+  }
+
+  void _refresh() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void dispose() {
+    widget.state.removeListener(_refresh);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+      appBar: AppBar(title: const Text('Notifications')),
+      body: RefreshIndicator(
+          onRefresh: widget.state.loadNotifications,
+          child: ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.fromLTRB(18, 8, 18, 30),
+              children: [
+                if (widget.state.notificationsBusy)
+                  const LinearProgressIndicator(color: AppColors.red),
+                ...widget.state.notifications.map((notification) {
+                  final data = notification['data'] is Map
+                      ? (notification['data'] as Map)
+                      : notification;
+                  final title =
+                      '${data['title'] ?? data['subject'] ?? 'Notification'}';
+                  final message =
+                      '${data['message'] ?? data['body'] ?? data['text'] ?? 'You have a new update.'}';
+                  final date = '${notification['created_at'] ?? ''}';
+                  final unread = notification['read_at'] == null;
+                  return Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Card(
+                          child: ListTile(
+                              contentPadding: const EdgeInsets.all(14),
+                              leading: CircleAvatar(
+                                  backgroundColor: unread
+                                      ? const Color(0xff3b174d)
+                                      : AppColors.surfaceSoft,
+                                  child: Icon(Icons.notifications_outlined,
+                                      color: unread
+                                          ? AppColors.red
+                                          : AppColors.muted)),
+                              title: Text(title,
+                                  style: TextStyle(
+                                      fontWeight: unread
+                                          ? FontWeight.w800
+                                          : FontWeight.w600)),
+                              subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 5),
+                                    Text(message),
+                                    if (date.isNotEmpty) ...[
+                                      const SizedBox(height: 6),
+                                      Text(date,
+                                          style: const TextStyle(fontSize: 11)),
+                                    ],
+                                  ]))));
+                }),
+                if (!widget.state.notificationsBusy &&
+                    widget.state.notifications.isEmpty)
+                  const Padding(
+                      padding: EdgeInsets.only(top: 110),
+                      child: Column(children: [
+                        Icon(Icons.notifications_off_outlined,
+                            size: 58, color: AppColors.purple),
+                        SizedBox(height: 14),
+                        Text('No notifications yet',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w700)),
+                        SizedBox(height: 6),
+                        Text('Job alerts and account updates will appear here.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: AppColors.muted)),
+                      ])),
+              ])));
 }
 
 class _CandidateAreaPage extends StatelessWidget {

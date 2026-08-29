@@ -16,14 +16,26 @@ class AppState extends ChangeNotifier {
   final CandidateService candidateApi;
   final JobService jobsApi;
   List<Job> jobs = const [];
+  List<Job> savedJobs = const [];
+  List<Map<String, dynamic>> notifications = const [];
   List<JobCategory> categories = const [];
   int? selectedCategoryId;
+  List<String> jobTypes = const [];
+  List<String> experiences = const [];
+  String selectedJobType = '';
+  String selectedExperience = '';
+  String selectedSort = '';
+  bool remoteOnly = false;
+  int? minSalary;
+  int? maxSalary;
   Map<String, dynamic> currentUser = const {};
   Map<String, dynamic> dashboard = const {};
   List<Map<String, dynamic>> resumes = const [];
   bool profileBusy = false;
   String? profileError;
   bool busy = false;
+  bool savedJobsBusy = false;
+  bool notificationsBusy = false;
   String? error;
 
   bool get loggedIn => api.isAuthenticated;
@@ -35,7 +47,14 @@ class AppState extends ChangeNotifier {
 
   Future<void> _loadInitialData() async {
     try {
-      categories = await jobsApi.getCategories();
+      final options = await Future.wait<dynamic>([
+        jobsApi.getCategories(),
+        jobsApi.getFilterOptions('/job-types'),
+        jobsApi.getFilterOptions('/experiences'),
+      ]);
+      categories = options[0] as List<JobCategory>;
+      jobTypes = options[1] as List<String>;
+      experiences = options[2] as List<String>;
     } catch (_) {
       categories = const [];
     }
@@ -54,6 +73,12 @@ class AppState extends ChangeNotifier {
       jobs = await jobsApi.getJobs(
         keyword: keyword,
         categoryId: categoryId ?? selectedCategoryId,
+        jobType: selectedJobType,
+        experience: selectedExperience,
+        sortBy: selectedSort,
+        remoteOnly: remoteOnly,
+        minSalary: minSalary,
+        maxSalary: maxSalary,
       );
     } catch (e) {
       error = e.toString();
@@ -63,10 +88,94 @@ class AppState extends ChangeNotifier {
     }
   }
 
+  int get activeFilterCount =>
+      (selectedJobType.isNotEmpty ? 1 : 0) +
+      (selectedExperience.isNotEmpty ? 1 : 0) +
+      (selectedSort.isNotEmpty ? 1 : 0) +
+      (remoteOnly ? 1 : 0) +
+      (minSalary != null || maxSalary != null ? 1 : 0);
+
+  Future<void> applyJobFilters({
+    required String jobType,
+    required String experience,
+    required String sortBy,
+    required bool remote,
+    int? salaryMin,
+    int? salaryMax,
+    String keyword = '',
+  }) async {
+    selectedJobType = jobType;
+    selectedExperience = experience;
+    selectedSort = sortBy;
+    remoteOnly = remote;
+    minSalary = salaryMin;
+    maxSalary = salaryMax;
+    await loadJobs(keyword: keyword);
+  }
+
+  Future<void> clearJobFilters({String keyword = ''}) => applyJobFilters(
+        jobType: '',
+        experience: '',
+        sortBy: '',
+        remote: false,
+        keyword: keyword,
+      );
+
   Future<void> selectCategory(int? categoryId, {String keyword = ''}) async {
     selectedCategoryId = categoryId;
     notifyListeners();
     await loadJobs(keyword: keyword, categoryId: categoryId);
+  }
+
+  Future<bool> toggleSaved(Job job) async {
+    final saved = await jobsApi.toggleBookmark(job.id);
+    jobs = jobs
+        .map((item) =>
+            item.id == job.id ? item.copyWith(bookmarked: saved) : item)
+        .toList();
+    if (saved && !savedJobs.any((item) => item.id == job.id)) {
+      savedJobs = [job.copyWith(bookmarked: true), ...savedJobs];
+    } else if (!saved) {
+      savedJobs = savedJobs.where((item) => item.id != job.id).toList();
+    }
+    notifyListeners();
+    return saved;
+  }
+
+  Future<void> loadSavedJobs() async {
+    if (!loggedIn) return;
+    savedJobsBusy = true;
+    notifyListeners();
+    try {
+      savedJobs = await jobsApi.getSavedJobs();
+    } catch (e) {
+      error = '$e';
+    } finally {
+      savedJobsBusy = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> loadNotifications() async {
+    if (!loggedIn) return;
+    notificationsBusy = true;
+    notifyListeners();
+    try {
+      final response = await api.get('/notifications');
+      dynamic payload = response['data'];
+      while (payload is Map && payload['data'] != null) {
+        payload = payload['data'];
+      }
+      notifications = (payload as List? ?? const [])
+          .whereType<Map>()
+          .map((item) => item.cast<String, dynamic>())
+          .toList();
+    } catch (e) {
+      error = '$e';
+    } finally {
+      notificationsBusy = false;
+      notifyListeners();
+    }
   }
 
   Future<void> login(String email, String password) async {
@@ -110,6 +219,8 @@ class AppState extends ChangeNotifier {
     currentUser = const {};
     dashboard = const {};
     resumes = const [];
+    savedJobs = const [];
+    notifications = const [];
     profileError = null;
     await loadJobs();
   }

@@ -6,19 +6,54 @@ class JobService {
   const JobService(this.api);
   final ApiClient api;
 
-  Future<List<Job>> getJobs({String keyword = '', int? categoryId}) async {
+  Future<List<Job>> getJobs({
+    String keyword = '',
+    int? categoryId,
+    String jobType = '',
+    String experience = '',
+    String sortBy = '',
+    bool remoteOnly = false,
+    int? minSalary,
+    int? maxSalary,
+  }) async {
     final response = await api
         .get(api.isAuthenticated ? '/candidate/jobs' : '/jobs', query: {
       'paginate': '20',
       if (keyword.isNotEmpty) 'keyword': keyword,
       if (categoryId != null) 'category': '$categoryId',
+      if (jobType.isNotEmpty) 'job_type': jobType,
+      if (experience.isNotEmpty) 'experience': experience,
+      if (sortBy.isNotEmpty) 'sort_by': sortBy,
+      if (remoteOnly) 'is_remote': '1',
+      if (minSalary != null) 'price_min': '$minSalary',
+      if (maxSalary != null) 'price_max': '$maxSalary',
     });
+    return _jobList(response);
+  }
+
+  Future<List<Job>> getSavedJobs() async =>
+      _jobList(await api.get('/candidate/favorite-jobs'));
+
+  List<Job> _jobList(Map<String, dynamic> response) {
     dynamic payload = response['data'];
-    if (payload is Map && payload['data'] != null) payload = payload['data'];
-    if (payload is Map && payload['data'] != null) payload = payload['data'];
+    while (payload is Map && payload['data'] != null) {
+      payload = payload['data'];
+    }
     return (payload as List? ?? const [])
         .whereType<Map>()
         .map((item) => Job.fromJson(item.cast<String, dynamic>()))
+        .toList();
+  }
+
+  Future<List<String>> getFilterOptions(String path) async {
+    final response = await api.get(path);
+    dynamic payload = response['data'];
+    if (payload is Map && payload['data'] != null) payload = payload['data'];
+    return (payload as List? ?? const [])
+        .whereType<Map>()
+        .map((item) => '${item['name'] ?? ''}'.trim())
+        .where((name) => name.isNotEmpty)
+        .toSet()
         .toList();
   }
 

@@ -35,4 +35,17 @@ class Job {
         logo: '${json['company_logo'] ?? ''}',
         bookmarked: json['bookmarked'] == true || json['bookmarked'] == 1,
       );
+
+  Job copyWith({bool? bookmarked}) => Job(
+        id: id,
+        slug: slug,
+        title: title,
+        company: company,
+        location: location,
+        type: type,
+        salary: salary,
+        deadline: deadline,
+        logo: logo,
+        bookmarked: bookmarked ?? this.bookmarked,
+      );
 }

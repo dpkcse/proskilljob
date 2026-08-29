@@ -34,7 +34,7 @@ class UpdateCandidateSettingService
         } elseif ($request->type == 'contact') {
             $contactInfo = $user->contactInfo;
 
-            return $this->updateContactInfo($request, $candidate, $contactInfo);
+            return $this->updateContactInfo($request, $user, $candidate, $contactInfo);
         } elseif ($request->type == 'password') {
             return $this->updatePasswordInfo($request, $user);
         } elseif ($request->type == 'account-delete') {
@@ -306,16 +306,18 @@ class UpdateCandidateSettingService
         ]);
     }
 
-    protected function updateContactInfo($request, $candidate, $contact)
+    protected function updateContactInfo($request, $user, $candidate, $contact)
     {
         $validator = Validator::make($request->all(), [
-            'phone' => 'required',
-            'secondary_phone' => 'nullable',
-            'email' => 'required|email',
-            'secondary_email' => 'nullable|email',
-            'country' => 'sometimes',
-            'city' => 'sometimes',
-            'address' => 'sometimes',
+            'phone' => 'required|string|max:50',
+            'secondary_phone' => 'nullable|string|max:50',
+            'whatsapp_number' => 'nullable|string|max:50',
+            'email' => 'required|email|max:255',
+            'secondary_email' => 'nullable|email|max:255',
+            'country' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:500',
+            'exact_location' => 'nullable|string|max:500',
             'lat' => 'sometimes',
             'long' => 'sometimes',
         ]);
@@ -326,37 +328,39 @@ class UpdateCandidateSettingService
             );
         }
 
-        if (empty($contact)) {
-            ContactInfo::create([
-                'user_id' => auth()->id(),
-                'phone' => $request->phone,
-                'secondary_phone' => $request->secondary_phone,
-                'email' => $request->email,
-                'secondary_email' => $request->secondary_email,
-            ]);
-        } else {
-            $contact->update([
-                'phone' => $request->phone,
-                'secondary_phone' => $request->secondary_phone,
-                'email' => $request->email,
-                'whatsapp_number' => $request->whatsapp_number,
-                'secondary_email' => $request->secondary_email,
-            ]);
+        $contactData = [
+            'phone' => $request->phone,
+            'secondary_phone' => $request->secondary_phone,
+            'email' => $request->email,
+            'secondary_email' => $request->secondary_email,
+        ];
+        if (Schema::hasColumn('contact_infos', 'whatsapp_number')) {
+            $contactData['whatsapp_number'] = $request->whatsapp_number;
         }
 
-        if (! empty($request->whatsapp_number)) {
+        if (empty($contact)) {
+            ContactInfo::create(array_merge($contactData, [
+                'user_id' => $user->id,
+            ]));
+        } else {
+            $contact->update($contactData);
+        }
+
+        if (Schema::hasColumn('candidates', 'whatsapp_number')) {
             $candidate->update(['whatsapp_number' => $request->whatsapp_number]);
         }
 
-        // Location
-        $candidate->update([
-            'country' => $request->country,
-            'city' => $request->city,
-            'address' => $request->address,
-            'exact_location' => $request->exact_location,
-            'lat' => $request->lat,
-            'long' => $request->long,
-        ]);
+        // Keep contact updates compatible with installations that do not yet
+        // have every optional candidate location column.
+        $locationData = [];
+        foreach (['country', 'city', 'address', 'exact_location', 'lat', 'long'] as $field) {
+            if (Schema::hasColumn('candidates', $field)) {
+                $locationData[$field] = $request->{$field};
+            }
+        }
+        if ($locationData !== []) {
+            $candidate->update($locationData);
+        }
 
         return $this->respondWithSuccess([
             'data' => [

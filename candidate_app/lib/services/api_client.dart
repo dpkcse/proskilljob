@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../config/app_config.dart';
 
@@ -47,6 +48,11 @@ class ApiClient {
         headers: _headers, body: jsonEncode(body ?? {})));
   }
 
+  Future<Map<String, dynamic>> delete(String path) async {
+    final uri = Uri.parse('${AppConfig.apiBaseUrl}$path');
+    return _decode(await _client.delete(uri, headers: _headers));
+  }
+
   Future<Map<String, dynamic>> postMultipart(
     String path, {
     required Map<String, dynamic> fields,
@@ -63,6 +69,33 @@ class ApiClient {
       if (value != null) request.fields[key] = '$value';
     });
     request.files.add(await http.MultipartFile.fromPath(fileField, filePath));
+    final streamed = await _client.send(request);
+    return _decode(await http.Response.fromStream(streamed));
+  }
+
+  Future<Map<String, dynamic>> postMultipartBytes(
+    String path, {
+    required Map<String, dynamic> fields,
+    required String fileField,
+    required List<int> bytes,
+    required String filename,
+    required MediaType contentType,
+  }) async {
+    final request = http.MultipartRequest(
+        'POST', Uri.parse('${AppConfig.apiBaseUrl}$path'));
+    request.headers.addAll({
+      'Accept': 'application/json',
+      if (_token != null) 'Authorization': 'Bearer $_token',
+    });
+    fields.forEach((key, value) {
+      if (value != null) request.fields[key] = '$value';
+    });
+    request.files.add(http.MultipartFile.fromBytes(
+      fileField,
+      bytes,
+      filename: filename,
+      contentType: contentType,
+    ));
     final streamed = await _client.send(request);
     return _decode(await http.Response.fromStream(streamed));
   }

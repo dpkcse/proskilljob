@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../state/app_state.dart';
 import '../theme/app_theme.dart';
 import 'login_screen.dart';
+import 'email_verification_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key, required this.state});
@@ -43,9 +44,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
       error = null;
     });
     try {
-      await widget.state.auth
+      final result = await widget.state.auth
           .register(name.text.trim(), email.text.trim(), password.text);
       if (!mounted) return;
+      if (result['requires_verification'] == true) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => EmailVerificationScreen(
+              state: widget.state,
+              email: '${result['email'] ?? email.text.trim()}',
+            ),
+          ),
+        );
+        return;
+      }
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(

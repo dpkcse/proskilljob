@@ -43,8 +43,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                   return;
                 }
                 try {
-                  final value =
-                      await widget.state.jobsApi.toggleBookmark(widget.job.id);
+                  final value = await widget.state.toggleSaved(widget.job);
                   if (mounted) {
                     setState(() => saved = value);
                   }
@@ -219,8 +218,8 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                           return;
                         }
                         try {
-                          final value = await widget.state.jobsApi
-                              .toggleBookmark(widget.job.id);
+                          final value =
+                              await widget.state.toggleSaved(widget.job);
                           if (mounted) setState(() => saved = value);
                         } catch (e) {
                           if (mounted) {

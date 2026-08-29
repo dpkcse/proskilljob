@@ -75,10 +75,12 @@ Route::controller(AttributeController::class)->group(function () {
 Route::controller(AuthController::class)->group(function () {
     Route::post('/login', 'login');
     Route::post('/register', 'register');
+    Route::get('/email/verification-status', 'verificationStatus')->middleware('throttle:12,1');
+    Route::post('/email/resend-verification', 'resendVerification')->middleware('throttle:3,1');
     Route::get('/profile', 'profile')->middleware('auth:sanctum');
     // Password Reset Emails
-    Route::post('/password/email', 'sendResetCodeEmail');
-    Route::post('/password/reset', 'reset');
+    Route::post('/password/email', 'sendResetCodeEmail')->middleware('throttle:3,1');
+    Route::post('/password/reset', 'reset')->middleware('throttle:8,1');
     Route::get('/user-info', 'getUserInfo');
 });
 

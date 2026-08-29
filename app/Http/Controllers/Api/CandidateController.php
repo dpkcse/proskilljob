@@ -12,6 +12,7 @@ use App\Services\API\Website\Candidate\FetchCandidateSettingService;
 use App\Services\API\Website\Candidate\UpdateCandidateSettingService;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class CandidateController extends Controller
@@ -148,6 +149,7 @@ class CandidateController extends Controller
                         'id' => $item->id,
                         'name' => $item->name,
                         'file' => $item->file,
+                        'file_url' => $item->file_url,
                         'file_size' => $item->file_size,
                     ];
                 });
@@ -220,6 +222,11 @@ class CandidateController extends Controller
         abort_if(! $candidate, 404);
 
         $resume = $candidate->resumes()->findOrFail($id);
+        if (DB::table('applied_jobs')->where('candidate_resume_id', $resume->id)->exists()) {
+            return $this->respondError(
+                'This resume is attached to a job application and cannot be deleted. You can replace the file instead.'
+            );
+        }
         deleteFile($resume->file);
         $resume->delete();
 

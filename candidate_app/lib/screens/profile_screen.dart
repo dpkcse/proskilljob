@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../state/app_state.dart';
 import '../theme/app_theme.dart';
 import '../widgets/brand_logo.dart';
 import 'edit_profile_screen.dart';
+import 'resume_manager_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({
@@ -159,7 +162,7 @@ class ProfileScreen extends StatelessWidget {
                 icon: Icons.description_outlined,
                 title: 'My Resumes',
                 subtitle: '${state.resumes.length} uploaded',
-                onTap: () => _showResumes(context)),
+                onTap: () => _openResumes(context)),
             _MenuItem(
                 icon: Icons.work_history_outlined,
                 title: 'Applied Jobs',
@@ -189,6 +192,9 @@ class ProfileScreen extends StatelessWidget {
                 label: 'Location',
                 value: location.isEmpty ? 'Not added' : location),
           ]),
+          const SizedBox(height: 22),
+          const _SectionTitle('Connect with Proskill Job'),
+          _SocialLinksCard(onOpen: (url) => _openExternal(context, url)),
           const SizedBox(height: 22),
           const _SectionTitle('Account'),
           _MenuCard(children: [
@@ -238,41 +244,13 @@ class ProfileScreen extends StatelessWidget {
         ),
       );
 
-  void _showResumes(BuildContext context) => showModalBottomSheet<void>(
-        context: context,
-        backgroundColor: AppColors.surface,
-        showDragHandle: true,
-        builder: (_) => SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
-            child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('My Resumes',
-                      style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
-                  const SizedBox(height: 14),
-                  if (state.resumes.isEmpty)
-                    const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 22),
-                        child: Center(
-                            child: Text('No resume uploaded yet',
-                                style: TextStyle(color: AppColors.muted)))),
-                  ...state.resumes.map((resume) => ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        leading: const CircleAvatar(
-                            backgroundColor: AppColors.surfaceSoft,
-                            child: Icon(Icons.picture_as_pdf_outlined,
-                                color: AppColors.red)),
-                        title: Text('${resume['name'] ?? 'Resume'}'),
-                        subtitle: Text('${resume['file_size'] ?? ''}',
-                            style: const TextStyle(color: AppColors.muted)),
-                      )),
-                ]),
-          ),
-        ),
-      );
+  Future<void> _openResumes(BuildContext context) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => ResumeManagerScreen(state: state)),
+    );
+    await state.loadProfile();
+  }
 
   Future<void> _openEditProfile(BuildContext context) async {
     await Navigator.push(context,
@@ -299,7 +277,117 @@ class ProfileScreen extends StatelessWidget {
     if (confirmed == true) await state.logout();
   }
 
+  Future<void> _openExternal(BuildContext context, String url) async {
+    final opened = await launchUrl(
+      Uri.parse(url),
+      mode: LaunchMode.externalApplication,
+    );
+    if (!opened && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('লিংকটি এখন খোলা যাচ্ছে না।')),
+      );
+    }
+  }
+
   int _number(dynamic value) => int.tryParse('${value ?? 0}') ?? 0;
+}
+
+class _SocialLinksCard extends StatelessWidget {
+  const _SocialLinksCard({required this.onOpen});
+
+  final ValueChanged<String> onOpen;
+
+  @override
+  Widget build(BuildContext context) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 17),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(17),
+          border: Border.all(color: AppColors.border),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _SocialButton(
+              label: 'Website',
+              color: AppColors.purple,
+              icon: const Icon(Icons.language_rounded,
+                  color: AppColors.purple, size: 21),
+              onTap: () => onOpen('https://proskilljob.com/'),
+            ),
+            _SocialButton(
+              label: 'Facebook',
+              color: const Color(0xff1877f2),
+              icon: const FaIcon(FontAwesomeIcons.facebookF,
+                  color: Color(0xff1877f2), size: 19),
+              onTap: () => onOpen('https://www.facebook.com/proskilljob2026/'),
+            ),
+            _SocialButton(
+              label: 'LinkedIn',
+              color: const Color(0xff0a66c2),
+              icon: const FaIcon(FontAwesomeIcons.linkedinIn,
+                  color: Color(0xff0a66c2), size: 20),
+              onTap: () =>
+                  onOpen('https://www.linkedin.com/company/proskill-job-com'),
+            ),
+            _SocialButton(
+              label: 'Instagram',
+              color: const Color(0xffc13584),
+              icon: const FaIcon(FontAwesomeIcons.instagram,
+                  color: Color(0xffc13584), size: 21),
+              onTap: () =>
+                  onOpen('https://www.instagram.com/proskilljob02/?hl=en'),
+            ),
+          ],
+        ),
+      );
+}
+
+class _SocialButton extends StatelessWidget {
+  const _SocialButton({
+    required this.label,
+    required this.color,
+    required this.icon,
+    required this.onTap,
+  });
+
+  final String label;
+  final Color color;
+  final Widget icon;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+        button: true,
+        label: 'Open Proskill Job $label',
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(14),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 45,
+                  height: 45,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: color.withValues(alpha: .1),
+                    border: Border.all(color: color.withValues(alpha: .25)),
+                  ),
+                  child: icon,
+                ),
+                const SizedBox(height: 7),
+                Text(label,
+                    style: const TextStyle(
+                        color: AppColors.muted, fontSize: 10.5)),
+              ],
+            ),
+          ),
+        ),
+      );
 }
 
 class _Avatar extends StatelessWidget {
