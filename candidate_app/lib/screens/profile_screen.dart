@@ -210,6 +210,9 @@ class ProfileScreen extends StatelessWidget {
                 danger: true,
                 onTap: () => _confirmLogout(context)),
           ]),
+          const SizedBox(height: 24),
+          _DeveloperCredit(
+              onTap: () => _openExternal(context, 'https://naxas.ai/')),
         ],
       ),
     );
@@ -240,6 +243,9 @@ class ProfileScreen extends StatelessWidget {
                     onPressed: onLogin,
                     child: const Padding(
                         padding: EdgeInsets.all(14), child: Text('Log In')))),
+            const SizedBox(height: 28),
+            _DeveloperCredit(
+                onTap: () => _openExternal(context, 'https://naxas.ai/')),
           ]),
         ),
       );
@@ -290,6 +296,46 @@ class ProfileScreen extends StatelessWidget {
   }
 
   int _number(dynamic value) => int.tryParse('${value ?? 0}') ?? 0;
+}
+
+class _DeveloperCredit extends StatelessWidget {
+  const _DeveloperCredit({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+        button: true,
+        label: 'Open Naxas Inventions Limited website',
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(12),
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            child: Column(children: [
+              Text('DESIGNED & DEVELOPED BY',
+                  style: TextStyle(
+                      color: AppColors.muted,
+                      fontSize: 9,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1.4)),
+              SizedBox(height: 5),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Icon(Icons.code_rounded, size: 15, color: AppColors.purple),
+                SizedBox(width: 6),
+                Text('Naxas Inventions Limited',
+                    style: TextStyle(
+                        color: AppColors.purple,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700)),
+                SizedBox(width: 4),
+                Icon(Icons.open_in_new_rounded,
+                    size: 12, color: AppColors.muted),
+              ]),
+            ]),
+          ),
+        ),
+      );
 }
 
 class _SocialLinksCard extends StatelessWidget {

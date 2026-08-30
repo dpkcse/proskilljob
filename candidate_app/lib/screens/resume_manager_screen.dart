@@ -89,7 +89,9 @@ class _ResumeManagerScreenState extends State<ResumeManagerScreen> {
         ],
       ),
     );
-    controller.dispose();
+    // The dialog route can still be finalizing its inherited dependencies
+    // when showDialog completes. Dispose after that frame has finished.
+    WidgetsBinding.instance.addPostFrameCallback((_) => controller.dispose());
     return result;
   }
 
@@ -217,81 +219,78 @@ class _ResumeManagerScreenState extends State<ResumeManagerScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => PopScope(
-        onPopInvokedWithResult: (_, __) => widget.state.loadProfile(),
-        child: Scaffold(
-          appBar: AppBar(title: const Text('My Resumes')),
-          floatingActionButton: FloatingActionButton.extended(
-            onPressed: working ? null : _upload,
-            backgroundColor: AppColors.purple,
-            foregroundColor: Colors.white,
-            icon: const Icon(Icons.upload_file_rounded),
-            label: const Text('Upload Resume'),
-          ),
-          body: Stack(
-            children: [
-              RefreshIndicator(
-                onRefresh: _load,
-                child: ListView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.fromLTRB(18, 18, 18, 110),
-                  children: [
-                    _UploadGuide(onUpload: working ? null : _upload),
-                    const SizedBox(height: 22),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Saved resumes',
-                            style: TextStyle(
-                                fontSize: 19, fontWeight: FontWeight.w800)),
-                        Text('${resumes.length}',
-                            style: const TextStyle(color: AppColors.muted)),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    if (loading)
-                      const Padding(
-                        padding: EdgeInsets.all(42),
-                        child: Center(child: CircularProgressIndicator()),
-                      )
-                    else if (error != null)
-                      _ResumeError(message: error!, onRetry: _load)
-                    else if (resumes.isEmpty)
-                      _EmptyResumes(onUpload: _upload)
-                    else
-                      ...resumes.map((resume) => _ResumeCard(
-                            resume: resume,
-                            onOpen: () => _open(resume),
-                            onRename: () => _rename(resume),
-                            onReplace: () => _replace(resume),
-                            onDelete: () => _delete(resume),
-                          )),
-                  ],
-                ),
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(title: const Text('My Resumes')),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: working ? null : _upload,
+          backgroundColor: AppColors.purple,
+          foregroundColor: Colors.white,
+          icon: const Icon(Icons.upload_file_rounded),
+          label: const Text('Upload Resume'),
+        ),
+        body: Stack(
+          children: [
+            RefreshIndicator(
+              onRefresh: _load,
+              child: ListView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: const EdgeInsets.fromLTRB(18, 18, 18, 110),
+                children: [
+                  _UploadGuide(onUpload: working ? null : _upload),
+                  const SizedBox(height: 22),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Saved resumes',
+                          style: TextStyle(
+                              fontSize: 19, fontWeight: FontWeight.w800)),
+                      Text('${resumes.length}',
+                          style: const TextStyle(color: AppColors.muted)),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  if (loading)
+                    const Padding(
+                      padding: EdgeInsets.all(42),
+                      child: Center(child: CircularProgressIndicator()),
+                    )
+                  else if (error != null)
+                    _ResumeError(message: error!, onRetry: _load)
+                  else if (resumes.isEmpty)
+                    _EmptyResumes(onUpload: _upload)
+                  else
+                    ...resumes.map((resume) => _ResumeCard(
+                          resume: resume,
+                          onOpen: () => _open(resume),
+                          onRename: () => _rename(resume),
+                          onReplace: () => _replace(resume),
+                          onDelete: () => _delete(resume),
+                        )),
+                ],
               ),
-              if (working)
-                Positioned.fill(
-                  child: ColoredBox(
-                    color: Colors.black.withValues(alpha: .42),
-                    child: const Center(
-                      child: Card(
-                        child: Padding(
-                          padding: EdgeInsets.all(22),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              CircularProgressIndicator(),
-                              SizedBox(height: 14),
-                              Text('Saving resume securely...'),
-                            ],
-                          ),
+            ),
+            if (working)
+              Positioned.fill(
+                child: ColoredBox(
+                  color: Colors.black.withValues(alpha: .42),
+                  child: const Center(
+                    child: Card(
+                      child: Padding(
+                        padding: EdgeInsets.all(22),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CircularProgressIndicator(),
+                            SizedBox(height: 14),
+                            Text('Saving resume securely...'),
+                          ],
                         ),
                       ),
                     ),
                   ),
                 ),
-            ],
-          ),
+              ),
+          ],
         ),
       );
 }

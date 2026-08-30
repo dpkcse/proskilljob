@@ -90,24 +90,39 @@ class CandidateJobsController extends Controller
     // save or remove favorite or bookmarked jobs of candidate
     public function bookmarkedJob(Job $job)
     {
-        $check = $job->bookmarkJobs()->toggle(auth('sanctum')->user()->candidate->id);
+        $user = auth('sanctum')->user();
+        $candidate = $user->candidate()->firstOrCreate(['user_id' => $user->id]);
+        $check = $job->bookmarkJobs()->toggle($candidate->id);
+        $saved = ! empty($check['attached']);
 
-        if ($check['attached']) {
-
-            $user = auth('sanctum')->user();
-            // make notification to company candidate bookmark job
-            Notification::send($job->company->user, new BookmarkJobNotification($user, $job));
-            // make notification to candidate for notify
-            if (auth('sanctum')->user()->recent_activities_alert) {
-                Notification::send(auth('sanctum')->user(), new BookmarkJobNotification($user, $job));
+        if ($saved) {
+            // A notification delivery failure must never roll back or mask a
+            // successful bookmark operation.
+            try {
+                if ($job->company?->user) {
+                    Notification::send(
+                        $job->company->user,
+                        new BookmarkJobNotification($user, $job)
+                    );
+                }
+                if ($user->recent_activities_alert) {
+                    Notification::send(
+                        $user,
+                        new BookmarkJobNotification($user, $job)
+                    );
+                }
+            } catch (\Throwable $exception) {
+                report($exception);
             }
         }
-        $check['attached'] ? $message = 'Job added to favorite list' : $message = 'Job removed from favorite list';
+        $message = $saved
+            ? 'Job added to favorite list'
+            : 'Job removed from favorite list';
 
         return $this->respondWithSuccess([
             'data' => [
                 'message' => $message,
-                'status' => $check['attached'] ? true : false,
+                'status' => $saved,
             ],
         ]);
 

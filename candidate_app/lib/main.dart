@@ -317,6 +317,32 @@ class _SocialFooter extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
+          const SizedBox(height: 9),
+          Semantics(
+            button: true,
+            label: 'Open Naxas Inventions Limited website',
+            child: InkWell(
+              onTap: () => _open(context, 'https://naxas.ai/'),
+              borderRadius: BorderRadius.circular(8),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                child: Text.rich(
+                  TextSpan(children: [
+                    TextSpan(
+                        text: 'Designed & Developed by  ',
+                        style: TextStyle(color: Color(0xff817485))),
+                    TextSpan(
+                        text: 'Naxas Inventions Limited',
+                        style: TextStyle(
+                            color: Color(0xffa982d4),
+                            fontWeight: FontWeight.w700)),
+                  ]),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 10.5, letterSpacing: .15),
+                ),
+              ),
+            ),
+          ),
         ],
       );
 }
