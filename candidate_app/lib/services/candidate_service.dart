@@ -100,6 +100,62 @@ class CandidateService {
         : 'Profile updated successfully!';
   }
 
+  Future<Map<String, dynamic>> saveEducation(Map<String, dynamic> values,
+      {int? id}) async {
+    final response = id == null
+        ? await api.post('/candidate/educations', body: values)
+        : await api.put('/candidate/educations/$id', body: values);
+    dynamic payload = response['data'];
+    if (payload is Map && payload['data'] != null) payload = payload['data'];
+    final data = (payload as Map? ?? const {}).cast<String, dynamic>();
+    return (data['education'] as Map? ?? const {}).cast<String, dynamic>();
+  }
+
+  Future<String> deleteEducation(int id) async {
+    final response = await api.delete('/candidate/educations/$id');
+    dynamic payload = response['data'];
+    if (payload is Map && payload['data'] != null) payload = payload['data'];
+    return payload is Map && payload['message'] != null
+        ? '${payload['message']}'
+        : 'Education deleted successfully!';
+  }
+
+  Future<Map<String, dynamic>> saveExperience(Map<String, dynamic> values,
+          {int? id}) =>
+      _saveProfileEntry('experiences', 'experience', values, id: id);
+
+  Future<String> deleteExperience(int id) => _deleteProfileEntry(
+      'experiences', id, 'Experience deleted successfully!');
+
+  Future<Map<String, dynamic>> saveReference(Map<String, dynamic> values,
+          {int? id}) =>
+      _saveProfileEntry('references', 'reference', values, id: id);
+
+  Future<String> deleteReference(int id) =>
+      _deleteProfileEntry('references', id, 'Reference deleted successfully!');
+
+  Future<Map<String, dynamic>> _saveProfileEntry(
+      String path, String key, Map<String, dynamic> values,
+      {int? id}) async {
+    final response = id == null
+        ? await api.post('/candidate/$path', body: values)
+        : await api.put('/candidate/$path/$id', body: values);
+    dynamic payload = response['data'];
+    if (payload is Map && payload['data'] != null) payload = payload['data'];
+    final data = (payload as Map? ?? const {}).cast<String, dynamic>();
+    return (data[key] as Map? ?? const {}).cast<String, dynamic>();
+  }
+
+  Future<String> _deleteProfileEntry(
+      String path, int id, String fallback) async {
+    final response = await api.delete('/candidate/$path/$id');
+    dynamic payload = response['data'];
+    if (payload is Map && payload['data'] != null) payload = payload['data'];
+    return payload is Map && payload['message'] != null
+        ? '${payload['message']}'
+        : fallback;
+  }
+
   Future<String> updatePersonalWithPhoto(
       Map<String, dynamic> values, String photoPath) async {
     final response = await api.postMultipart('/candidate/settings',

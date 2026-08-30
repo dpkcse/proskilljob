@@ -10,6 +10,7 @@ use App\Models\JobRole;
 use App\Models\Profession;
 use App\Models\Skill;
 use F9Web\ApiResponseHelpers;
+use Illuminate\Support\Facades\Schema;
 
 class FetchCandidateSettingService
 {
@@ -37,11 +38,15 @@ class FetchCandidateSettingService
             'data' => [
                 'image_url' => $candidate_user->image_url,
                 'name' => $candidate_user->name,
-                'title' => $candidate->title,
                 'education_id' => (int) $candidate->education_id,
                 'experience_id' => (int) $candidate->experience_id,
-                'website' => $candidate->website,
                 'nationality' => $candidate->nationality,
+                'nid_birth_registration_no' => Schema::hasColumn('candidates', 'nid_birth_registration_no')
+                    ? $candidate->nid_birth_registration_no : null,
+                'passport_no' => Schema::hasColumn('candidates', 'passport_no')
+                    ? $candidate->passport_no : null,
+                'passport_expiry_date' => Schema::hasColumn('candidates', 'passport_expiry_date') && $candidate->passport_expiry_date
+                    ? date('Y-m-d', strtotime($candidate->passport_expiry_date)) : null,
                 'date_of_birth' => formatTime($candidate->birth_date, 'Y-m-d'),
                 'district' => $candidate->district,
                 'place' => $candidate->place,
@@ -72,9 +77,55 @@ class FetchCandidateSettingService
                 'gender' => $candidate->gender,
                 'marital_status' => $candidate->marital_status,
                 'profession_id' => (int) $candidate->profession_id,
+                'education_id' => (int) $candidate->education_id,
+                'experience_id' => (int) $candidate->experience_id,
                 'bio' => $candidate->bio,
                 'availability' => $candidate->status,
                 'available_in' => $candidate->available_in,
+                'preferred_job_locations' => json_decode($candidate->preferred_job_locations ?? '[]', true) ?: [],
+                'education_qualifications' => $candidate->educations()->latest()->get()->map(function ($item) {
+                    return [
+                        'id' => $item->id,
+                        'exam_name' => $item->exam_name ?? $item->level,
+                        'degree_name' => $item->degree_name ?? $item->degree,
+                        'major_subject' => $item->major_subject,
+                        'institute_name' => $item->institute_name,
+                        'passing_year' => $item->passing_year ?? $item->year,
+                        'result_type' => $item->result_type,
+                        'result' => $item->result,
+                        'board' => $item->board,
+                    ];
+                }),
+                'experience_entries' => $candidate->experiences()->latest()->get()->map(function ($item) {
+                    return [
+                        'id' => $item->id,
+                        'designation' => $item->designation,
+                        'company' => $item->company,
+                        'department' => $item->department,
+                        'start' => $item->start,
+                        'end' => $item->end,
+                        'currently_working' => (bool) $item->currently_working,
+                        'supervisor' => $item->supervisor ?? null,
+                        'hr_contact_number' => $item->hr_contact_number ?? null,
+                        'responsibilities' => $item->responsibilities,
+                    ];
+                }),
+                'references' => $candidate->professionalReferences()->latest()->get()->map(function ($item) {
+                    return [
+                        'id' => $item->id,
+                        'name' => $item->name,
+                        'designation' => $item->designation,
+                        'organization' => $item->organization,
+                        'email' => $item->email,
+                        'mobile' => $item->mobile,
+                    ];
+                }),
+                'education_list' => Education::all()->map(fn ($item) => [
+                    'id' => $item->id, 'name' => $item->name,
+                ]),
+                'experience_list' => Experience::all()->map(fn ($item) => [
+                    'id' => $item->id, 'name' => $item->name,
+                ]),
                 'skills' => $candidate->skills->map(function ($item) {
                     return [
                         'id' => $item->id,
@@ -85,6 +136,8 @@ class FetchCandidateSettingService
                     return [
                         'id' => $item->id,
                         'name' => $item->name,
+                        'proficiency_level' => ($item->pivot->proficiency_level ?? 'basic') === 'fluent'
+                            ? 'professional' : ($item->pivot->proficiency_level ?? 'basic'),
                     ];
                 }),
                 'profession_list' => Profession::all()->map(function ($item) {

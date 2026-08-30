@@ -207,7 +207,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen>
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: messageIsError
-                        ? AppColors.red
+                        ? AppColors.danger
                         : const Color(0xff69dbb8),
                   ),
                 ),

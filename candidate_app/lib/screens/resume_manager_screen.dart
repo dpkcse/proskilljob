@@ -164,7 +164,9 @@ class _ResumeManagerScreenState extends State<ResumeManagerScreen> {
               onPressed: () => Navigator.pop(context, false),
               child: const Text('Cancel')),
           FilledButton(
-            style: FilledButton.styleFrom(backgroundColor: AppColors.red),
+            style: FilledButton.styleFrom(
+                backgroundColor: AppColors.danger,
+                foregroundColor: Colors.white),
             onPressed: () => Navigator.pop(context, true),
             child: const Text('Delete'),
           ),
@@ -417,8 +419,8 @@ class _ResumeCard extends StatelessWidget {
               PopupMenuItem(value: 'replace', child: Text('Replace file')),
               PopupMenuItem(
                   value: 'delete',
-                  child:
-                      Text('Delete', style: TextStyle(color: AppColors.red))),
+                  child: Text('Delete',
+                      style: TextStyle(color: AppColors.danger))),
             ],
           ),
         ]),

@@ -121,6 +121,15 @@ Route::middleware(['auth:sanctum', 'api_candidate:candidate'])->prefix('candidat
         Route::post('/upload-resume', 'uploadResume');
         Route::post('/update-resume/{id}', 'updateResume');
         Route::delete('/delete-resume/{id}', 'deleteResume');
+        Route::post('/educations', 'storeEducation');
+        Route::put('/educations/{education}', 'updateEducation');
+        Route::delete('/educations/{education}', 'deleteEducation');
+        Route::post('/experiences', 'storeExperience');
+        Route::put('/experiences/{experience}', 'updateExperience');
+        Route::delete('/experiences/{experience}', 'deleteExperience');
+        Route::post('/references', 'storeReference');
+        Route::put('/references/{reference}', 'updateReference');
+        Route::delete('/references/{reference}', 'deleteReference');
     });
     //  Candidate Jobs Apis
     Route::controller(CandidateJobsController::class)->group(function () {

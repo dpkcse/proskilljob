@@ -18,6 +18,8 @@ class CandidateExperience extends Model
         'designation',
         'responsibilities',
         'currently_working',
+        'supervisor',
+        'hr_contact_number',
     ];
 
     protected $appends = ['formatted_start', 'formatted_end'];

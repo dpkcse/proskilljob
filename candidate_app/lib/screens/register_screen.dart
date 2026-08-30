@@ -234,7 +234,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Padding(
                   padding: const EdgeInsets.only(top: 14),
                   child: Text(error!,
-                      style: const TextStyle(color: AppColors.red))),
+                      style: const TextStyle(color: AppColors.danger))),
             const SizedBox(height: 22),
             FilledButton(
                 style: FilledButton.styleFrom(

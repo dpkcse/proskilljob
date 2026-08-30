@@ -188,6 +188,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                   child: FilledButton(
                       style: FilledButton.styleFrom(
                           backgroundColor: AppColors.red,
+                          foregroundColor: AppColors.onSecondary,
                           padding: const EdgeInsets.all(16)),
                       onPressed: applied || openingApplication
                           ? null
@@ -446,13 +447,15 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                           Padding(
                             padding: const EdgeInsets.only(bottom: 12),
                             child: Text(submitError!,
-                                style: const TextStyle(color: AppColors.red)),
+                                style:
+                                    const TextStyle(color: AppColors.danger)),
                           ),
                         SizedBox(
                           width: double.infinity,
                           child: FilledButton.icon(
                             style: FilledButton.styleFrom(
                                 backgroundColor: AppColors.red,
+                                foregroundColor: AppColors.onSecondary,
                                 padding: const EdgeInsets.all(15)),
                             onPressed: submitting ? null : submit,
                             icon: submitting

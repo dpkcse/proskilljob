@@ -22,10 +22,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   final fields = <String, TextEditingController>{};
   final socials = <_SocialEntry>[];
-  List<Map<String, dynamic>> experiences = const [];
   List<Map<String, dynamic>> educations = const [];
+  List<Map<String, dynamic>> academicQualifications = const [];
+  List<Map<String, dynamic>> experienceEntries = const [];
+  List<Map<String, dynamic>> references = const [];
   List<Map<String, dynamic>> professions = const [];
-  List<Map<String, dynamic>> skills = const [];
   List<Map<String, dynamic>> languages = const [];
   List<String> socialPlatforms = const [
     'facebook',
@@ -36,9 +37,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     'youtube',
     'other',
   ];
-  final selectedSkills = <dynamic>{};
   final selectedLanguages = <dynamic>{};
-  int? experienceId;
+  final languageProficiencies = <int, String>{};
+  final customSkills = <String>[];
   int? educationId;
   int? professionId;
   String? gender;
@@ -95,23 +96,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   void _fillPersonal(Map<String, dynamic> data) {
     for (final key in [
       'name',
-      'title',
-      'website',
       'nationality',
+      'nid_birth_registration_no',
+      'passport_no',
+      'passport_expiry_date',
       'date_of_birth',
-      'district',
-      'place',
       'address',
-      'postcode',
       'permanent_address',
-      'international_address',
     ]) {
       _field(key).text = '${data[key] ?? ''}';
     }
-    experiences = _mapList(data['experience_list']);
-    educations = _mapList(data['education_list']);
-    experienceId = _validId(data['experience_id'], experiences);
-    educationId = _validId(data['education_id'], educations);
   }
 
   void _fillProfessional(Map<String, dynamic> data) {
@@ -120,30 +114,37 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     availability = '${data['availability'] ?? 'available'}';
     _field('bio').text = '${data['bio'] ?? ''}';
     _field('available_in').text = '${data['available_in'] ?? ''}';
+    _field('preferred_job_locations').text =
+        _stringList(data['preferred_job_locations']).join(', ');
+    educations = _mapList(data['education_list']);
+    academicQualifications = _mapList(data['education_qualifications']);
+    experienceEntries = _mapList(data['experience_entries']);
+    references = _mapList(data['references']);
     professions = _mapList(data['profession_list']);
-    skills = _mapList(data['skill_list']);
     languages = _mapList(data['language_list']);
     professionId = _validId(data['profession_id'], professions);
-    selectedSkills
-      ..clear()
-      ..addAll(_mapList(data['skills']).map((item) => item['id']));
+    educationId = _validId(data['education_id'], educations);
     selectedLanguages
       ..clear()
       ..addAll(_mapList(data['languages']).map((item) => item['id']));
+    languageProficiencies
+      ..clear()
+      ..addEntries(_mapList(data['languages']).map((item) => MapEntry(
+          int.tryParse('${item['id']}') ?? 0,
+          '${item['proficiency_level'] ?? 'basic'}')));
+    customSkills
+      ..clear()
+      ..addAll(_mapList(data['skills']).map((item) => '${item['name']}'));
   }
 
   void _fillContact(Map<String, dynamic> data) {
     final contact = _map(data['contact_info']);
-    final location = _map(data['location']);
     _field('phone').text = '${contact['phone'] ?? ''}';
     _field('secondary_phone').text = '${contact['secondary_phone'] ?? ''}';
     _field('whatsapp_number').text = '${contact['whatsapp_no'] ?? ''}';
     _field('email').text =
         '${contact['email'] ?? widget.state.currentUser['email'] ?? ''}';
     _field('secondary_email').text = '${contact['secondary_email'] ?? ''}';
-    for (final key in ['country', 'city', 'address', 'exact_location']) {
-      _field('contact_$key').text = '${location[key] ?? ''}';
-    }
   }
 
   void _fillSocial(Map<String, dynamic> data) {
@@ -169,7 +170,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) => DefaultTabController(
-        length: 4,
+        length: 5,
         child: Scaffold(
           appBar: AppBar(
             title: const Text('Edit Profile'),
@@ -177,8 +178,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               isScrollable: true,
               tabs: [
                 Tab(text: 'Personal'),
-                Tab(text: 'Professional'),
+                Tab(text: 'Education & Profession'),
                 Tab(text: 'Contact'),
+                Tab(text: 'Reference'),
                 Tab(text: 'Social'),
               ],
             ),
@@ -192,6 +194,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       _personalTab(),
                       _professionalTab(),
                       _contactTab(),
+                      _referenceTab(),
                       _socialTab(),
                     ]),
         ),
@@ -203,35 +206,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           _completionCard(),
           _photoPicker(),
           _text('name', 'Full name', required: true),
-          _text('title', 'Professional title', required: true),
+          _text('nid_birth_registration_no', 'NID / Birth Registration Number'),
           Row(children: [
-            Expanded(
-                child: _dropdown<int>(
-                    label: 'Experience level',
-                    value: experienceId,
-                    options: experiences,
-                    onChanged: (value) => experienceId = value)),
+            Expanded(child: _text('passport_no', 'Passport Number')),
             const SizedBox(width: 12),
             Expanded(
-                child: _dropdown<int>(
-                    label: 'Education level',
-                    value: educationId,
-                    options: educations,
-                    onChanged: (value) => educationId = value)),
+                child: _date('passport_expiry_date', 'Passport Expiry Date',
+                    futureOnly: true)),
           ]),
           _date('date_of_birth', 'Date of birth', required: true),
-          _text('website', 'Personal website', keyboard: TextInputType.url),
           _text('nationality', 'Nationality'),
           const _GroupTitle('Present address'),
-          Row(children: [
-            Expanded(child: _text('district', 'District')),
-            const SizedBox(width: 12),
-            Expanded(child: _text('place', 'Thana/Area')),
-          ]),
-          _text('address', 'House, road or village'),
-          _text('postcode', 'Post code'),
-          _text('permanent_address', 'Permanent address', lines: 2),
-          _text('international_address', 'International address', lines: 2),
+          _text('address', 'Present address',
+              lines: 3,
+              hint: 'Example: House No/Road, Village, District, Post Code'),
+          const _GroupTitle('Permanent address'),
+          _text('permanent_address', 'Permanent address',
+              lines: 3,
+              hint: 'Example: House No/Road, Village, District, Post Code'),
           _saveButton('personal', _savePersonal),
         ],
       );
@@ -239,6 +231,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget _professionalTab() => _FormPage(
         formKey: professionalKey,
         children: [
+          const _GroupTitle('Education'),
+          _dropdown<int>(
+              label: 'Education level',
+              value: educationId,
+              options: educations,
+              onChanged: (value) => educationId = value),
+          _academicEducationSection(),
+          const _GroupTitle('Profession'),
+          _dropdown<int>(
+              label: 'Profession',
+              value: professionId,
+              options: professions,
+              required: false,
+              onChanged: (value) => professionId = value),
+          _text('custom_profession', 'Or enter your profession'),
+          const _GroupTitle('Experience'),
+          _experienceSection(),
+          const _GroupTitle('Language'),
+          _languageSection(),
+          const _GroupTitle('Skills'),
+          _manualSkillsSection(),
+          const _GroupTitle('Preferred Job Location'),
+          _text('preferred_job_locations',
+              'Preferred locations (comma separated)',
+              lines: 2),
+          const _GroupTitle('Additional professional details'),
           _dropdown<String>(
             label: 'Gender',
             value: gender,
@@ -259,11 +277,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ],
             onChanged: (value) => maritalStatus = value,
           ),
-          _dropdown<int>(
-              label: 'Profession',
-              value: professionId,
-              options: professions,
-              onChanged: (value) => professionId = value),
           _text('bio', 'Professional summary', required: true, lines: 6),
           _dropdown<String>(
             label: 'Availability',
@@ -277,11 +290,428 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           ),
           if (availability == 'available_in')
             _date('available_in', 'Available from', required: true),
-          _multiSelect('Skills', skills, selectedSkills),
-          _multiSelect('Languages', languages, selectedLanguages),
           _saveButton('profile', _saveProfessional),
         ],
       );
+
+  Widget _academicEducationSection() => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(children: [
+            const Expanded(
+              child: Text('Academic qualifications',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
+            ),
+            FilledButton.icon(
+              onPressed: () => _openEducationEditor(),
+              icon: const Icon(Icons.add, size: 18),
+              label: const Text('Add'),
+            ),
+          ]),
+          const SizedBox(height: 10),
+          if (academicQualifications.isEmpty)
+            Container(
+              padding: const EdgeInsets.all(18),
+              decoration: BoxDecoration(
+                color: AppColors.surface,
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: AppColors.border),
+              ),
+              child: const Column(children: [
+                Icon(Icons.school_outlined, size: 34, color: AppColors.muted),
+                SizedBox(height: 8),
+                Text('No academic qualification added yet.',
+                    style: TextStyle(color: AppColors.muted)),
+              ]),
+            )
+          else
+            ...academicQualifications.map(_educationCard),
+          const SizedBox(height: 8),
+        ],
+      );
+
+  Widget _experienceSection() => _EntrySection(
+        emptyIcon: Icons.work_history_outlined,
+        emptyText: 'No professional experience added yet.',
+        addLabel: 'Add experience',
+        onAdd: () => _openExperienceEditor(),
+        children: experienceEntries
+            .map((item) => _ProfileEntryCard(
+                  icon: Icons.business_center_outlined,
+                  title: '${item['designation'] ?? ''}',
+                  subtitle: '${item['company'] ?? ''}',
+                  detail: _experiencePeriod(item),
+                  onEdit: () => _openExperienceEditor(item: item),
+                  onDelete: () => _deleteProfileEntry('experience', item),
+                ))
+            .toList(),
+      );
+
+  Widget _languageSection() => Column(
+        children: languages.map((item) {
+          final id = int.tryParse('${item['id']}') ?? 0;
+          final selected = selectedLanguages.contains(item['id']);
+          return Container(
+            margin: const EdgeInsets.only(bottom: 9),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(
+              color: AppColors.surface,
+              borderRadius: BorderRadius.circular(13),
+              border: Border.all(color: AppColors.border),
+            ),
+            child: Row(children: [
+              Checkbox(
+                value: selected,
+                onChanged: (value) => setState(() {
+                  if (value == true) {
+                    selectedLanguages.add(item['id']);
+                    languageProficiencies.putIfAbsent(id, () => 'basic');
+                  } else {
+                    selectedLanguages.remove(item['id']);
+                  }
+                }),
+              ),
+              Expanded(child: Text('${item['name'] ?? ''}')),
+              if (selected)
+                SizedBox(
+                  width: 135,
+                  child: DropdownButton<String>(
+                    value: languageProficiencies[id] ?? 'basic',
+                    isExpanded: true,
+                    underline: const SizedBox.shrink(),
+                    items: const [
+                      DropdownMenuItem(value: 'native', child: Text('Native')),
+                      DropdownMenuItem(value: 'basic', child: Text('Basic')),
+                      DropdownMenuItem(
+                          value: 'professional', child: Text('Professional')),
+                    ],
+                    onChanged: (value) => setState(
+                        () => languageProficiencies[id] = value ?? 'basic'),
+                  ),
+                ),
+            ]),
+          );
+        }).toList(),
+      );
+
+  Widget _manualSkillsSection() => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(children: [
+            Expanded(
+              child: TextField(
+                controller: _field('new_skill'),
+                textInputAction: TextInputAction.done,
+                decoration: const InputDecoration(
+                    labelText: 'Type a skill', hintText: 'Example: AutoCAD'),
+                onSubmitted: (_) => _addSkill(),
+              ),
+            ),
+            const SizedBox(width: 9),
+            IconButton.filled(
+                onPressed: _addSkill, icon: const Icon(Icons.add)),
+          ]),
+          const SizedBox(height: 10),
+          Wrap(
+            spacing: 7,
+            runSpacing: 7,
+            children: customSkills
+                .map((skill) => InputChip(
+                      label: Text(skill),
+                      onDeleted: () =>
+                          setState(() => customSkills.remove(skill)),
+                    ))
+                .toList(),
+          ),
+          const SizedBox(height: 12),
+        ],
+      );
+
+  void _addSkill() {
+    final skill = _value('new_skill');
+    if (skill.isEmpty) return;
+    if (!customSkills
+        .any((item) => item.toLowerCase() == skill.toLowerCase())) {
+      setState(() => customSkills.add(skill));
+    }
+    _field('new_skill').clear();
+  }
+
+  Widget _referenceTab() => ListView(
+        padding: const EdgeInsets.fromLTRB(18, 22, 18, 34),
+        children: [
+          const Text('Professional References',
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800)),
+          const SizedBox(height: 5),
+          const Text('Add people employers may contact for verification.',
+              style: TextStyle(color: AppColors.muted)),
+          const SizedBox(height: 18),
+          _EntrySection(
+            emptyIcon: Icons.contact_page_outlined,
+            emptyText: 'No reference added yet.',
+            addLabel: 'Add reference',
+            onAdd: () => _openReferenceEditor(),
+            children: references
+                .map((item) => _ProfileEntryCard(
+                      icon: Icons.person_outline,
+                      title: '${item['name'] ?? ''}',
+                      subtitle:
+                          '${item['designation'] ?? ''} • ${item['organization'] ?? ''}',
+                      detail: '${item['email'] ?? item['mobile'] ?? ''}',
+                      onEdit: () => _openReferenceEditor(item: item),
+                      onDelete: () => _deleteProfileEntry('reference', item),
+                    ))
+                .toList(),
+          ),
+        ],
+      );
+
+  String _experiencePeriod(Map<String, dynamic> item) {
+    final end =
+        item['currently_working'] == true ? 'Present' : '${item['end'] ?? ''}';
+    return '${item['start'] ?? ''} — $end';
+  }
+
+  Widget _educationCard(Map<String, dynamic> item) {
+    final degree = '${item['degree_name'] ?? ''}'.trim();
+    final exam = '${item['exam_name'] ?? ''}'.trim();
+    final institute = '${item['institute_name'] ?? ''}'.trim();
+    final major = '${item['major_subject'] ?? ''}'.trim();
+    final year = '${item['passing_year'] ?? ''}'.trim();
+    final result = '${item['result'] ?? ''}'.trim();
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        const CircleAvatar(
+          backgroundColor: AppColors.purple,
+          foregroundColor: Colors.white,
+          child: Icon(Icons.school_outlined),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(degree.isNotEmpty ? degree : exam,
+                style: const TextStyle(fontWeight: FontWeight.w800)),
+            if (institute.isNotEmpty) ...[
+              const SizedBox(height: 3),
+              Text(institute, style: const TextStyle(color: AppColors.muted)),
+            ],
+            if (major.isNotEmpty || year.isNotEmpty || result.isNotEmpty) ...[
+              const SizedBox(height: 6),
+              Text(
+                  [major, year, if (result.isNotEmpty) 'Result: $result']
+                      .where((value) => value.isNotEmpty)
+                      .join(' • '),
+                  style: const TextStyle(fontSize: 12, color: AppColors.muted)),
+            ],
+          ]),
+        ),
+        PopupMenuButton<String>(
+          onSelected: (action) => action == 'edit'
+              ? _openEducationEditor(item: item)
+              : _deleteEducation(item),
+          itemBuilder: (_) => const [
+            PopupMenuItem(value: 'edit', child: Text('Edit')),
+            PopupMenuItem(value: 'delete', child: Text('Delete')),
+          ],
+        ),
+      ]),
+    );
+  }
+
+  Future<void> _openEducationEditor({Map<String, dynamic>? item}) async {
+    final values = await showModalBottomSheet<Map<String, dynamic>>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      backgroundColor: AppColors.background,
+      builder: (_) => _EducationEditorSheet(initial: item),
+    );
+    if (values == null || !mounted) return;
+    setState(() => savingSection = 'education');
+    try {
+      final saved = await widget.state.candidateApi
+          .saveEducation(values, id: int.tryParse('${item?['id']}'));
+      if (!mounted) return;
+      setState(() {
+        final id = int.tryParse('${saved['id']}');
+        final index = academicQualifications
+            .indexWhere((entry) => int.tryParse('${entry['id']}') == id);
+        if (index < 0) {
+          academicQualifications = [saved, ...academicQualifications];
+        } else {
+          final updated = [...academicQualifications];
+          updated[index] = saved;
+          academicQualifications = updated;
+        }
+      });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(item == null
+              ? 'Education added successfully!'
+              : 'Education updated successfully!'),
+          backgroundColor: const Color(0xff167c62)));
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('$e')));
+      }
+    } finally {
+      if (mounted) setState(() => savingSection = null);
+    }
+  }
+
+  Future<void> _openExperienceEditor({Map<String, dynamic>? item}) async {
+    final values = await showModalBottomSheet<Map<String, dynamic>>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      backgroundColor: AppColors.background,
+      builder: (_) => _ExperienceEditorSheet(initial: item),
+    );
+    if (values == null || !mounted) return;
+    await _saveProfileEntry('experience', values, item: item);
+  }
+
+  Future<void> _openReferenceEditor({Map<String, dynamic>? item}) async {
+    final values = await showModalBottomSheet<Map<String, dynamic>>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      backgroundColor: AppColors.background,
+      builder: (_) => _ReferenceEditorSheet(initial: item),
+    );
+    if (values == null || !mounted) return;
+    await _saveProfileEntry('reference', values, item: item);
+  }
+
+  Future<void> _saveProfileEntry(String type, Map<String, dynamic> values,
+      {Map<String, dynamic>? item}) async {
+    setState(() => savingSection = type);
+    try {
+      final id = int.tryParse('${item?['id']}');
+      final saved = type == 'experience'
+          ? await widget.state.candidateApi.saveExperience(values, id: id)
+          : await widget.state.candidateApi.saveReference(values, id: id);
+      if (!mounted) return;
+      setState(() {
+        final list = type == 'experience' ? experienceEntries : references;
+        final savedId = int.tryParse('${saved['id']}');
+        final index = list
+            .indexWhere((entry) => int.tryParse('${entry['id']}') == savedId);
+        final updated = [...list];
+        if (index < 0) {
+          updated.insert(0, saved);
+        } else {
+          updated[index] = saved;
+        }
+        if (type == 'experience') {
+          experienceEntries = updated;
+        } else {
+          references = updated;
+        }
+      });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(item == null
+              ? '${_titleCase(type)} added successfully!'
+              : '${_titleCase(type)} updated successfully!'),
+          backgroundColor: const Color(0xff167c62)));
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('$e')));
+      }
+    } finally {
+      if (mounted) setState(() => savingSection = null);
+    }
+  }
+
+  Future<void> _deleteProfileEntry(
+      String type, Map<String, dynamic> item) async {
+    final id = int.tryParse('${item['id']}');
+    if (id == null) return;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Delete $type?'),
+        content: const Text('This information will be removed permanently.'),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('Cancel')),
+          FilledButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('Delete')),
+        ],
+      ),
+    );
+    if (confirmed != true || !mounted) return;
+    try {
+      final message = type == 'experience'
+          ? await widget.state.candidateApi.deleteExperience(id)
+          : await widget.state.candidateApi.deleteReference(id);
+      if (!mounted) return;
+      setState(() {
+        if (type == 'experience') {
+          experienceEntries = experienceEntries
+              .where((entry) => int.tryParse('${entry['id']}') != id)
+              .toList();
+        } else {
+          references = references
+              .where((entry) => int.tryParse('${entry['id']}') != id)
+              .toList();
+        }
+      });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(message), backgroundColor: const Color(0xff167c62)));
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('$e')));
+      }
+    }
+  }
+
+  Future<void> _deleteEducation(Map<String, dynamic> item) async {
+    final id = int.tryParse('${item['id']}');
+    if (id == null) return;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete education?'),
+        content: const Text('This qualification will be removed permanently.'),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('Cancel')),
+          FilledButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('Delete')),
+        ],
+      ),
+    );
+    if (confirmed != true || !mounted) return;
+    try {
+      final message = await widget.state.candidateApi.deleteEducation(id);
+      if (!mounted) return;
+      setState(() => academicQualifications = academicQualifications
+          .where((entry) => int.tryParse('${entry['id']}') != id)
+          .toList());
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(message), backgroundColor: const Color(0xff167c62)));
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('$e')));
+      }
+    }
+  }
 
   Widget _contactTab() => _FormPage(
         formKey: contactKey,
@@ -301,14 +731,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               required: true, keyboard: TextInputType.emailAddress),
           _text('secondary_email', 'Secondary email',
               keyboard: TextInputType.emailAddress),
-          const _GroupTitle('Location'),
-          Row(children: [
-            Expanded(child: _text('contact_country', 'Country')),
-            const SizedBox(width: 12),
-            Expanded(child: _text('contact_city', 'City')),
-          ]),
-          _text('contact_address', 'Address', lines: 2),
-          _text('contact_exact_location', 'Exact location'),
           _saveButton('contact', _saveContact),
         ],
       );
@@ -349,7 +771,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             socials.removeAt(index).dispose();
                           }),
                       icon: const Icon(Icons.delete_outline,
-                          color: AppColors.red)),
+                          color: AppColors.danger)),
                 ]),
                 const SizedBox(height: 10),
                 TextField(
@@ -452,7 +874,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   Widget _text(String key, String label,
-          {bool required = false, int lines = 1, TextInputType? keyboard}) =>
+          {bool required = false,
+          int lines = 1,
+          TextInputType? keyboard,
+          String? hint}) =>
       Padding(
         padding: const EdgeInsets.only(bottom: 14),
         child: TextFormField(
@@ -460,7 +885,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           keyboardType: keyboard,
           minLines: lines,
           maxLines: lines,
-          decoration: InputDecoration(labelText: label),
+          decoration: InputDecoration(labelText: label, hintText: hint),
           validator: required
               ? (value) => value == null || value.trim().isEmpty
                   ? '$label is required'
@@ -469,7 +894,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
       );
 
-  Widget _date(String key, String label, {bool required = false}) => Padding(
+  Widget _date(String key, String label,
+          {bool required = false, bool futureOnly = false}) =>
+      Padding(
         padding: const EdgeInsets.only(bottom: 14),
         child: TextFormField(
           controller: _field(key),
@@ -477,7 +904,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           decoration: InputDecoration(
               labelText: label,
               suffixIcon: const Icon(Icons.calendar_month_outlined)),
-          onTap: () => _pickDate(key),
+          onTap: () => _pickDate(key, futureOnly: futureOnly),
           validator: required
               ? (value) =>
                   value == null || value.isEmpty ? '$label is required' : null
@@ -515,40 +942,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
       );
 
-  Widget _multiSelect(String title, List<Map<String, dynamic>> options,
-          Set<dynamic> selected) =>
-      Padding(
-        padding: const EdgeInsets.only(bottom: 18),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(title,
-              style:
-                  const TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
-          const SizedBox(height: 9),
-          Container(
-            constraints: const BoxConstraints(maxHeight: 210),
-            child: SingleChildScrollView(
-              child: Wrap(
-                  spacing: 7,
-                  runSpacing: 7,
-                  children: options.map((item) {
-                    final id = item['id'];
-                    return FilterChip(
-                        label: Text('${item['name'] ?? ''}'),
-                        selected: selected.contains(id),
-                        onSelected: (value) => setState(() =>
-                            value ? selected.add(id) : selected.remove(id)));
-                  }).toList()),
-            ),
-          ),
-        ]),
-      );
-
   Widget _saveButton(String section, Future<void> Function() onSave) =>
       SizedBox(
         width: double.infinity,
         child: FilledButton.icon(
           style: FilledButton.styleFrom(
               backgroundColor: AppColors.red,
+              foregroundColor: AppColors.onSecondary,
               padding: const EdgeInsets.all(15)),
           onPressed: savingSection == null ? onSave : null,
           icon: savingSection == section
@@ -563,25 +963,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       );
 
   Future<void> _savePersonal() async {
-    if (!(personalKey.currentState?.validate() ?? false) ||
-        experienceId == null ||
-        educationId == null) {
-      return;
-    }
+    if (!(personalKey.currentState?.validate() ?? false)) return;
     final values = <String, dynamic>{
       'name': _value('name'),
-      'title': _value('title'),
-      'experience_id': experienceId,
-      'education_id': educationId,
-      'website': _value('website'),
+      'nid_birth_registration_no': _value('nid_birth_registration_no'),
+      'passport_no': _value('passport_no'),
+      'passport_expiry_date': _value('passport_expiry_date'),
       'nationality': _value('nationality'),
       'date_of_birth': _value('date_of_birth'),
-      'district': _value('district'),
-      'place': _value('place'),
       'neighborhood': _value('address'),
-      'postcode': _value('postcode'),
       'permanent_address': _value('permanent_address'),
-      'international_address': _value('international_address'),
     };
     if (selectedPhotoPath == null) {
       await _save('personal', values);
@@ -610,19 +1001,33 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   Future<void> _saveProfessional() async {
     if (!(professionalKey.currentState?.validate() ?? false) ||
-        professionId == null) {
+        educationId == null ||
+        (professionId == null && _value('custom_profession').isEmpty)) {
       return;
     }
     await _save('profile', {
       'gender': gender,
       'marital_status': maritalStatus,
-      'profession': professionId,
+      'profession': _value('custom_profession').isNotEmpty
+          ? _value('custom_profession')
+          : professionId,
+      'education_id': educationId,
       'bio': _value('bio'),
       'status': availability,
       'available_in':
           availability == 'available_in' ? _value('available_in') : null,
-      'skills': selectedSkills.toList(),
+      'skills': customSkills,
       'languages': selectedLanguages.toList(),
+      'language_proficiencies': {
+        for (final id in selectedLanguages)
+          '$id': languageProficiencies[int.tryParse('$id') ?? 0] ?? 'basic',
+      },
+      'preferred_job_locations': _value('preferred_job_locations')
+          .split(',')
+          .map((value) => value.trim())
+          .where((value) => value.isNotEmpty)
+          .toSet()
+          .toList(),
     });
   }
 
@@ -634,10 +1039,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       'whatsapp_number': _value('whatsapp_number'),
       'email': _value('email'),
       'secondary_email': _value('secondary_email'),
-      'country': _value('contact_country'),
-      'city': _value('contact_city'),
-      'address': _value('contact_address'),
-      'exact_location': _value('contact_exact_location'),
     });
   }
 
@@ -667,13 +1068,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
   }
 
-  Future<void> _pickDate(String key) async {
+  Future<void> _pickDate(String key, {bool futureOnly = false}) async {
     final current = DateTime.tryParse(_value(key));
+    final today = DateTime.now();
     final picked = await showDatePicker(
       context: context,
-      initialDate: current ?? DateTime(2000),
-      firstDate: DateTime(1940),
-      lastDate: DateTime.now().add(const Duration(days: 3650)),
+      initialDate: current ??
+          (futureOnly ? today.add(const Duration(days: 365)) : DateTime(2000)),
+      firstDate: futureOnly ? today : DateTime(1940),
+      lastDate: futureOnly ? DateTime(today.year + 20, 12, 31) : today,
     );
     if (picked != null) {
       _field(key).text =
@@ -700,6 +1103,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       .toList();
   Map<String, dynamic> _map(dynamic value) =>
       (value as Map? ?? {}).cast<String, dynamic>();
+  List<String> _stringList(dynamic value) => (value as List? ?? const [])
+      .map((item) => '$item'.trim())
+      .where((item) => item.isNotEmpty)
+      .toList();
   int? _validId(dynamic value, List<Map<String, dynamic>> list) {
     final id = int.tryParse('$value');
     return list.any((item) => int.tryParse('${item['id']}') == id) ? id : null;
@@ -714,6 +1121,505 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   static String _titleCase(String value) =>
       value.isEmpty ? value : '${value[0].toUpperCase()}${value.substring(1)}';
+}
+
+class _EntrySection extends StatelessWidget {
+  const _EntrySection({
+    required this.emptyIcon,
+    required this.emptyText,
+    required this.addLabel,
+    required this.onAdd,
+    required this.children,
+  });
+  final IconData emptyIcon;
+  final String emptyText;
+  final String addLabel;
+  final VoidCallback onAdd;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Align(
+            alignment: Alignment.centerRight,
+            child: FilledButton.icon(
+                onPressed: onAdd,
+                icon: const Icon(Icons.add, size: 18),
+                label: Text(addLabel)),
+          ),
+          const SizedBox(height: 10),
+          if (children.isEmpty)
+            Container(
+              padding: const EdgeInsets.all(18),
+              decoration: BoxDecoration(
+                color: AppColors.surface,
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: AppColors.border),
+              ),
+              child: Column(children: [
+                Icon(emptyIcon, size: 34, color: AppColors.muted),
+                const SizedBox(height: 8),
+                Text(emptyText, style: const TextStyle(color: AppColors.muted)),
+              ]),
+            )
+          else
+            ...children,
+          const SizedBox(height: 10),
+        ],
+      );
+}
+
+class _ProfileEntryCard extends StatelessWidget {
+  const _ProfileEntryCard({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.detail,
+    required this.onEdit,
+    required this.onDelete,
+  });
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final String detail;
+  final VoidCallback onEdit;
+  final VoidCallback onDelete;
+
+  @override
+  Widget build(BuildContext context) => Container(
+        margin: const EdgeInsets.only(bottom: 10),
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: AppColors.border),
+        ),
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          CircleAvatar(
+              backgroundColor: AppColors.purple,
+              foregroundColor: Colors.white,
+              child: Icon(icon)),
+          const SizedBox(width: 12),
+          Expanded(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(title, style: const TextStyle(fontWeight: FontWeight.w800)),
+              if (subtitle.trim().isNotEmpty)
+                Text(subtitle, style: const TextStyle(color: AppColors.muted)),
+              if (detail.trim().isNotEmpty) ...[
+                const SizedBox(height: 4),
+                Text(detail,
+                    style:
+                        const TextStyle(fontSize: 12, color: AppColors.muted)),
+              ],
+            ]),
+          ),
+          PopupMenuButton<String>(
+            onSelected: (value) => value == 'edit' ? onEdit() : onDelete(),
+            itemBuilder: (_) => const [
+              PopupMenuItem(value: 'edit', child: Text('Edit')),
+              PopupMenuItem(value: 'delete', child: Text('Delete')),
+            ],
+          ),
+        ]),
+      );
+}
+
+class _ExperienceEditorSheet extends StatefulWidget {
+  const _ExperienceEditorSheet({this.initial});
+  final Map<String, dynamic>? initial;
+  @override
+  State<_ExperienceEditorSheet> createState() => _ExperienceEditorSheetState();
+}
+
+class _ExperienceEditorSheetState extends State<_ExperienceEditorSheet> {
+  final formKey = GlobalKey<FormState>();
+  final fields = <String, TextEditingController>{};
+  bool currentlyWorking = false;
+
+  TextEditingController field(String key) => fields.putIfAbsent(
+      key, () => TextEditingController(text: '${widget.initial?[key] ?? ''}'));
+
+  @override
+  void initState() {
+    super.initState();
+    currentlyWorking = widget.initial?['currently_working'] == true ||
+        '${widget.initial?['currently_working']}' == '1';
+  }
+
+  @override
+  void dispose() {
+    for (final controller in fields.values) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => _EditorFrame(
+        title: widget.initial == null ? 'Add Experience' : 'Edit Experience',
+        formKey: formKey,
+        children: [
+          _editorField(field('designation'), 'Position', required: true),
+          _editorField(field('company'), 'Working Organization',
+              required: true),
+          _editorField(field('department'), 'Department'),
+          Row(children: [
+            Expanded(child: _dateField('start', 'Start date', required: true)),
+            const SizedBox(width: 10),
+            Expanded(
+                child:
+                    _dateField('end', 'End date', enabled: !currentlyWorking)),
+          ]),
+          CheckboxListTile(
+            contentPadding: EdgeInsets.zero,
+            value: currentlyWorking,
+            title: const Text('Currently working here'),
+            onChanged: (value) =>
+                setState(() => currentlyWorking = value ?? false),
+          ),
+          _editorField(field('supervisor'), 'Supervisor'),
+          _editorField(field('hr_contact_number'), 'HR Contact Number',
+              keyboard: TextInputType.phone),
+          _editorField(field('responsibilities'), 'Professional Summary',
+              lines: 4),
+          FilledButton.icon(
+              onPressed: submit,
+              icon: const Icon(Icons.save_outlined),
+              label: const Text('Save experience')),
+        ],
+      );
+
+  Widget _dateField(String key, String label,
+          {bool required = false, bool enabled = true}) =>
+      Padding(
+        padding: const EdgeInsets.only(bottom: 14),
+        child: TextFormField(
+          controller: field(key),
+          enabled: enabled,
+          readOnly: true,
+          decoration: InputDecoration(
+              labelText: label, suffixIcon: const Icon(Icons.calendar_month)),
+          validator: required
+              ? (value) =>
+                  value == null || value.isEmpty ? '$label is required' : null
+              : null,
+          onTap: () async {
+            final today = DateTime.now();
+            final picked = await showDatePicker(
+              context: context,
+              initialDate: DateTime.tryParse(field(key).text) ?? today,
+              firstDate: DateTime(1950),
+              lastDate: DateTime(today.year + 5),
+            );
+            if (picked != null) field(key).text = _isoDate(picked);
+          },
+        ),
+      );
+
+  void submit() {
+    if (!(formKey.currentState?.validate() ?? false)) return;
+    Navigator.pop(context, {
+      for (final key in [
+        'designation',
+        'company',
+        'department',
+        'start',
+        'end',
+        'supervisor',
+        'hr_contact_number',
+        'responsibilities'
+      ])
+        key: field(key).text.trim(),
+      'currently_working': currentlyWorking,
+      if (currentlyWorking) 'end': null,
+    });
+  }
+}
+
+class _ReferenceEditorSheet extends StatefulWidget {
+  const _ReferenceEditorSheet({this.initial});
+  final Map<String, dynamic>? initial;
+  @override
+  State<_ReferenceEditorSheet> createState() => _ReferenceEditorSheetState();
+}
+
+class _ReferenceEditorSheetState extends State<_ReferenceEditorSheet> {
+  final formKey = GlobalKey<FormState>();
+  final fields = <String, TextEditingController>{};
+  TextEditingController field(String key) => fields.putIfAbsent(
+      key, () => TextEditingController(text: '${widget.initial?[key] ?? ''}'));
+  @override
+  void dispose() {
+    for (final controller in fields.values) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => _EditorFrame(
+        title: widget.initial == null ? 'Add Reference' : 'Edit Reference',
+        formKey: formKey,
+        children: [
+          _editorField(field('name'), 'Name', required: true),
+          _editorField(field('designation'), 'Position', required: true),
+          _editorField(field('organization'), 'Organization', required: true),
+          _editorField(field('email'), 'Email',
+              keyboard: TextInputType.emailAddress,
+              validator: (value) =>
+                  value != null && value.isNotEmpty && !value.contains('@')
+                      ? 'Enter a valid email'
+                      : null),
+          _editorField(field('mobile'), 'Phone', keyboard: TextInputType.phone),
+          FilledButton.icon(
+              onPressed: submit,
+              icon: const Icon(Icons.save_outlined),
+              label: const Text('Save reference')),
+        ],
+      );
+  void submit() {
+    if (!(formKey.currentState?.validate() ?? false)) return;
+    Navigator.pop(context, {
+      for (final key in [
+        'name',
+        'designation',
+        'organization',
+        'email',
+        'mobile'
+      ])
+        key: field(key).text.trim(),
+    });
+  }
+}
+
+class _EditorFrame extends StatelessWidget {
+  const _EditorFrame(
+      {required this.title, required this.formKey, required this.children});
+  final String title;
+  final GlobalKey<FormState> formKey;
+  final List<Widget> children;
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: EdgeInsets.fromLTRB(
+            18, 18, 18, MediaQuery.viewInsetsOf(context).bottom + 24),
+        child: Form(
+          key: formKey,
+          child: SingleChildScrollView(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(children: [
+                    Expanded(
+                        child: Text(title,
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w800))),
+                    IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(Icons.close)),
+                  ]),
+                  const SizedBox(height: 14),
+                  ...children,
+                ]),
+          ),
+        ),
+      );
+}
+
+Widget _editorField(TextEditingController controller, String label,
+        {bool required = false,
+        int lines = 1,
+        TextInputType? keyboard,
+        String? Function(String?)? validator}) =>
+    Padding(
+      padding: const EdgeInsets.only(bottom: 14),
+      child: TextFormField(
+        controller: controller,
+        minLines: lines,
+        maxLines: lines,
+        keyboardType: keyboard,
+        decoration: InputDecoration(labelText: label),
+        validator: validator ??
+            (required
+                ? (value) => value == null || value.trim().isEmpty
+                    ? '$label is required'
+                    : null
+                : null),
+      ),
+    );
+
+String _isoDate(DateTime date) =>
+    '${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+
+class _EducationEditorSheet extends StatefulWidget {
+  const _EducationEditorSheet({this.initial});
+  final Map<String, dynamic>? initial;
+
+  @override
+  State<_EducationEditorSheet> createState() => _EducationEditorSheetState();
+}
+
+class _EducationEditorSheetState extends State<_EducationEditorSheet> {
+  final formKey = GlobalKey<FormState>();
+  final controllers = <String, TextEditingController>{};
+  String resultType = 'cgpa_4';
+
+  static const resultTypes = [
+    {'id': 'gpa_5', 'name': 'GPA (out of 5)'},
+    {'id': 'cgpa_4', 'name': 'CGPA (out of 4)'},
+    {'id': 'percentage', 'name': 'Percentage'},
+    {'id': 'division', 'name': 'Division / Class'},
+    {'id': 'other', 'name': 'Other'},
+  ];
+
+  TextEditingController field(String key) => controllers.putIfAbsent(
+      key, () => TextEditingController(text: '${widget.initial?[key] ?? ''}'));
+
+  @override
+  void initState() {
+    super.initState();
+    final existing = '${widget.initial?['result_type'] ?? ''}';
+    if (resultTypes.any((item) => item['id'] == existing)) {
+      resultType = existing;
+    }
+  }
+
+  @override
+  void dispose() {
+    for (final controller in controllers.values) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => Padding(
+        padding: EdgeInsets.fromLTRB(
+            18, 18, 18, MediaQuery.viewInsetsOf(context).bottom + 24),
+        child: Form(
+          key: formKey,
+          child: SingleChildScrollView(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(children: [
+                    Expanded(
+                      child: Text(
+                        widget.initial == null
+                            ? 'Add Education Qualification'
+                            : 'Edit Education Qualification',
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w800),
+                      ),
+                    ),
+                    IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(Icons.close)),
+                  ]),
+                  const SizedBox(height: 14),
+                  input('exam_name', 'Degree / Qualification', required: true),
+                  input('degree_name', 'Degree name'),
+                  input('institute_name', 'Institution', required: true),
+                  input('major_subject', 'Subject / Major'),
+                  input('passing_year', 'Passing year',
+                      keyboard: TextInputType.number, validator: (value) {
+                    if (value == null || value.trim().isEmpty) return null;
+                    final year = int.tryParse(value);
+                    if (year == null ||
+                        value.length != 4 ||
+                        year < 1940 ||
+                        year > DateTime.now().year + 10) {
+                      return 'Enter a valid passing year';
+                    }
+                    return null;
+                  }),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 14),
+                    child: DropdownButtonFormField<String>(
+                      initialValue: resultType,
+                      decoration:
+                          const InputDecoration(labelText: 'Result type'),
+                      items: resultTypes
+                          .map((item) => DropdownMenuItem(
+                              value: item['id'], child: Text(item['name']!)))
+                          .toList(),
+                      onChanged: (value) => setState(() => resultType = value!),
+                    ),
+                  ),
+                  input('result', resultLabel,
+                      keyboard:
+                          const TextInputType.numberWithOptions(decimal: true),
+                      validator: validateResult),
+                  input('board', 'Board / Awarding body'),
+                  const SizedBox(height: 6),
+                  FilledButton.icon(
+                    onPressed: submit,
+                    icon: const Icon(Icons.save_outlined),
+                    label: Text(widget.initial == null
+                        ? 'Add qualification'
+                        : 'Save changes'),
+                  ),
+                ]),
+          ),
+        ),
+      );
+
+  Widget input(String key, String label,
+          {bool required = false,
+          TextInputType? keyboard,
+          String? Function(String?)? validator}) =>
+      Padding(
+        padding: const EdgeInsets.only(bottom: 14),
+        child: TextFormField(
+          controller: field(key),
+          keyboardType: keyboard,
+          decoration: InputDecoration(labelText: label),
+          validator: validator ??
+              (required
+                  ? (value) => value == null || value.trim().isEmpty
+                      ? '$label is required'
+                      : null
+                  : null),
+        ),
+      );
+
+  String get resultLabel => switch (resultType) {
+        'gpa_5' => 'Result / GPA (maximum 5)',
+        'cgpa_4' => 'Result / CGPA (maximum 4)',
+        'percentage' => 'Result / Percentage (maximum 100)',
+        _ => 'Result',
+      };
+
+  String? validateResult(String? value) {
+    if (value == null || value.trim().isEmpty) return null;
+    final result = double.tryParse(value);
+    if (result == null || result < 0) return 'Enter a valid result';
+    final maximum = switch (resultType) {
+      'gpa_5' => 5.0,
+      'cgpa_4' => 4.0,
+      'percentage' => 100.0,
+      _ => null,
+    };
+    if (maximum != null && result > maximum) {
+      return 'Result cannot exceed ${maximum.toInt()}';
+    }
+    return null;
+  }
+
+  void submit() {
+    if (!(formKey.currentState?.validate() ?? false)) return;
+    Navigator.pop(context, {
+      'exam_name': field('exam_name').text.trim(),
+      'degree_name': field('degree_name').text.trim(),
+      'institute_name': field('institute_name').text.trim(),
+      'major_subject': field('major_subject').text.trim(),
+      'passing_year': field('passing_year').text.trim(),
+      'result_type': resultType,
+      'result': field('result').text.trim(),
+      'board': field('board').text.trim(),
+    });
+  }
 }
 
 class _FormPage extends StatelessWidget {
@@ -752,7 +1658,7 @@ class _LoadError extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(28),
           child: Column(mainAxisSize: MainAxisSize.min, children: [
-            const Icon(Icons.error_outline, size: 48, color: AppColors.red),
+            const Icon(Icons.error_outline, size: 48, color: AppColors.danger),
             const SizedBox(height: 12),
             Text(message, textAlign: TextAlign.center),
             const SizedBox(height: 16),

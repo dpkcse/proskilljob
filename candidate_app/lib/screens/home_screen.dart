@@ -814,7 +814,10 @@ class _FilterChip extends StatelessWidget {
                         color: selected ? AppColors.red : AppColors.border),
                     borderRadius: BorderRadius.circular(12)),
                 child: Text(label,
-                    style: const TextStyle(fontWeight: FontWeight.w600)),
+                    style: TextStyle(
+                        color:
+                            selected ? AppColors.onSecondary : AppColors.text,
+                        fontWeight: FontWeight.w600)),
               ))));
 }
 

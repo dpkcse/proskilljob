@@ -47,13 +47,10 @@ class UpdateCandidateSettingService
         $validator = Validator::make($request->all(), [
             'image' => 'image|mimes:jpeg,png,jpg',
             'name' => 'required|max:100',
-            'title' => 'required|max:100',
-            'experience_id' => 'required',
-            'education_id' => 'required',
             'date_of_birth' => 'required|date_format:Y-m-d',
-        ], [
-            'experience_id.required' => 'The experience field is required.',
-            'education_id.required' => 'The education field is required.',
+            'nid_birth_registration_no' => 'nullable|string|max:100',
+            'passport_no' => 'nullable|string|max:255',
+            'passport_expiry_date' => 'nullable|date_format:Y-m-d',
         ]);
 
         if ($validator->fails()) {
@@ -67,13 +64,14 @@ class UpdateCandidateSettingService
         $date = $request['date_of_birth'] = $dateTime->toDateString();
 
         $candidateData = [
-            'title' => $request->title,
-            'experience_id' => $request->experience_id,
-            'education_id' => $request->education_id,
-            'website' => $request->website,
             'birth_date' => $date,
             'nationality' => $request->nationality,
         ];
+        foreach (['nid_birth_registration_no', 'passport_no', 'passport_expiry_date'] as $field) {
+            if (Schema::hasColumn('candidates', $field)) {
+                $candidateData[$field] = $request->{$field} ?: null;
+            }
+        }
         foreach ([
             'district', 'place', 'neighborhood', 'postcode',
             'permanent_address', 'international_address',
@@ -107,10 +105,11 @@ class UpdateCandidateSettingService
                 'message' => 'Basic Info Updated Successful!',
                 'data' => [
                     'name' => $user->name,
-                    'title' => $candidate->title,
                     'experience_id' => (int) $candidate->experience_id,
                     'education_id' => (int) $candidate->education_id,
-                    'website' => $candidate->website,
+                    'nid_birth_registration_no' => $candidate->nid_birth_registration_no ?? null,
+                    'passport_no' => $candidate->passport_no ?? null,
+                    'passport_expiry_date' => $candidate->passport_expiry_date ?? null,
                     'date_of_birth' => $candidate->birth_date ? Carbon::parse($candidate->birth_date)->format('Y-m-d') : null,
                     'image_url' => $candidate->photo,
                 ],
@@ -124,8 +123,13 @@ class UpdateCandidateSettingService
             'gender' => 'required',
             'marital_status' => 'nullable',
             'profession' => 'required',
+            'education_id' => 'required|integer',
             'status' => 'required',
             'bio' => 'required',
+            'preferred_job_locations' => 'nullable|array',
+            'preferred_job_locations.*' => 'string|max:255',
+            'language_proficiencies' => 'nullable|array',
+            'language_proficiencies.*' => 'nullable|in:basic,professional,native',
         ];
         if (! setting('candidate_gender_active')) {
             unset($rules['gender']);
@@ -165,14 +169,21 @@ class UpdateCandidateSettingService
             $profession_id = $profession->profession_id;
         }
 
-        $candidate->update([
+        $candidateData = [
             'gender' => $request->gender ?? null,
             'marital_status' => $request->marital_status ?? null,
             'bio' => $request->bio,
             'profession_id' => $profession_id,
+            'education_id' => $request->education_id,
             'status' => $request->status,
             'available_in' => $request->available_in ? Carbon::parse($request->available_in)?->format('Y-m-d') : null,
-        ]);
+        ];
+        if (Schema::hasColumn('candidates', 'preferred_job_locations')) {
+            $candidateData['preferred_job_locations'] = json_encode(
+                array_values(array_filter($request->preferred_job_locations ?? []))
+            );
+        }
+        $candidate->update($candidateData);
 
         // skill & language
         $skills = $request->skills;
@@ -207,6 +218,15 @@ class UpdateCandidateSettingService
 
         if ($request->has('languages')) {
             $candidate->languages()->sync($request->languages ?? []);
+            if (Schema::hasColumn('candidate_language', 'proficiency_level')) {
+                foreach ($request->languages ?? [] as $languageId) {
+                    $level = $request->language_proficiencies[$languageId] ?? 'basic';
+                    $databaseLevel = $level === 'professional' ? 'fluent' : $level;
+                    $candidate->languages()->updateExistingPivot($languageId, [
+                        'proficiency_level' => $databaseLevel,
+                    ]);
+                }
+            }
         }
 
         return $this->respondWithSuccess([
@@ -354,7 +374,7 @@ class UpdateCandidateSettingService
         // have every optional candidate location column.
         $locationData = [];
         foreach (['country', 'city', 'address', 'exact_location', 'lat', 'long'] as $field) {
-            if (Schema::hasColumn('candidates', $field)) {
+            if ($request->has($field) && Schema::hasColumn('candidates', $field)) {
                 $locationData[$field] = $request->{$field};
             }
         }

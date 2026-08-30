@@ -105,7 +105,7 @@ class _AppLoadingScreenState extends State<_AppLoadingScreen>
                   left: -70,
                   child: _GlowOrb(
                     size: 210,
-                    color: Color(0xffe31e3c),
+                    color: Color(0xffffc107),
                     opacity: .045,
                   ),
                 ),
@@ -157,7 +157,7 @@ class _AppLoadingScreenState extends State<_AppLoadingScreen>
                           borderRadius: BorderRadius.circular(20),
                           child: LinearProgressIndicator(
                             minHeight: 4,
-                            color: const Color(0xffe31e3c),
+                            color: const Color(0xffffc107),
                             backgroundColor:
                                 const Color(0xff67256a).withValues(alpha: .12),
                           ),
