@@ -128,15 +128,26 @@ class AppState extends ChangeNotifier {
   }
 
   Future<bool> toggleSaved(Job job) async {
-    final saved = await jobsApi.toggleBookmark(job.id);
+    var jobId = job.id;
+    if (jobId <= 0 && job.slug.isNotEmpty) {
+      final details = await jobsApi.details(job.slug);
+      jobId = int.tryParse('${details['id'] ?? details['job_id'] ?? 0}') ?? 0;
+    }
+    if (jobId <= 0) {
+      throw const ApiException(
+          'This job could not be identified. Please refresh and try again.');
+    }
+    final saved = await jobsApi.toggleBookmark(jobId);
+    final resolvedJob = job.copyWith(id: jobId, bookmarked: saved);
     jobs = jobs
-        .map((item) =>
-            item.id == job.id ? item.copyWith(bookmarked: saved) : item)
+        .map((item) => item.slug == job.slug
+            ? item.copyWith(id: jobId, bookmarked: saved)
+            : item)
         .toList();
-    if (saved && !savedJobs.any((item) => item.id == job.id)) {
-      savedJobs = [job.copyWith(bookmarked: true), ...savedJobs];
+    if (saved && !savedJobs.any((item) => item.slug == job.slug)) {
+      savedJobs = [resolvedJob, ...savedJobs];
     } else if (!saved) {
-      savedJobs = savedJobs.where((item) => item.id != job.id).toList();
+      savedJobs = savedJobs.where((item) => item.slug != job.slug).toList();
     }
     notifyListeners();
     return saved;

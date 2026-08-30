@@ -36,8 +36,8 @@ class Job {
         bookmarked: json['bookmarked'] == true || json['bookmarked'] == 1,
       );
 
-  Job copyWith({bool? bookmarked}) => Job(
-        id: id,
+  Job copyWith({int? id, bool? bookmarked}) => Job(
+        id: id ?? this.id,
         slug: slug,
         title: title,
         company: company,

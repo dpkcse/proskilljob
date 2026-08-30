@@ -17,6 +17,7 @@ class JobListResource extends JsonResource
         $salary = $this->salary_mode == 'range' ? currencyAmountShort($this->min_salary).' - '.currencyAmountShort($this->max_salary).' '.currentCurrencyCode() : $this->custom_salary;
 
         return [
+            'id' => $this->id,
             'title' => $this->title,
             'slug' => $this->slug,
             'job_details' => route('website.job.details', $this->slug),
