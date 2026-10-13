@@ -74,7 +74,7 @@ Route::controller(AttributeController::class)->group(function () {
 // Authentication Apis
 Route::controller(AuthController::class)->group(function () {
     Route::post('/login', 'login');
-    Route::post('/register', 'register');
+    Route::post('/register', 'register')->middleware('throttle:5,10');
     Route::get('/email/verification-status', 'verificationStatus')->middleware('throttle:12,1');
     Route::post('/email/resend-verification', 'resendVerification')->middleware('throttle:3,1');
     Route::get('/profile', 'profile')->middleware('auth:sanctum');

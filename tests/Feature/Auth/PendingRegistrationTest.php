@@ -69,3 +69,26 @@ test('a superadmin can view and resend a pending verification', function () {
         ->and($pendingUser->verification_send_attempts)->toBe(1)
         ->and($pendingUser->last_verification_sent_at)->not->toBeNull();
 });
+
+test('captcha is required for candidate and employer registration', function (string $role) {
+    config(['captcha.active' => true]);
+
+    $payload = [
+        'role' => $role,
+        'name' => 'Captcha Test',
+        'email' => "captcha-{$role}@gmail.com",
+        'password' => 'password',
+        'password_confirmation' => 'password',
+    ];
+
+    if ($role === 'company') {
+        $payload['company_registration_number'] = 'CAPTCHA-COMPANY-001';
+    }
+
+    $this->post(route('register'), $payload)
+        ->assertSessionHasErrors('g-recaptcha-response');
+
+    $this->assertDatabaseMissing('pending_users', [
+        'email' => $payload['email'],
+    ]);
+})->with(['candidate', 'company']);
