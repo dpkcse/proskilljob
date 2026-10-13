@@ -214,6 +214,14 @@ class RolePermissionSeeder extends Seeder
                     'activity-log.view',
                 ],
             ],
+            [
+                'group_name' => 'pending-registration',
+                'permissions' => [
+                    'pending-registration.view',
+                    'pending-registration.resend',
+                    'pending-registration.delete',
+                ],
+            ],
         ];
 
         // Assaign Permission

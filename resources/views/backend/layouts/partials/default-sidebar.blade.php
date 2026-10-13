@@ -47,7 +47,7 @@
                         {{ __('candidate') }}
                     </x-admin.sidebar-list>
                     @endif
-                    @if (auth('admin')->user()?->hasRole('superadmin'))
+                    @if (auth('admin')->user()?->hasRole('superadmin') || userCan('pending-registration.view'))
                     <x-admin.sidebar-list :linkActive="request()->routeIs('pending-registration.*') ? true : false"
                         route="pending-registration.index" path="pending-registration.index" plus_icon=""
                         icon="fas fa-user-clock">

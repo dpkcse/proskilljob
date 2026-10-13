@@ -1,10 +1,13 @@
 <?php
 
+use App\Models\Admin;
 use App\Models\PendingUser;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 test('an expired pending email can register again', function () {
     config(['captcha.active' => false]);
@@ -68,6 +71,43 @@ test('a superadmin can view and resend a pending verification', function () {
         ->and($pendingUser->expires_at->isFuture())->toBeTrue()
         ->and($pendingUser->verification_send_attempts)->toBe(1)
         ->and($pendingUser->last_verification_sent_at)->not->toBeNull();
+});
+
+test('pending registration permissions can be assigned to another admin role', function () {
+    $role = Role::create(['name' => 'registration-reviewer', 'guard_name' => 'admin']);
+    $viewPermission = Permission::findByName('pending-registration.view', 'admin');
+    $role->givePermissionTo($viewPermission);
+
+    $admin = Admin::factory()->create();
+    $admin->assignRole($role);
+
+    $pendingUser = PendingUser::create([
+        'role' => 'candidate',
+        'name' => 'Permission Test Candidate',
+        'username' => 'permission-test-candidate',
+        'email' => 'permission-test-candidate@gmail.com',
+        'password' => Hash::make('password'),
+        'verification_token' => Str::random(60),
+        'expires_at' => now()->addDay(),
+    ]);
+
+    actingAs($admin, 'admin')
+        ->get(route('pending-registration.index'))
+        ->assertOk()
+        ->assertSee('permission-test-candidate@gmail.com')
+        ->assertDontSee('Resend');
+
+    actingAs($admin, 'admin')
+        ->post(route('pending-registration.resend', $pendingUser))
+        ->assertForbidden();
+
+    $role->givePermissionTo(Permission::findByName('pending-registration.resend', 'admin'));
+
+    Notification::fake();
+
+    actingAs($admin->fresh(), 'admin')
+        ->post(route('pending-registration.resend', $pendingUser))
+        ->assertRedirect();
 });
 
 test('captcha is required for candidate and employer registration', function (string $role) {

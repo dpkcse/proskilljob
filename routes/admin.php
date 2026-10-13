@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ActivityLogController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AffiliateSettingsController;
 use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\Auth\LoginController;
@@ -58,8 +58,6 @@ Route::prefix('admin')->group(function () {
         Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('admin.password.reset');
     });
 
-
-
     Route::middleware(['auth:admin', 'admin.activity'])->group(function () {
         Route::post('/notifications/read', [AdminController::class, 'notificationRead'])->name('admin.notification.read');
         Route::get('/notifications', [AdminController::class, 'allNotifications'])->name('admin.all.notification');
@@ -70,10 +68,16 @@ Route::prefix('admin')->group(function () {
         Route::get('/activity-logs/unread-count', [ActivityLogController::class, 'unreadCount'])->name('activity-log.unread-count');
     });
 
-    Route::middleware(['auth:admin', 'role:superadmin', 'admin.activity'])->group(function () {
-        Route::get('/pending-registrations', [PendingRegistrationController::class, 'index'])->name('pending-registration.index');
-        Route::post('/pending-registrations/{pendingUser}/resend', [PendingRegistrationController::class, 'resend'])->name('pending-registration.resend');
-        Route::delete('/pending-registrations/{pendingUser}', [PendingRegistrationController::class, 'destroy'])->name('pending-registration.destroy');
+    Route::middleware(['auth:admin', 'admin.activity'])->group(function () {
+        Route::get('/pending-registrations', [PendingRegistrationController::class, 'index'])
+            ->middleware('role_or_permission:superadmin|pending-registration.view')
+            ->name('pending-registration.index');
+        Route::post('/pending-registrations/{pendingUser}/resend', [PendingRegistrationController::class, 'resend'])
+            ->middleware('role_or_permission:superadmin|pending-registration.resend')
+            ->name('pending-registration.resend');
+        Route::delete('/pending-registrations/{pendingUser}', [PendingRegistrationController::class, 'destroy'])
+            ->middleware('role_or_permission:superadmin|pending-registration.delete')
+            ->name('pending-registration.destroy');
     });
 
     Route::middleware(['auth:admin', 'admin.activity'])->group(function () {

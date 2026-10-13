@@ -33,7 +33,9 @@
                             <th>Expires</th>
                             <th>Status</th>
                             <th>Mail attempts</th>
-                            <th>Action</th>
+                            @if (auth('admin')->user()->hasRole('superadmin') || userCan('pending-registration.resend') || userCan('pending-registration.delete'))
+                                <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -59,7 +61,9 @@
                                         <small class="d-block text-muted">{{ $pendingUser->last_verification_sent_at->diffForHumans() }}</small>
                                     @endif
                                 </td>
+                                @if (auth('admin')->user()->hasRole('superadmin') || userCan('pending-registration.resend') || userCan('pending-registration.delete'))
                                 <td>
+                                    @if (auth('admin')->user()->hasRole('superadmin') || userCan('pending-registration.resend'))
                                     <form method="POST" action="{{ route('pending-registration.resend', $pendingUser) }}" class="d-inline">
                                         @csrf
                                         <button type="submit" class="btn btn-sm btn-primary"
@@ -67,6 +71,8 @@
                                             <i class="fas fa-paper-plane"></i> Resend
                                         </button>
                                     </form>
+                                    @endif
+                                    @if (auth('admin')->user()->hasRole('superadmin') || userCan('pending-registration.delete'))
                                     <form method="POST" action="{{ route('pending-registration.destroy', $pendingUser) }}" class="d-inline">
                                         @csrf
                                         @method('DELETE')
@@ -75,7 +81,9 @@
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
+                                    @endif
                                 </td>
+                                @endif
                             </tr>
                         @empty
                             <tr><td colspan="8" class="text-center py-4">No pending registrations found.</td></tr>
