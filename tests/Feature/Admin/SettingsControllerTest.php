@@ -3,6 +3,7 @@
 use App\Models\Setting;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Config;
+use Jackiedo\DotenvEditor\Facades\DotenvEditor;
 
 beforeEach(function () {
     // Create an admin user using the 'createAdmin' function.
@@ -60,8 +61,15 @@ it('admin can update app configuartion', function () {
 });
 
 it('admin can update recapta configuartion', function () {
-
-    Config::set('app.env', 'testing');
+    DotenvEditor::shouldReceive('setKeys')
+        ->once()
+        ->with([
+            'NOCAPTCHA_SITEKEY' => 'Testing',
+            'NOCAPTCHA_SECRET' => 'Secret',
+            'NOCAPTCHA_ACTIVE' => 'true',
+        ])
+        ->andReturnSelf();
+    DotenvEditor::shouldReceive('save')->once();
     // Prepare data for updating the general settings.
     $data = [
         'nocaptcha_key' => 'Testing',
@@ -71,10 +79,31 @@ it('admin can update recapta configuartion', function () {
 
     // Send a PUT request to update the general settings and assert the response status.
     $this->put(route('settings.recaptcha.update'), $data)
-        ->assertStatus(302); // Assuming a 302 is the expected redirect status code.
+        ->assertRedirect()
+        ->assertSessionHas('success');
 
-    expect(env('NOCAPTCHA_SITEKEY'))->toBe('Testing');
-    expect(env('NOCAPTCHA_SECRET'))->toBe('Secret');
+    expect(config('captcha.sitekey'))->toBe('Testing');
+    expect(config('captcha.secret'))->toBe('Secret');
+    expect(config('captcha.active'))->toBeTrue();
+});
+
+it('admin can deactivate recaptcha configuration', function () {
+    DotenvEditor::shouldReceive('setKeys')
+        ->once()
+        ->with([
+            'NOCAPTCHA_SITEKEY' => 'Testing',
+            'NOCAPTCHA_SECRET' => 'Secret',
+            'NOCAPTCHA_ACTIVE' => 'false',
+        ])
+        ->andReturnSelf();
+    DotenvEditor::shouldReceive('save')->once();
+
+    $this->put(route('settings.recaptcha.update'), [
+        'nocaptcha_key' => 'Testing',
+        'nocaptcha_secret' => 'Secret',
+    ])->assertRedirect()->assertSessionHas('success');
+
+    expect(config('captcha.active'))->toBeFalse();
 });
 
 it('admin fails to update recapta configuartion for validation', function () {

@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
+use Jackiedo\DotenvEditor\Facades\DotenvEditor;
 use Modules\Currency\Entities\Currency;
 use Modules\Currency\Http\Controllers\CurrencyController;
 use Modules\Language\Entities\Language;
@@ -848,9 +849,21 @@ class SettingsController extends Controller
         $request->validate(['nocaptcha_key' => 'required', 'nocaptcha_secret' => 'required']);
 
         try {
-            checkSetConfig('captcha.sitekey', $request->nocaptcha_key);
-            checkSetConfig('captcha.secret', $request->nocaptcha_secret);
-            checkSetConfig('captcha.active', $request->status ? true : false);
+            $active = $request->boolean('status');
+
+            DotenvEditor::setKeys([
+                'NOCAPTCHA_SITEKEY' => $request->string('nocaptcha_key')->toString(),
+                'NOCAPTCHA_SECRET' => $request->string('nocaptcha_secret')->toString(),
+                'NOCAPTCHA_ACTIVE' => $active ? 'true' : 'false',
+            ])->save();
+
+            config([
+                'captcha.sitekey' => $request->string('nocaptcha_key')->toString(),
+                'captcha.secret' => $request->string('nocaptcha_secret')->toString(),
+                'captcha.active' => $active,
+            ]);
+
+            Artisan::call('config:clear');
 
             return back()->with('success', 'Recaptcha configuration updated successfully!');
         } catch (\Exception $e) {
