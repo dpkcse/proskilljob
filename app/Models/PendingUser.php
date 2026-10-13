@@ -19,10 +19,15 @@ class PendingUser extends Model
         'created_ip',
         'verification_token',
         'expires_at',
+        'last_verification_sent_at',
+        'verification_send_attempts',
+        'verification_last_error',
     ];
 
     protected $casts = [
         'expires_at' => 'datetime',
+        'last_verification_sent_at' => 'datetime',
+        'verification_send_attempts' => 'integer',
     ];
 
     /**

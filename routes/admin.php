@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\OrganizationTypeController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Admin\PendingRegistrationController;
 use App\Http\Controllers\Admin\ProfessionController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RolesController;
@@ -67,6 +68,12 @@ Route::prefix('admin')->group(function () {
     Route::middleware(['auth:admin', 'role_or_permission:superadmin|activity-log.view', 'admin.activity'])->group(function () {
         Route::get('/activity-logs', [ActivityLogController::class, 'index'])->name('activity-log.index');
         Route::get('/activity-logs/unread-count', [ActivityLogController::class, 'unreadCount'])->name('activity-log.unread-count');
+    });
+
+    Route::middleware(['auth:admin', 'role:superadmin', 'admin.activity'])->group(function () {
+        Route::get('/pending-registrations', [PendingRegistrationController::class, 'index'])->name('pending-registration.index');
+        Route::post('/pending-registrations/{pendingUser}/resend', [PendingRegistrationController::class, 'resend'])->name('pending-registration.resend');
+        Route::delete('/pending-registrations/{pendingUser}', [PendingRegistrationController::class, 'destroy'])->name('pending-registration.destroy');
     });
 
     Route::middleware(['auth:admin', 'admin.activity'])->group(function () {

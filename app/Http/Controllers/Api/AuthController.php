@@ -81,7 +81,15 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'role' => ['required', Rule::in(['candidate', 'company'])],
-            'email' => 'required|string|email|max:255|unique:users|unique:pending_users,email',
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('users', 'email'),
+                Rule::unique('pending_users', 'email')
+                    ->where(fn ($query) => $query->where('expires_at', '>', now())),
+            ],
             'password' => 'required|string|min:8|confirmed',
             'company_registration_number' => [
                 'nullable',
@@ -89,7 +97,8 @@ class AuthController extends Controller
                 'string',
                 'max:100',
                 Rule::unique('companies', 'company_registration_number'),
-                Rule::unique('pending_users', 'company_registration_number'),
+                Rule::unique('pending_users', 'company_registration_number')
+                    ->where(fn ($query) => $query->where('expires_at', '>', now())),
             ],
         ]);
 
@@ -222,6 +231,8 @@ class AuthController extends Controller
         $pendingUser->update([
             'verification_token' => $token,
             'expires_at' => now()->addHours(24),
+            'verification_send_attempts' => $pendingUser->verification_send_attempts + 1,
+            'verification_last_error' => null,
         ]);
         DB::table('password_resets')->updateOrInsert(
             ['email' => $pendingUser->email],
@@ -230,7 +241,11 @@ class AuthController extends Controller
 
         try {
             $this->sendVerificationEmail($pendingUser->email, $token);
+            $pendingUser->update(['last_verification_sent_at' => now()]);
         } catch (\Throwable $th) {
+            $pendingUser->update([
+                'verification_last_error' => Str::limit($th->getMessage(), 1000),
+            ]);
             Log::warning('API verification email resend failed', [
                 'email' => $pendingUser->email,
                 'exception' => $th,
@@ -252,6 +267,15 @@ class AuthController extends Controller
 
         try {
             $pendingUser = DB::transaction(function () use ($request, $username, $token) {
+                $expiredPendingUser = PendingUser::where('email', $request->email)
+                    ->where('expires_at', '<=', now())
+                    ->first();
+
+                if ($expiredPendingUser) {
+                    DB::table('password_resets')->where('email', $request->email)->delete();
+                    $expiredPendingUser->delete();
+                }
+
                 $pendingUser = PendingUser::create([
                     'role' => $request->role,
                     'name' => $request->name,
@@ -274,17 +298,31 @@ class AuthController extends Controller
                 return $pendingUser;
             });
 
-            $this->sendVerificationEmail($pendingUser->email, $token);
+            try {
+                $this->sendVerificationEmail($pendingUser->email, $token);
+                $pendingUser->update([
+                    'last_verification_sent_at' => now(),
+                    'verification_send_attempts' => 1,
+                    'verification_last_error' => null,
+                ]);
+            } catch (\Throwable $mailException) {
+                Log::warning('API verification email could not be sent', [
+                    'email' => $pendingUser->email,
+                    'exception' => $mailException,
+                ]);
+                $pendingUser->update([
+                    'verification_send_attempts' => 1,
+                    'verification_last_error' => Str::limit($mailException->getMessage(), 1000),
+                ]);
+            }
         } catch (\Throwable $th) {
-            PendingUser::where('email', $request->email)->delete();
-            DB::table('password_resets')->where('email', $request->email)->delete();
             Log::error('API pending registration failed', [
                 'email' => $request->email,
                 'exception' => $th,
             ]);
 
             return response()->json([
-                'message' => 'Verification email could not be sent. Please check the address and try again.',
+                'message' => 'The pending registration could not be created. Please try again.',
             ], 503);
         }
 
@@ -294,7 +332,9 @@ class AuthController extends Controller
                 'email' => $pendingUser->email,
                 'expires_at' => $pendingUser->expires_at?->toIso8601String(),
             ],
-            'message' => 'Registration received. Please verify your email address.',
+            'message' => $pendingUser->verification_last_error
+                ? 'Registration received, but the verification email could not be sent. Please retry later or contact support.'
+                : 'Registration received. Please verify your email address.',
         ]);
     }
 

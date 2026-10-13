@@ -20,7 +20,7 @@ class CleanExpiredPendingUsers extends Command
      *
      * @var string
      */
-    protected $description = 'Clean up expired pending user registrations';
+    protected $description = 'Clean up pending user registrations that expired more than 30 days ago';
 
     /**
      * Execute the console command.
@@ -29,14 +29,14 @@ class CleanExpiredPendingUsers extends Command
     {
         $this->info('Cleaning up expired pending user registrations...');
 
-        // Delete expired pending users
-        $deletedCount = PendingUser::where('expires_at', '<', now())->count();
+        $cutoff = now()->subDays(30);
+        $deletedCount = PendingUser::where('expires_at', '<', $cutoff)->count();
 
         // Also clean up related password_resets records
-        $expiredEmails = PendingUser::where('expires_at', '<', now())->pluck('email');
+        $expiredEmails = PendingUser::where('expires_at', '<', $cutoff)->pluck('email');
 
         // Delete expired pending users
-        PendingUser::where('expires_at', '<', now())->delete();
+        PendingUser::where('expires_at', '<', $cutoff)->delete();
 
         // Clean up related password_resets
         if ($expiredEmails->isNotEmpty()) {

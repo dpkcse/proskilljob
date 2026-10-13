@@ -88,7 +88,8 @@ class RegisterController extends Controller
                     'max:255',
                     'indisposable',
                     'unique:users,email',
-                    'unique:pending_users,email',
+                    Rule::unique('pending_users', 'email')
+                        ->where(fn ($query) => $query->where('expires_at', '>', now())),
                 ],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
                 'company_registration_number' => [
@@ -97,7 +98,8 @@ class RegisterController extends Controller
                     'string',
                     'max:100',
                     Rule::unique('companies', 'company_registration_number'),
-                    Rule::unique('pending_users', 'company_registration_number'),
+                    Rule::unique('pending_users', 'company_registration_number')
+                        ->where(fn ($query) => $query->where('expires_at', '>', now())),
                 ],
                 'g-recaptcha-response' => config('captcha.active') ? 'required|captcha' : '',
             ],
@@ -117,6 +119,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        // An expired registration must not permanently reserve an email address.
+        // Remove its stale token before creating the replacement registration.
+        $expiredPendingUser = PendingUser::where('email', $data['email'])
+            ->where('expires_at', '<=', now())
+            ->first();
+
+        if ($expiredPendingUser) {
+            DB::table('password_resets')->where('email', $data['email'])->delete();
+            $expiredPendingUser->delete();
+        }
+
         $newUsername = Str::slug($data['name']);
 
         // Check for username conflicts in both users and pending_users tables
@@ -166,28 +179,43 @@ class RegisterController extends Controller
 
         // if mail configured, send notification to candidate and company
         if (checkMailConfig()) {
-            if ($user->role == 'candidate') {
-                $candidate_account_auto_activation_enabled = Setting::where('candidate_account_auto_activation', 1)->count();
+            try {
+                if ($user->role == 'candidate') {
+                    $candidate_account_auto_activation_enabled = Setting::where('candidate_account_auto_activation', 1)->count();
 
-                if ($candidate_account_auto_activation_enabled) {
-                    Notification::route('mail', $user->email)->notify(new CandidateCreateNotification($user, $data['password']));
-                } else {
-                    Notification::route('mail', $user->email)->notify(new CandidateCreateApprovalPendingNotification($user, $data['password']));
+                    if ($candidate_account_auto_activation_enabled) {
+                        Notification::route('mail', $user->email)->notify(new CandidateCreateNotification($user, $data['password']));
+                    } else {
+                        Notification::route('mail', $user->email)->notify(new CandidateCreateApprovalPendingNotification($user, $data['password']));
+                    }
+                } elseif ($user->role == 'company') {
+                    $employer_auto_activation_enabled = Setting::where('employer_auto_activation', 1)->count();
+
+                    if ($employer_auto_activation_enabled) {
+                        Notification::route('mail', $user->email)->notify(new CompanyCreatedNotification($user, $data['password']));
+                    } else {
+                        Notification::route('mail', $user->email)->notify(new CompanyCreateApprovalPendingNotification($user, $data['password']));
+                    }
                 }
-            } elseif ($user->role == 'company') {
 
-                $employer_auto_activation_enabled = Setting::where('employer_auto_activation', 1)->count();
-
-                if ($employer_auto_activation_enabled) {
-                    Notification::route('mail', $user->email)->notify(new CompanyCreatedNotification($user, $data['password']));
-                } else {
-                    Notification::route('mail', $user->email)->notify(new CompanyCreateApprovalPendingNotification($user, $data['password']));
+                if (setting('email_verification')) {
+                    Notification::route('mail', $user->email)->notify(new EmailVerifyNotification($user->email, $verificationToken));
                 }
 
-            }
+                $pendingUser->update([
+                    'last_verification_sent_at' => now(),
+                    'verification_send_attempts' => 1,
+                    'verification_last_error' => null,
+                ]);
+            } catch (\Throwable $exception) {
+                report($exception);
 
-            if (setting('email_verification')) {
-                Notification::route('mail', $user->email)->notify(new EmailVerifyNotification($user->email, $verificationToken));
+                $pendingUser->update([
+                    'verification_send_attempts' => 1,
+                    'verification_last_error' => Str::limit($exception->getMessage(), 1000),
+                ]);
+
+                session()->flash('error', 'Your account is pending, but the verification email could not be sent. Please use resend or contact support.');
             }
         }
 
